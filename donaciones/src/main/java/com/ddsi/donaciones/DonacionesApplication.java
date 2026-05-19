@@ -10,5 +10,4 @@ public class DonacionesApplication {
 		System.out.println("Hola, mundo!");
 		SpringApplication.run(DonacionesApplication.class, args);
 	}
-
 }
