@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GeneradorDonaciones {
-    public static GeneradorDonaciones generadorDonaciones = null;
+    private static GeneradorDonaciones generadorDonaciones = null;
     private ArrayList<Donacion> donaciones;
     private ArrayList<DonacionIndependiente> posiblesDonaciones;
 
