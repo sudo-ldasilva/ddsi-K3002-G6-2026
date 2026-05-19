@@ -21,10 +21,11 @@ public class GeneradorDonaciones {
     }
 
     public void donar(Donacion donacion) {
+        // TODO
     }
 
     private void generarDonacionesIndependientes(Donacion donacion) {
-
+        // TODO
     }
 
 }
