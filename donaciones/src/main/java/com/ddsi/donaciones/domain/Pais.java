@@ -1,3 +1,5 @@
+package com.ddsi.donaciones.domain;
+
 public class Pais{
     private String nombre;
 

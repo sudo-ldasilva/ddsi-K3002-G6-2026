@@ -1,3 +1,5 @@
+package com.ddsi.donaciones.domain;
+
 public class Provincia{
     private String nombre;
     private Pais pais;
