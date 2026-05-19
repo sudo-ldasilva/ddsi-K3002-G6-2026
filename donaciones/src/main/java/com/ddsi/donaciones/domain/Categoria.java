@@ -1,6 +1,5 @@
 package com.ddsi.donaciones.domain;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Categoria {
     private String nombre;

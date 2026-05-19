@@ -16,8 +16,10 @@ public class Direccion {
     }
 
     public String direccion(){
-        if(altura != NULL)
+        if (altura != null) {
             return this.callePrincipal + " " + this.altura;
+        }
+
         return this.callePrincipal + " (Entre " + this.calleEntre1 + " y " + this.calleEntre2 + ")";
     }
 

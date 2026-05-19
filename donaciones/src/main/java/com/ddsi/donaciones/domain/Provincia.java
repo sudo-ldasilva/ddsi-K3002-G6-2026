@@ -17,7 +17,7 @@ public class Provincia{
         return this.pais;
     }
 
-    public getUbicacionCompleta(){
+    public String getUbicacionCompleta(){
         return this.nombre + ", " + this.pais.getNombre();
     }
 }
