@@ -14,7 +14,7 @@ public class EntidadBeneficiaria {
 
     // ArrayList, LinkedList u otro?
     private ArrayList<Representante> representantes;
-    private ArrayList<Necesidad> necesidades;
+    private ArrayList<CampañaNecesidad> necesidades;
 
     public EntidadBeneficiaria(
             String razonSocial, String tipo, String telefono, Direccion direccion)

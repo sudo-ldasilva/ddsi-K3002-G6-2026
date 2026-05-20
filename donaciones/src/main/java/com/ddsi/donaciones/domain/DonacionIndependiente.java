@@ -2,7 +2,7 @@ package com.ddsi.donaciones.domain;
 
 public class DonacionIndependiente {
     private Subcategoria subcategoria;
-    private necesidadIndividual necesidad;
+    private NecesidadIndividual necesidad;
     private Donacion donacion;
     private BienDonado bien;
 
@@ -17,7 +17,7 @@ public class DonacionIndependiente {
         return subcategoria;
     }
 
-    public necesidadIndividual getNecesidad() {
+    public NecesidadIndividual getNecesidad() {
         return necesidad;
     }
 
@@ -33,7 +33,7 @@ public class DonacionIndependiente {
         this.subcategoria = subcategoria;
     }
 
-    public void setNecesidad(necesidadIndividual necesidad) {
+    public void setNecesidad(NecesidadIndividual necesidad) {
         this.necesidad = necesidad;
     }
 }
