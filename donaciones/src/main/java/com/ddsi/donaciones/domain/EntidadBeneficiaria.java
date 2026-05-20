@@ -24,7 +24,7 @@ public class EntidadBeneficiaria {
         this.telefono = telefono;
         this.direccion = direccion;
         this.representantes = new ArrayList<Representante>();
-        this.necesidades = new ArrayList<Necesidad>();
+        this.necesidades = new ArrayList<>();
     }
 
     public void agregarRepresentante(Representante representante) {

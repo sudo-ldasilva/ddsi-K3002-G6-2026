@@ -1,17 +1,17 @@
 package com.ddsi.donaciones.domain;
 
 public class BienDonado {
-    private String cantidad;
+    private int cantidad;
     private String unidad;
     private Bien bien;
 
-    public BienDonado(String cantidad, String unidad, Bien bien) {
+    public BienDonado(int cantidad, String unidad, Bien bien) {
         this.cantidad = cantidad;
         this.unidad = unidad;
         this.bien = bien;
     }
 
-    public String getCantidad() {
+    public int getCantidad() {
         return cantidad;
     }
     public String getUnidad() {
