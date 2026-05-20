@@ -6,7 +6,11 @@ public class ContactoTelefono extends Contacto {
     private boolean esFijo;
 
     public ContactoTelefono(String codigoDeArea, String num, boolean fijo) {
-        this.numero= substring(this.codigoDeArea)+numero;
-        this.esFijo=fijo;
+        this.numero = this.codigoDeArea + numero;
+        this.esFijo = fijo;
+    }
+
+    public void MandarMensaje(String mensaje) {
+        // TODO tercerizado
     }
 }
