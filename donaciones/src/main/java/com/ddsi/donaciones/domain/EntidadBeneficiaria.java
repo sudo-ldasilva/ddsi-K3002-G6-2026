@@ -27,7 +27,7 @@ public class EntidadBeneficiaria {
         this.necesidades = new ArrayList<Necesidad>();
     }
 
-    public void añadirRepresentante(Representante representante) {
+    public void agregarRepresentante(Representante representante) {
         representantes.add(representante);
     }
 

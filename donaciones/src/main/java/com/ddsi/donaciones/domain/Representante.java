@@ -1,3 +1,5 @@
+package com.ddsi.donaciones.domain;
+
 public class Representante{
     private String email;
     private PersonaJuridica personaJuridica;
