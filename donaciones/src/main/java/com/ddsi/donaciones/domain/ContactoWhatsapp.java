@@ -1,0 +1,5 @@
+package com.ddsi.donaciones.domain;
+
+public class ContactoWhatsapp extends ContactoTelefono {
+    public ContactoWhatsapp(String codigoDeArea, String num) {super(codigoDeArea,num)};
+}
