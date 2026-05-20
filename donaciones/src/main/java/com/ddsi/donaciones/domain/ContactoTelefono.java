@@ -1,6 +1,6 @@
 package com.ddsi.donaciones.domain;
 
-public class ContactoTelefono extends Contacto {
+public class ContactoTelefono implements Contacto {
     private String numero;
     private String codigoDeArea;
     private boolean esFijo;
