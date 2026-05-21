@@ -9,7 +9,7 @@ public class ContactoTelefono implements Contacto {
         String[] partesDelNumero = numeroCompleto.split(" ",2);
         this.codigoDeArea = partesDelNumero[0];
         this.numero = partesDelNumero[1];
-        if(this.numero.startsWith("11"){
+        if(this.numero.startsWith("11")){
             this.esFijo = false;
         }
         else{ this.esFijo = true; }

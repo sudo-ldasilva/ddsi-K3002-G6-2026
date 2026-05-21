@@ -50,8 +50,10 @@ public class GestorDonantes {
         scannerHeader.close();
 
         // DATOS
-        ArrayList<String> camposDeDonanteNuevo = new ArrayList<String>();
+
         while (scannerRegistros.hasNextLine()) {
+            ArrayList<String> camposDeDonanteNuevo = new ArrayList<String>();
+
             String registro = scannerRegistros.nextLine();
             Scanner scannerRegistro = new Scanner(registro);
             scannerRegistro.useDelimiter(",");
@@ -63,22 +65,28 @@ public class GestorDonantes {
                 
             }
 
-            if(donantesRegistrados.stream().anyMatch(donante -> donante.getDocumento().equals(camposDeDonanteNuevo.get(2)))){
+            if(donantesRegistrados.stream().anyMatch(donante -> donante.getDocumento().equals(camposDeDonanteNuevo.get(2)))) {
+                /*
                 Donante donanteNuevo = this.donantesRegistrados.find(donante -> donante.getDocumento() == camposDeDonanteNuevo.get(2));
+                //*/
                 //actualizar datos de donante
-            
+            }
             else{
                 if(camposDeDonanteNuevo.get(0) == "HUMANA"){//Leo fijate pls
+                    /*
                     PersonaHumana nuevoDonanteHumano = new PersonaHumana(camposDeDonanteNuevo.get(2),camposDeDonanteNuevo.get(3),null,camposDeDonanteNuevo.get(1),null,null,null);
                     nuevoDonanteHumano.agregarContacto(new ContactoMail(camposDeDonanteNuevo.get(4)));
                     nuevoDonanteHumano.agregarContacto(new ContactoTelefono(camposDeDonanteNuevo.get(3)));
                     this.donantesRegistrados.add(nuevoDonanteHumano);
+                    //*/
                 }
                 else{
+                    /*
                     PersonaJuridica nuevoDonanteJuridico = new PersonaJuridica(camposDeDonanteNuevo.get(2),camposDeDonanteNuevo.get(3),null,null,));
                     nuevoDonanteJuridico.agregarContacto(new ContactoMail(camposDeDonanteNuevo.get(4)));
                     nuevoDonanteJuridico.agregarContacto(new ContactoTelefono(camposDeDonanteNuevo.get(3)));
                     this.donantesRegistrados.add(nuevoDonanteJuridico);
+                    //*/
                 }
             }
             scannerRegistro.close();

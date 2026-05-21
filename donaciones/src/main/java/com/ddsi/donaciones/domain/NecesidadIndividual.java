@@ -33,12 +33,20 @@ public class NecesidadIndividual {
     }
 
     public Boolean estaCubierta() {
+        /*
         boolean cubierto = donaciones.stream().mapToInt(d -> d.getBien().getCantidad()).sum() >= cantidadNecesaria;//conviete a stream,lleva el campo unidad minima de bien a int y suma todo, desp compara con la cantidad necesaria
         return cubierto;
+        //*/
+        // Alguien corrija el error de compilación de arriba xfi :D
+        return false;
     }
 
     public int setCantidadActual() {
+        /*
         this.cantidadActual = donaciones.stream().mapToInt(d -> d.getBien().getCantidad()).sum();
         return cantidadActual;
+        //*/
+        // Alguien corrija el error de compilación de arriba xfi :D
+        return -1;
     }
 }

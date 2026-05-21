@@ -15,7 +15,7 @@ public class PersonaHumana extends Donante{
         this.nombreYApellido = nombreYApellido;
         this.edad = edad;
         this.tipoDocumento = tipoDocumento;
-        this.numeroDocumento = numeroDocumento;
+        //this.numeroDeDocumento = numeroDeDocumento; MARCOS: este valor es el que se le pasa a super, no?
         this.genero = genero;
         this.direccion = direccion;
         this.medioPredeterminado = medioPredeterminado;

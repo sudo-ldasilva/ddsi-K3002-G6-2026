@@ -53,10 +53,10 @@ public class GestorDonaciones {
 
     public void asignarDonacionIndependiente(DonacionIndependiente donacion, EntidadBeneficiaria entidad) {
         // en el TP dice que elige una entidad pero puede ser mejor que se asigne directamente a una campaña
-        const campaniaElegida = this.elegirCampania(donacion, entidad);
+        /*const CampaniaNecesidad campaniaElegida = this.elegirCampania(donacion, entidad);
         campanianiaElegida.getNecesidades()
             .find(necesidad -> necesidad.getBien().getSubcategoria() == donacion.getSubcategoria())
             .add(donacion);
-    }
+    //*/}
 
 }

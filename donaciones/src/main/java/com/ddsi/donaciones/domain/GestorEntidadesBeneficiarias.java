@@ -24,7 +24,7 @@ public class GestorEntidadesBeneficiarias {
     }
 
     public void crearCampaniaNecesidad(EntidadBeneficiaria entidadBeneficiaria, CampaniaNecesidad campaniaNecesidad){
-        entidadBeneficiaria.getNecesidades().add(campañaNecesidad);
+        entidadBeneficiaria.getNecesidades().add(campaniaNecesidad);
     }
 
     public List<CampaniaNecesidad> obtenerCampaniasDeNecesidad(){
