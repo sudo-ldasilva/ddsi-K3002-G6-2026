@@ -10,8 +10,8 @@ public class PersonaJuridica extends Donante {
     private ArrayList<Representante> representantes;
     private String cuit;
 
-    public PersonaJuridica(List<Contacto> mediosDeContacto, String razonSocial, TipoPersonaJuridica tipo, String rubro, ArrayList<Representante> representantes, String cuit) {
-        super(mediosDeContacto);
+    public PersonaJuridica(String razonSocial, TipoPersonaJuridica tipo, String rubro, ArrayList<Representante> representantes, String cuit) {
+        super();
         this.razonSocial = razonSocial;
         this.tipo = tipo;
         this.rubro = rubro;
