@@ -11,8 +11,8 @@ public class PersonaHumana extends Donante{
     private Direccion direccion;
     private Contacto medioPredeterminado;
 
-    public PersonaHumana(List<Contacto> mediosDeContacto, String nombreYApellido, int edad, Documento tipoDocumento, String numeroDocumento, Genero genero, Direccion direccion, Contacto medioPredeterminado) {
-        super(mediosDeContacto);
+    public PersonaHumana(String nombreYApellido, int edad, Documento tipoDocumento, String numeroDocumento, Genero genero, Direccion direccion, Contacto medioPredeterminado) {
+        super();
         this.nombreYApellido = nombreYApellido;
         this.edad = edad;
         this.tipoDocumento = tipoDocumento;
