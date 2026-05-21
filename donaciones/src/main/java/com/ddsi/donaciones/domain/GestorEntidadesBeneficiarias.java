@@ -23,14 +23,14 @@ public class GestorEntidadesBeneficiarias {
         this.entidadesBeneficiarias.add(entidadBeneficiaria);
     }
 
-    public void crearCampañaNecesidad(EntidadBeneficiaria entidadBeneficiaria, CampañaNecesidad campañaNecesidad){
+    public void crearCampaniaNecesidad(EntidadBeneficiaria entidadBeneficiaria, CampaniaNecesidad campaniaNecesidad){
         entidadBeneficiaria.getNecesidades().add(campañaNecesidad);
     }
 
-    public List<CampañaNecesidad> obtenerCampañasDeNecesidad(){
-        List<CampañaNecesidad> campañas = new LinkedList<CampañaNecesidad>();
-        this.entidadesBeneficiarias.forEach(e -> campañas.addAll(e.getNecesidades()));
-        return campañas;
+    public List<CampaniaNecesidad> obtenerCampaniasDeNecesidad(){
+        List<CampaniaNecesidad> campanias = new LinkedList<CampaniaNecesidad>();
+        this.entidadesBeneficiarias.forEach(e -> campanias.addAll(e.getNecesidades()));
+        return campanias;
     }
 
 }
