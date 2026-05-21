@@ -8,16 +8,16 @@ public class EntidadBeneficiaria {
     private String tipo;
 
     // ContactoTelefonoFijo / ContactoCelular?
-    private String telefono;
+    private ContactoTelefono telefono;
 
     private Direccion direccion;
 
     // ArrayList, LinkedList u otro?
     private ArrayList<Representante> representantes;
-    private ArrayList<CampañaNecesidad> necesidades;
+    private ArrayList<CampaniaNecesidad> necesidades;
 
     public EntidadBeneficiaria(
-            String razonSocial, String tipo, String telefono, Direccion direccion)
+            String razonSocial, String tipo, ContactoTelefono telefono, Direccion direccion)
     {
         this.razonSocial = razonSocial;
         this.tipo = tipo;
@@ -35,7 +35,7 @@ public class EntidadBeneficiaria {
         representantes.remove(representante);
     }
 
-    public ArrayList<CampañaNecesidad> getNecesidades() {
+    public ArrayList<CampaniaNecesidad> getNecesidades() {
         return necesidades;
     }
 
