@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GestorDonantes {
     private static GestorDonantes gestorDonantes = null;
@@ -33,24 +34,33 @@ public class GestorDonantes {
     //     System.out.println("Que no panda el cúnico");
     // }
 
-    private void leerHeadersCSV(Scanner scannerRegistros) {
+    private HashMap<String, Integer> leerHeadersCSV(Scanner scannerRegistros) {
+        HashMap<String, Integer> posicionesHeaders = new HashMap<>();
+
         String header = scannerRegistros.nextLine();
         Scanner scannerHeader = new Scanner(header);
         scannerHeader.useDelimiter(",");
 
         System.out.println("Header: " + header);
-        while (scannerHeader.hasNext()) {
+        for (Integer posicion = 0; scannerHeader.hasNext(); posicion++) {
             String campo = scannerHeader.next();
+            posicionesHeaders.put(campo, posicion);
             //System.out.println("\t- Header Campo: " + campo);
         }
         scannerHeader.close();
+
+        return posicionesHeaders;
     }
 
     public void cargarCSV(String path) throws FileNotFoundException {
         File csv = new File(path);
         Scanner scannerRegistros = new Scanner(csv);
 
-        leerHeadersCSV(scannerRegistros);
+        HashMap<String, Integer> posicionesHeaders = leerHeadersCSV(scannerRegistros);
+        // posicionesHeaders.get("TipoPersona") retorna 0;
+        // posicionesHeaders.get("TipoDoc") retorna 1;
+        // ... y así
+        // (entonces no dependemos del orden en el que se guardaron las columnas)
 
         // DATOS
         while (scannerRegistros.hasNextLine()) {
