@@ -47,7 +47,7 @@ public class EntidadBeneficiaria {
         return direccion;
     }
 
-    public String getTelefono() {
+    public ContactoTelefono getTelefono() {
         return telefono;
     }
 
