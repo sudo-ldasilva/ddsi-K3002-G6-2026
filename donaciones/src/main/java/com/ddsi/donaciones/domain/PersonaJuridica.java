@@ -8,15 +8,13 @@ public class PersonaJuridica extends Donante {
     private TipoPersonaJuridica tipo;
     private String rubro;
     private ArrayList<Representante> representantes;
-    private String cuit;
 
-    public PersonaJuridica(String razonSocial, TipoPersonaJuridica tipo, String rubro, String cuit) {
-        super();
+    public PersonaJuridica(String documento, String razonSocial, TipoPersonaJuridica tipo, String rubro) {
+        super(documento);
         this.razonSocial = razonSocial;
         this.tipo = tipo;
         this.rubro = rubro;
         this.representantes = new ArrayList<Representante>();
-        this.cuit = cuit;
     }
 
     public String getRazonSocial() {
@@ -33,10 +31,6 @@ public class PersonaJuridica extends Donante {
 
     public ArrayList<Representante> getRepresentantes() {
         return representantes;
-    }
-
-    public String getCuit() {
-        return cuit;
     }
 
     public void agregarRepresentante(Representante representante){
