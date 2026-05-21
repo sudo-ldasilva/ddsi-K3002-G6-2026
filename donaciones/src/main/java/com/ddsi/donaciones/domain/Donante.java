@@ -5,9 +5,11 @@ import java.util.LinkedList;
 
 public abstract class Donante {
     private List<Contacto> mediosDeContacto;
+    private String documento;
 
-    public Donante() {
+    public Donante(String documento) {
         this.mediosDeContacto = new LinkedList<Contacto>();
+        this.documento = documento;
     }
 
     public List<Contacto> getMediosDeContacto() {
@@ -20,5 +22,9 @@ public abstract class Donante {
 
     public void eliminarContacto(Contacto contacto){
         this.mediosDeContacto.remove(contacto);
+    }
+
+    public String getDocumento(){
+        return this.documento;
     }
 }
