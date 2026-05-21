@@ -2,21 +2,21 @@ package com.ddsi.donaciones.domain;
 
 import java.util.ArrayList;
 
-public class GeneradorDonaciones {
-    private static GeneradorDonaciones generadorDonaciones = null;
+public class GestorDonaciones {
+    private static GestorDonaciones gestorDonaciones = null;
     private ArrayList<Donacion> donaciones;
     private ArrayList<DonacionIndependiente> posiblesDonaciones;
 
-    private GeneradorDonaciones() {
+    private GestorDonaciones() {
         this.donaciones = new ArrayList<>();
         this.posiblesDonaciones = new ArrayList<>();
     }
 
-    public static GeneradorDonaciones getInstance() {
-        if (generadorDonaciones == null) {
-            generadorDonaciones = new GeneradorDonaciones();
+    public static GestorDonaciones getInstance() {
+        if (gestorDonaciones == null) {
+            gestorDonaciones = new GestorDonaciones();
         }
-        return generadorDonaciones;
+        return gestorDonaciones;
     }
 
     public void donar(Donacion donacion) {

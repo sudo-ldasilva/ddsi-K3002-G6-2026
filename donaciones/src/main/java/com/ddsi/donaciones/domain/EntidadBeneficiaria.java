@@ -34,4 +34,28 @@ public class EntidadBeneficiaria {
     public void quitarRepresentante(Representante representante) {
         representantes.remove(representante);
     }
+
+    public ArrayList<CampañaNecesidad> getNecesidades() {
+        return necesidades;
+    }
+
+    public ArrayList<Representante> getRepresentantes() {
+        return representantes;
+    }
+
+    public Direccion getDireccion() {
+        return direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public String getRazonSocial() {
+        return razonSocial;
+    }
 }
