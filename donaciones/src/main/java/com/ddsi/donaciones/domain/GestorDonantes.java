@@ -22,7 +22,7 @@ public class GestorDonantes {
     }
 
     public void registrarDonante(Donante donante) {
-        donantesRegistrados.add(donante);
+        this.donantesRegistrados.add(donante);
     }
 
     // import com.ddsi.donaciones.domain.GestorDonantes;
@@ -63,20 +63,22 @@ public class GestorDonantes {
                 
             }
 
-            if(){
+            if(donantesRegistrados.stream().anyMatch(donante -> donante.getDocumento().equals(camposDeDonanteNuevo.get(2)))){
+                Donante donanteNuevo = this.donantesRegistrados.find(donante -> donante.getDocumento() == camposDeDonanteNuevo.get(2));
+                //actualizar datos de donante
             
             else{
                 if(camposDeDonanteNuevo.get(0) == "HUMANA"){//Leo fijate pls
-                    PersonaHumana nuevoDonanteHumano = new PersonaHumana(camposDeDonanteNuevo.get(3),null,camposDeDonanteNuevo.get(1),camposDeDonanteNuevo.get(2),null,null,null);
+                    PersonaHumana nuevoDonanteHumano = new PersonaHumana(camposDeDonanteNuevo.get(2),camposDeDonanteNuevo.get(3),null,camposDeDonanteNuevo.get(1),null,null,null);
                     nuevoDonanteHumano.agregarContacto(new ContactoMail(camposDeDonanteNuevo.get(4)));
                     nuevoDonanteHumano.agregarContacto(new ContactoTelefono(camposDeDonanteNuevo.get(3)));
-                    donantesRegistrados.add(nuevoDonanteHumano);
+                    this.donantesRegistrados.add(nuevoDonanteHumano);
                 }
                 else{
-                    PersonaJuridica nuevoDonanteJuridico = new PersonaJuridica(camposDeDonanteNuevo.get(3),null,null,camposDeDonanteNuevo.get(2));
+                    PersonaJuridica nuevoDonanteJuridico = new PersonaJuridica(camposDeDonanteNuevo.get(2),camposDeDonanteNuevo.get(3),null,null,));
                     nuevoDonanteJuridico.agregarContacto(new ContactoMail(camposDeDonanteNuevo.get(4)));
                     nuevoDonanteJuridico.agregarContacto(new ContactoTelefono(camposDeDonanteNuevo.get(3)));
-                    donantesRegistrados.add(nuevoDonanteJuridico);
+                    this.donantesRegistrados.add(nuevoDonanteJuridico);
                 }
             }
             scannerRegistro.close();
