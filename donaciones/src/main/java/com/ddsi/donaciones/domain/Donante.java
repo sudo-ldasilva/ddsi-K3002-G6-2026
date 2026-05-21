@@ -6,7 +6,7 @@ import java.util.LinkedList;
 public abstract class Donante {
     private List<Contacto> mediosDeContacto;
 
-    public Donante(List<Contacto> mediosDeContacto) {
+    public Donante() {
         this.mediosDeContacto = new LinkedList<Contacto>();
     }
 
