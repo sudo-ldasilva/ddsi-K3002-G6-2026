@@ -33,11 +33,7 @@ public class GestorDonantes {
     //     System.out.println("Que no panda el cúnico");
     // }
 
-    public void cargarCSV(String path) throws FileNotFoundException {
-        File csv = new File(path);
-        Scanner scannerRegistros = new Scanner(csv);
-
-        // HEADER
+    private void leerHeadersCSV(Scanner scannerRegistros) {
         String header = scannerRegistros.nextLine();
         Scanner scannerHeader = new Scanner(header);
         scannerHeader.useDelimiter(",");
@@ -48,9 +44,15 @@ public class GestorDonantes {
             //System.out.println("\t- Header Campo: " + campo);
         }
         scannerHeader.close();
+    }
+
+    public void cargarCSV(String path) throws FileNotFoundException {
+        File csv = new File(path);
+        Scanner scannerRegistros = new Scanner(csv);
+
+        leerHeadersCSV(scannerRegistros);
 
         // DATOS
-
         while (scannerRegistros.hasNextLine()) {
             ArrayList<String> camposDeDonanteNuevo = new ArrayList<String>();
 
