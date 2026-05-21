@@ -1,9 +1,9 @@
 package com.ddsi.donaciones.domain;
 
-public class CampañaNecesidadRecurrente extends CampañaNecesidad {
+public class CampaniaNecesidadRecurrente extends CampaniaNecesidad {
     private String periodo;
 
-    public CampañaNecesidadRecurrente(EntidadBeneficiaria entidadBeneficiaria, String descripcion, String estado, Subcategoria subcategoria, String periodo) {
+    public CampaniaNecesidadRecurrente(EntidadBeneficiaria entidadBeneficiaria, String descripcion, String estado, Subcategoria subcategoria, String periodo) {
         super(entidadBeneficiaria, descripcion, estado, subcategoria);
         this.periodo = periodo;
     }
