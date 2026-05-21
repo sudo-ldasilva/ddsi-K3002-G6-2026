@@ -1,16 +1,18 @@
 package com.ddsi.donaciones.domain;
 
+import java.util.ArrayList;
+
 public class DonacionIndependiente {
     private Subcategoria subcategoria;
     private NecesidadIndividual necesidad;
     private Donacion donacion;
-    private BienDonado bien;
+    private ArrayList<BienDonado> bienes;
 
-    public DonacionIndependiente(Subcategoria subcategoria, NecesidadIndividual necesidad, Donacion donacion, BienDonado bien) {
+    public DonacionIndependiente(Subcategoria subcategoria, NecesidadIndividual necesidad, Donacion donacion) {
         this.subcategoria = subcategoria;
         this.necesidad = necesidad;
         this.donacion = donacion;
-        this.bien = bien;
+        this.bienes = new ArrayList<>();
     }
 
     public Subcategoria getSubcategoria() {
@@ -25,8 +27,12 @@ public class DonacionIndependiente {
         return donacion;
     }
 
-    public BienDonado getBien() {
-        return bien;
+    public ArrayList<BienDonado> getBienes() {
+        return bienes;
+    }
+
+    public void agregarBien(BienDonado bien) {
+        bienes.add(bien);
     }
 
     public void setSubcategoria(Subcategoria subcategoria) {
