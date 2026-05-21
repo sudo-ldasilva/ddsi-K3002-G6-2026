@@ -1,5 +1,5 @@
 package com.ddsi.donaciones.domain;
 
-public enum Documento {
-    DNI, LIBRETACIVICA, LIBRETAENROLAMIENTO, CEDULAIDENTIDAD, OTRO;
+public enum Documento { // TODO Renombrar a TipoDocumento
+    DNI, LIBRETACIVICA, LIBRETAENROLAMIENTO, CEDULAIDENTIDAD, OTRO; // TODO: Agregar CUIT
 }

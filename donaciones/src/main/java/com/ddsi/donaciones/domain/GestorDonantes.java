@@ -34,10 +34,9 @@ public class GestorDonantes {
     //     System.out.println("Que no panda el cúnico");
     // }
 
-    private HashMap<String, Integer> leerHeadersCSV(Scanner scannerRegistros) {
+    private HashMap<String, Integer> parsearHeaderCSV(String header) {
         HashMap<String, Integer> posicionesHeaders = new HashMap<>();
 
-        String header = scannerRegistros.nextLine();
         Scanner scannerHeader = new Scanner(header);
         scannerHeader.useDelimiter(",");
 
@@ -45,18 +44,20 @@ public class GestorDonantes {
         for (Integer posicion = 0; scannerHeader.hasNext(); posicion++) {
             String campo = scannerHeader.next();
             posicionesHeaders.put(campo, posicion);
-            //System.out.println("\t- Header Campo: " + campo);
+            // System.out.println("\t- Header Campo: " + campo);
         }
         scannerHeader.close();
 
         return posicionesHeaders;
     }
 
-    public void cargarCSV(String path) throws FileNotFoundException {
+    public void cargarCSV(String path) throws Exception, FileNotFoundException {
         File csv = new File(path);
         Scanner scannerRegistros = new Scanner(csv);
 
-        HashMap<String, Integer> posicionesHeaders = leerHeadersCSV(scannerRegistros);
+        // HEADER
+        String header = scannerRegistros.nextLine();
+        HashMap<String, Integer> posiciones = parsearHeaderCSV(header);
         // posicionesHeaders.get("TipoPersona") retorna 0;
         // posicionesHeaders.get("TipoDoc") retorna 1;
         // ... y así
@@ -69,36 +70,62 @@ public class GestorDonantes {
             String registro = scannerRegistros.nextLine();
             Scanner scannerRegistro = new Scanner(registro);
             scannerRegistro.useDelimiter(",");
-            
-           // System.out.println("Registro: " + registro);
+
+            // LEER campos donante
+            // System.out.println("Registro: " + registro);
             while (scannerRegistro.hasNext()) {
-                 camposDeDonanteNuevo.add(scannerRegistro.next());
-                //System.out.println("\t- Campo: " + campo);
-                
+                camposDeDonanteNuevo.add(scannerRegistro.next());
+                // System.out.println("\t- Campo: " + campo);
             }
 
-            if(donantesRegistrados.stream().anyMatch(donante -> donante.getDocumento().equals(camposDeDonanteNuevo.get(2)))) {
-                /*
-                Donante donanteNuevo = this.donantesRegistrados.find(donante -> donante.getDocumento() == camposDeDonanteNuevo.get(2));
-                //*/
-                //actualizar datos de donante
-            }
-            else{
-                if(camposDeDonanteNuevo.get(0) == "HUMANA"){//Leo fijate pls
-                    /*
-                    PersonaHumana nuevoDonanteHumano = new PersonaHumana(camposDeDonanteNuevo.get(2),camposDeDonanteNuevo.get(3),null,camposDeDonanteNuevo.get(1),null,null,null);
-                    nuevoDonanteHumano.agregarContacto(new ContactoMail(camposDeDonanteNuevo.get(4)));
-                    nuevoDonanteHumano.agregarContacto(new ContactoTelefono(camposDeDonanteNuevo.get(3)));
-                    this.donantesRegistrados.add(nuevoDonanteHumano);
-                    //*/
+            int posicionDocumento = posiciones.get("Documento");
+            boolean yaEstaCargado = donantesRegistrados
+                                    .stream()
+                                    .anyMatch( (donante) -> donante.getDocumento().equals(camposDeDonanteNuevo.get(posicionDocumento)));
+
+            if (yaEstaCargado) {
+                Donante donanteAActualizar = donantesRegistrados
+                                             .stream()
+                                             .filter( (donante) -> donante.getDocumento().equals(camposDeDonanteNuevo.get(posicionDocumento)))
+                                             .findFirst()
+                                             .orElse(null);
+
+                if (donanteAActualizar == null) {
+                    scannerRegistro.close();
+                    scannerRegistros.close();
+                    throw new Exception("Donante está registrado pero no se pudo encontrar");
                 }
-                else{
-                    /*
-                    PersonaJuridica nuevoDonanteJuridico = new PersonaJuridica(camposDeDonanteNuevo.get(2),camposDeDonanteNuevo.get(3),null,null,));
-                    nuevoDonanteJuridico.agregarContacto(new ContactoMail(camposDeDonanteNuevo.get(4)));
-                    nuevoDonanteJuridico.agregarContacto(new ContactoTelefono(camposDeDonanteNuevo.get(3)));
+
+                // TODO donanteAActualizar.cargarDesdeCSV(posicionesHeader, camposDeDonanteNuevo)
+
+            } else {
+                // TODO donanteAActualizar.cargarDesdeCSV(posicionesHeader, camposDeDonanteNuevo)
+                // Para cumplir con el polimorfismo
+                if (camposDeDonanteNuevo.get(posiciones.get("TipoPersona")) == "HUMANA") {
+                    PersonaHumana nuevoDonanteHumano = new PersonaHumana(
+                        camposDeDonanteNuevo.get(posicionDocumento),
+                        camposDeDonanteNuevo.get(posiciones.get("Nombre/Razón Social")),
+                        // Estos no están en el CSV de ejemplo:
+                        0,              // TODO: camposDeDonanteNuevo.get(posicionesHeader.get("Edad")),
+                        Documento.OTRO, // TODO: Documento.fromString(camposDeDonanteNuevo.get(posicionesHeaders.get("TipoDoc"))),
+                        Genero.OTRO,    // TODO: Genero.fromString(camposDeDonanteNuevo.get(posicionesHeaders.get("Genero))),
+                        null,           // TODO: Direccion.fromString(camposDeDonanteNuevo.get(posicionesHeaders.get("Dirección"))),
+                        null            // TODO: medio predeterminado
+                    );
+
+                    nuevoDonanteHumano.agregarContacto(new ContactoMail(camposDeDonanteNuevo.get(posiciones.get("Email"))));
+                    nuevoDonanteHumano.agregarContacto(new ContactoTelefono(camposDeDonanteNuevo.get(posiciones.get("Teléfono"))));
+                    this.donantesRegistrados.add(nuevoDonanteHumano);
+                } else {
+                    PersonaJuridica nuevoDonanteJuridico = new PersonaJuridica(
+                        camposDeDonanteNuevo.get(posiciones.get("Documento")),
+                        camposDeDonanteNuevo.get(posiciones.get("Nombre/Razón Social")),
+                        null,
+                        null
+                    );
+                    nuevoDonanteJuridico.agregarContacto(new ContactoMail(camposDeDonanteNuevo.get(posiciones.get("Email"))));
+                    nuevoDonanteJuridico.agregarContacto(new ContactoTelefono(camposDeDonanteNuevo.get(posiciones.get("Teléfono"))));
                     this.donantesRegistrados.add(nuevoDonanteJuridico);
-                    //*/
                 }
             }
             scannerRegistro.close();
