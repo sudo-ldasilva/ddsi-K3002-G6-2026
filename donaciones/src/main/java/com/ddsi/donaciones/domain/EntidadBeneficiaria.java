@@ -13,7 +13,7 @@ public class EntidadBeneficiaria {
     private Direccion direccion;
 
     // ArrayList, LinkedList u otro?
-    private ArrayList<Representante> representantes;
+    private ArrayList<RepresentanteEntidadBeneficiaria> representantes;
     private ArrayList<CampaniaNecesidad> necesidades;
 
     public EntidadBeneficiaria(
@@ -23,15 +23,15 @@ public class EntidadBeneficiaria {
         this.tipo = tipo;
         this.telefono = telefono;
         this.direccion = direccion;
-        this.representantes = new ArrayList<Representante>();
+        this.representantes = new ArrayList<RepresentanteEntidadBeneficiaria>();
         this.necesidades = new ArrayList<>();
     }
 
-    public void agregarRepresentante(Representante representante) {
+    public void agregarRepresentante(RepresentanteEntidadBeneficiaria representante) {
         representantes.add(representante);
     }
 
-    public void quitarRepresentante(Representante representante) {
+    public void quitarRepresentante(RepresentanteEntidadBeneficiaria representante) {
         representantes.remove(representante);
     }
 
@@ -39,7 +39,7 @@ public class EntidadBeneficiaria {
         return necesidades;
     }
 
-    public ArrayList<Representante> getRepresentantes() {
+    public ArrayList<RepresentanteEntidadBeneficiaria> getRepresentantes() {
         return representantes;
     }
 

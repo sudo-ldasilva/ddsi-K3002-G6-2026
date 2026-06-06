@@ -7,14 +7,14 @@ public class PersonaJuridica extends Donante {
     private String razonSocial;
     private TipoPersonaJuridica tipo;
     private String rubro;
-    private ArrayList<Representante> representantes;
+    private ArrayList<RepresentantePersonaJuridica> representantes;
 
     public PersonaJuridica(String documento, String razonSocial, TipoPersonaJuridica tipo, String rubro) {
         super(documento);
         this.razonSocial = razonSocial;
         this.tipo = tipo;
         this.rubro = rubro;
-        this.representantes = new ArrayList<Representante>();
+        this.representantes = new ArrayList<RepresentantePersonaJuridica>();
     }
 
     public String getRazonSocial() {
@@ -29,15 +29,15 @@ public class PersonaJuridica extends Donante {
         return rubro;
     }
 
-    public ArrayList<Representante> getRepresentantes() {
+    public ArrayList<RepresentantePersonaJuridica> getRepresentantes() {
         return representantes;
     }
 
-    public void agregarRepresentante(Representante representante){
+    public void agregarRepresentante(RepresentantePersonaJuridica representante){
         this.representantes.add(representante);
     }
 
-    public void quitarRepresentante(Representante representante){
+    public void quitarRepresentante(RepresentantePersonaJuridica representante){
         this.representantes.remove(representante);
     }
 }
