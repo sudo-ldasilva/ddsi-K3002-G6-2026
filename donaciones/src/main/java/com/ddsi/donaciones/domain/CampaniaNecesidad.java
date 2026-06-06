@@ -7,14 +7,12 @@ public class CampaniaNecesidad {
     EntidadBeneficiaria entidadBeneficiaria;
     String descripcion;
     String estado;
-    Subcategoria subcategoria;
 
     public CampaniaNecesidad(EntidadBeneficiaria entidadBeneficiaria, String descripcion, String estado, Subcategoria subcategoria) {
         this.necesidades = new ArrayList<>();
         this.entidadBeneficiaria = entidadBeneficiaria;
         this.descripcion = descripcion;
         this.estado = estado;
-        this.subcategoria = subcategoria;
     }
 
     public boolean estaCubierta() {
@@ -27,5 +25,13 @@ public class CampaniaNecesidad {
 
     public void agregarNecesidad(NecesidadIndividual necesidad) {
         necesidades.add(necesidad);
+    }
+
+    public ArrayList<Subcategoria> getSubcategorias() {
+        ArrayList<Subcategoria> list = new ArrayList<>();
+        for (NecesidadIndividual necesidad : necesidades) {
+            list.add(necesidad.getSubcategoria());
+        }
+        return list;
     }
 }

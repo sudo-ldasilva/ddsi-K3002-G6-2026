@@ -6,14 +6,12 @@ import java.util.function.ToIntFunction;
 public class NecesidadIndividual {
     private Bien bien;//que se necesita,ej)sillas,ropa,comida
     public int cantidadNecesaria;//cuanto se necesita
-    public int cantidadActual;
     public ArrayList<DonacionIndependiente> donaciones;//las donaciones independientes que se van juntando para satisfacer
-    public Boolean estado;
+    public Boolean cubierta;
 
     public NecesidadIndividual(Bien bien, int casntidadNecesaria) {
         this.bien = bien;
         this.cantidadNecesaria = casntidadNecesaria;
-        this.cantidadActual = 0;
         this.donaciones = new ArrayList<>();
     }
 
@@ -29,8 +27,12 @@ public class NecesidadIndividual {
         return donaciones;
     }
 
-    public Boolean getEstado() {
-        return estado;
+    public Boolean getCubierta() {
+        return cubierta;
+    }
+
+    public Subcategoria getSubcategoria() {
+        return bien.getSubcategoria();
     }
 
     public Boolean estaCubierta() {
@@ -41,11 +43,14 @@ public class NecesidadIndividual {
         return donaciones.stream().mapToInt(funcionGetCantidadBienes).sum() >= cantidadNecesaria;
     }
 
-    public int setCantidadActual() {
+    public int getCantidadRecibida() {
         ToIntFunction<DonacionIndependiente> funcionGetCantidadBienes
             = d -> d.getBienes().stream().mapToInt(b -> b.getCantidad()).sum();
 
-        this.cantidadActual = donaciones.stream().mapToInt(funcionGetCantidadBienes).sum();
-        return cantidadActual;
+        return donaciones.stream().mapToInt(funcionGetCantidadBienes).sum();
+    }
+
+    public void recibir(DonacionIndependiente donacion) {
+        donaciones.add(donacion);
     }
 }

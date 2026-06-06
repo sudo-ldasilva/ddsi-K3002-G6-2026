@@ -5,7 +5,6 @@ import java.util.List;
 public class PersonaHumana extends Donante{
     private String nombreYApellido;
     private int edad;
-    private Documento tipoDocumento;
     private Genero genero;
     private Direccion direccion;
     private Contacto medioPredeterminado;
@@ -46,7 +45,7 @@ public class PersonaHumana extends Donante{
     }
 
     public void setMedioPredeterminado(Contacto medioPredeterminado) throws Exception{
-        if (!this.getMediosDeContacto().contains(medioPredeterminado)){
+        if (!this.getContactos().contains(medioPredeterminado)){
             throw new Exception("Error: El medio de contacto no esta definido");
         }
         this.medioPredeterminado = medioPredeterminado;

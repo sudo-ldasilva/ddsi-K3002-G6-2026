@@ -1,5 +1,11 @@
 package com.ddsi.donaciones.domain;
 
-public enum Documento { // TODO Renombrar a TipoDocumento
-    DNI, LIBRETACIVICA, LIBRETAENROLAMIENTO, CEDULAIDENTIDAD, OTRO; // TODO: Agregar CUIT
+public class Documento {
+    TipoDocumento tipoDocumento;
+    String documento;
+
+    public Documento(TipoDocumento tipoDocumento, String documento) {
+        this.tipoDocumento = tipoDocumento;
+        this.documento = documento;
+    }
 }

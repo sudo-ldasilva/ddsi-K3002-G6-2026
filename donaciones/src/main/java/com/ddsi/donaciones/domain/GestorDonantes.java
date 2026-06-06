@@ -51,6 +51,7 @@ public class GestorDonantes {
         return posicionesHeaders;
     }
 
+    // TODO Pasar a Carga de Datos CSV
     public void cargarCSV(String path) throws Exception, FileNotFoundException {
         File csv = new File(path);
         Scanner scannerRegistros = new Scanner(csv);

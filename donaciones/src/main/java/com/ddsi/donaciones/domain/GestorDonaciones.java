@@ -30,7 +30,7 @@ public class GestorDonaciones {
 
         ArrayList<DonacionIndependiente> donacionesInd = new ArrayList<>();
 
-        for (BienDonado bien : donacion.getBienesDonados()) {
+        for (BienDonado bien : donacion.getBienes()) {
             Subcategoria sc = bien.getBien().getSubcategoria();
 
             DonacionIndependiente donacionInd =

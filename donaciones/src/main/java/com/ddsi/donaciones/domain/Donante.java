@@ -5,14 +5,14 @@ import java.util.LinkedList;
 
 public abstract class Donante {
     private List<Contacto> mediosDeContacto;
-    private String documento;
+    private Documento documento;
 
-    public Donante(String documento) {
+    public Donante(Documento documento) {
         this.mediosDeContacto = new LinkedList<Contacto>();
         this.documento = documento;
     }
 
-    public List<Contacto> getMediosDeContacto() {
+    public List<Contacto> getContactos() {
         return mediosDeContacto;
     }
 
@@ -24,7 +24,7 @@ public abstract class Donante {
         this.mediosDeContacto.remove(contacto);
     }
 
-    public String getDocumento(){
+    public Documento getDocumento(){
         return this.documento;
     }
 }
