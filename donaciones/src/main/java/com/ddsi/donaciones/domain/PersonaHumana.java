@@ -1,7 +1,5 @@
 package com.ddsi.donaciones.domain;
 
-import java.util.List;
-
 public class PersonaHumana extends Donante{
     private String nombreYApellido;
     private int edad;
@@ -9,11 +7,10 @@ public class PersonaHumana extends Donante{
     private Direccion direccion;
     private Contacto medioPredeterminado;
 
-    public PersonaHumana(String documento, String nombreYApellido, int edad, Documento tipoDocumento, Genero genero, Direccion direccion, Contacto medioPredeterminado) {
+    public PersonaHumana(Documento documento, String nombreYApellido, int edad, Genero genero, Direccion direccion, Contacto medioPredeterminado) {
         super(documento);
         this.nombreYApellido = nombreYApellido;
         this.edad = edad;
-        this.tipoDocumento = tipoDocumento;
         //this.numeroDeDocumento = numeroDeDocumento; MARCOS: este valor es el que se le pasa a super, no?
         this.genero = genero;
         this.direccion = direccion;
@@ -26,10 +23,6 @@ public class PersonaHumana extends Donante{
 
     public int getEdad() {
         return edad;
-    }
-
-    public Documento getTipoDocumento() {
-        return tipoDocumento;
     }
 
     public Genero getGenero() {

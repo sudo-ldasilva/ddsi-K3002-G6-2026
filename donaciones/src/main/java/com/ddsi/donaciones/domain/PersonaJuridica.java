@@ -1,5 +1,4 @@
 package com.ddsi.donaciones.domain;
-import java.util.List;
 import java.util.ArrayList;
 
 
@@ -9,7 +8,7 @@ public class PersonaJuridica extends Donante {
     private String rubro;
     private ArrayList<RepresentantePersonaJuridica> representantes;
 
-    public PersonaJuridica(String documento, String razonSocial, TipoPersonaJuridica tipo, String rubro) {
+    public PersonaJuridica(Documento documento, String razonSocial, TipoPersonaJuridica tipo, String rubro) {
         super(documento);
         this.razonSocial = razonSocial;
         this.tipo = tipo;

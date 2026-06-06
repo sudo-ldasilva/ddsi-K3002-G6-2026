@@ -104,11 +104,10 @@ public class GestorDonantes {
                 // Para cumplir con el polimorfismo
                 if (camposDeDonanteNuevo.get(posiciones.get("TipoPersona")) == "HUMANA") {
                     PersonaHumana nuevoDonanteHumano = new PersonaHumana(
-                        camposDeDonanteNuevo.get(posicionDocumento),
+                        null,
                         camposDeDonanteNuevo.get(posiciones.get("Nombre/Razón Social")),
                         // Estos no están en el CSV de ejemplo:
                         0,              // TODO: camposDeDonanteNuevo.get(posicionesHeader.get("Edad")),
-                        Documento.OTRO, // TODO: Documento.fromString(camposDeDonanteNuevo.get(posicionesHeaders.get("TipoDoc"))),
                         Genero.OTRO,    // TODO: Genero.fromString(camposDeDonanteNuevo.get(posicionesHeaders.get("Genero))),
                         null,           // TODO: Direccion.fromString(camposDeDonanteNuevo.get(posicionesHeaders.get("Dirección"))),
                         null            // TODO: medio predeterminado
@@ -119,7 +118,7 @@ public class GestorDonantes {
                     this.donantesRegistrados.add(nuevoDonanteHumano);
                 } else {
                     PersonaJuridica nuevoDonanteJuridico = new PersonaJuridica(
-                        camposDeDonanteNuevo.get(posiciones.get("Documento")),
+                        null,
                         camposDeDonanteNuevo.get(posiciones.get("Nombre/Razón Social")),
                         null,
                         null
