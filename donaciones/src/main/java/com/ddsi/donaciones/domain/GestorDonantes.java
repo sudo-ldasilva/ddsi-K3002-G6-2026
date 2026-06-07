@@ -79,15 +79,15 @@ public class GestorDonantes {
                 // System.out.println("\t- Campo: " + campo);
             }
 
-            int posicionDocumento = posiciones.get("Documento");
+            int posicionMail = posiciones.get("Email");
             boolean yaEstaCargado = donantesRegistrados
                                     .stream()
-                                    .anyMatch( (donante) -> donante.getDocumento().equals(camposDeDonanteNuevo.get(posicionDocumento)));
+                                    .anyMatch( (donante) -> donante.tieneMail(camposDeDonanteNuevo.get(posicionMail)));
 
             if (yaEstaCargado) {
                 Donante donanteAActualizar = donantesRegistrados
                                              .stream()
-                                             .filter( (donante) -> donante.getDocumento().equals(camposDeDonanteNuevo.get(posicionDocumento)))
+                                             .filter( (donante) -> donante.tieneMail(camposDeDonanteNuevo.get(posicionMail)))
                                              .findFirst()
                                              .orElse(null);
 
@@ -113,7 +113,6 @@ public class GestorDonantes {
                         null            // TODO: medio predeterminado
                     );
 
-                    nuevoDonanteHumano.agregarContacto(new ContactoMail(camposDeDonanteNuevo.get(posiciones.get("Email"))));
                     nuevoDonanteHumano.agregarContacto(new ContactoTelefono(camposDeDonanteNuevo.get(posiciones.get("Teléfono"))));
                     this.donantesRegistrados.add(nuevoDonanteHumano);
                 } else {
@@ -130,7 +129,6 @@ public class GestorDonantes {
             }
             scannerRegistro.close();
         }
-
         scannerRegistros.close();
     }
 }
