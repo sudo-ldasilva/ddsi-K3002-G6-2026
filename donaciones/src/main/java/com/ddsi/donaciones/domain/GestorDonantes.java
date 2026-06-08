@@ -14,6 +14,10 @@ public class GestorDonantes {
         donantesRegistrados = new ArrayList<>();
     }
 
+    public ArrayList<Donante> getDonantes() {
+        return this.donantesRegistrados;
+    }
+
     public static GestorDonantes getInstance() {
         if (gestorDonantes == null) {
             gestorDonantes = new GestorDonantes();
@@ -82,12 +86,12 @@ public class GestorDonantes {
             int posicionMail = posiciones.get("Email");
             boolean yaEstaCargado = donantesRegistrados
                                     .stream()
-                                    .anyMatch( (donante) -> donante.tieneMail(camposDeDonanteNuevo.get(posicionMail)));
+                                    .anyMatch( (donante) -> donante.tieneMail(new ContactoMail(camposDeDonanteNuevo.get(posicionMail))));
 
             if (yaEstaCargado) {
                 Donante donanteAActualizar = donantesRegistrados
                                              .stream()
-                                             .filter( (donante) -> donante.tieneMail(camposDeDonanteNuevo.get(posicionMail)))
+                                             .filter( (donante) -> donante.tieneMail(new ContactoMail(camposDeDonanteNuevo.get(posicionMail))))
                                              .findFirst()
                                              .orElse(null);
 
