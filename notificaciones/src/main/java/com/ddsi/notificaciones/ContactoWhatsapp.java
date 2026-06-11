@@ -1,4 +1,4 @@
-package com.ddsi.donaciones.domain;
+package com.ddsi.notificaciones;
 
 public class ContactoWhatsapp extends ContactoTelefono {
     public ContactoWhatsapp(String codigoDeArea, String num) {

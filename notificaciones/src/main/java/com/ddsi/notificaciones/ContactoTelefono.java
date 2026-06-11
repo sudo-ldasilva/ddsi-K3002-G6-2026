@@ -1,4 +1,4 @@
-package com.ddsi.donaciones.domain;
+package com.ddsi.notificaciones;
 //Vamos a mandar el string completo, de ahi se separa el codigo de area y si es fijo
 public class ContactoTelefono implements Contacto {
     private String numero;

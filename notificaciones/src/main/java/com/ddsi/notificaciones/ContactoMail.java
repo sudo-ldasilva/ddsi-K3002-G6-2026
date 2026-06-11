@@ -1,4 +1,4 @@
-package com.ddsi.donaciones.domain;
+package com.ddsi.notificaciones;
 
 public class ContactoMail implements Contacto {
     private String direccion;
