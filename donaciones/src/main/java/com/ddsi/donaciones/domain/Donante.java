@@ -30,8 +30,9 @@ public abstract class Donante {
 
     public boolean tieneMail(ContactoMail contactoMail) {
         return mediosDeContacto.stream()
-                .filter(contacto -> contacto instanceof ContactoMail)
-                .map(contacto -> (ContactoMail) contacto)
-                .anyMatch(contacto -> contacto == contactoMail);
+                .filter(c -> c != null)
+                .map(c -> (Contacto) c)
+                .anyMatch(c -> c.getDireccion().equalsIgnoreCase(contactoMail.getDireccion()));
     }
 }
+

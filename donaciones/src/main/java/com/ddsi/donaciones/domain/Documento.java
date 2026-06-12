@@ -8,4 +8,8 @@ public class Documento {
         this.tipoDocumento = tipoDocumento;
         this.documento = documento;
     }
+
+    public String getDocumento() {
+        return documento;
+    }
 }

@@ -2,6 +2,7 @@ package com.ddsi.donaciones.domain;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,10 +64,6 @@ public class GestorDonantes {
         // HEADER
         String header = scannerRegistros.nextLine();
         HashMap<String, Integer> posiciones = parsearHeaderCSV(header);
-        // posicionesHeaders.get("TipoPersona") retorna 0;
-        // posicionesHeaders.get("TipoDoc") retorna 1;
-        // ... y así
-        // (entonces no dependemos del orden en el que se guardaron las columnas)
 
         // DATOS
         while (scannerRegistros.hasNextLine()) {
@@ -76,11 +73,8 @@ public class GestorDonantes {
             Scanner scannerRegistro = new Scanner(registro);
             scannerRegistro.useDelimiter(",");
 
-            // LEER campos donante
-            // System.out.println("Registro: " + registro);
             while (scannerRegistro.hasNext()) {
                 camposDeDonanteNuevo.add(scannerRegistro.next());
-                // System.out.println("\t- Campo: " + campo);
             }
 
             int posicionMail = posiciones.get("Email");
@@ -106,7 +100,7 @@ public class GestorDonantes {
             } else {
                 // TODO donanteAActualizar.cargarDesdeCSV(posicionesHeader, camposDeDonanteNuevo)
                 // Para cumplir con el polimorfismo
-                if (camposDeDonanteNuevo.get(posiciones.get("TipoPersona")) == "HUMANA") {
+                if (Objects.equals(camposDeDonanteNuevo.get(posiciones.get("TipoPersona")), "HUMANA")) {
                     PersonaHumana nuevoDonanteHumano = new PersonaHumana(
                         null,
                         camposDeDonanteNuevo.get(posiciones.get("Nombre/Razón Social")),
@@ -117,7 +111,7 @@ public class GestorDonantes {
                         null            // TODO: medio predeterminado
                     );
 
-                    nuevoDonanteHumano.agregarContacto(new ContactoTelefono(camposDeDonanteNuevo.get(posiciones.get("Teléfono"))));
+                    nuevoDonanteHumano.agregarContacto(new Contacto(camposDeDonanteNuevo.get(posiciones.get("Telefono")), "telefono"));//dios sabra como hago esto
                     this.donantesRegistrados.add(nuevoDonanteHumano);
                 } else {
                     PersonaJuridica nuevoDonanteJuridico = new PersonaJuridica(
@@ -126,8 +120,8 @@ public class GestorDonantes {
                         null,
                         null
                     );
-                    nuevoDonanteJuridico.agregarContacto(new ContactoMail(camposDeDonanteNuevo.get(posiciones.get("Email"))));
-                    nuevoDonanteJuridico.agregarContacto(new ContactoTelefono(camposDeDonanteNuevo.get(posiciones.get("Teléfono"))));
+                    nuevoDonanteJuridico.agregarContacto(new Contacto(camposDeDonanteNuevo.get(posiciones.get("Email")),"mail")); //agregar contacto se usa polimorficamente, ver como arreglo esto
+                    nuevoDonanteJuridico.agregarContacto(new Contacto(camposDeDonanteNuevo.get(posiciones.get("Telefono")), "telefono"));
                     this.donantesRegistrados.add(nuevoDonanteJuridico);
                 }
             }

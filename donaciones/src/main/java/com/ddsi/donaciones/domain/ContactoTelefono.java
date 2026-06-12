@@ -1,4 +1,7 @@
-package com.ddsi.notificaciones;
+package com.ddsi.donaciones.domain;
+
+import com.ddsi.notificaciones.Contacto;
+
 //Vamos a mandar el string completo, de ahi se separa el codigo de area y si es fijo
 public class ContactoTelefono implements Contacto {
     private String numero;
@@ -17,5 +20,9 @@ public class ContactoTelefono implements Contacto {
 
     public void MandarMensaje(String mensaje) {
         // TODO tercerizado
+    }
+    //para la validacion de CSV
+    public String getNumeroCompleto() {
+        return this.codigoDeArea + " " + this.numero;
     }
 }

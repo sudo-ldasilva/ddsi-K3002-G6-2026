@@ -1,4 +1,6 @@
-package com.ddsi.notificaciones;
+package com.ddsi.donaciones.domain;
+
+import com.ddsi.notificaciones.Contacto;
 
 public class ContactoMail implements Contacto {
     private String direccion;
@@ -8,5 +10,9 @@ public class ContactoMail implements Contacto {
 
     public void MandarMensaje(String mensaje) {
         // TODO tercerizado
+    }
+
+    public String getDireccion() {
+        return direccion;
     }
 }

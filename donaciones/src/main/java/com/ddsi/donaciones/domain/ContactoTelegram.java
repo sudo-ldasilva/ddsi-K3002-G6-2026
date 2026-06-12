@@ -1,4 +1,4 @@
-package com.ddsi.notificaciones;
+package com.ddsi.donaciones.domain;
 
 public class ContactoTelegram extends ContactoTelefono {
     private String usuario;
