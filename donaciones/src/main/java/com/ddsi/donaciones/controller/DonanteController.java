@@ -2,6 +2,7 @@ package com.ddsi.donaciones.controller;
 
 import java.util.ArrayList;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,20 +18,20 @@ import com.ddsi.donaciones.domain.Donante;
 @RequestMapping("/donantes")
 public class DonanteController {
 
+    @GetMapping
+    public ResponseEntity<ArrayList<Donante>> getDonantes() {
+        return ResponseEntity.status(200).body(GestorDonantes.getInstance().getDonantes());
+    }
+
     @PostMapping("/humanos")
-    public String crearHumano(@RequestBody PersonaHumana donante) {
-		GestorDonantes.getInstance().registrarDonante(donante);
-        return "Persona humana recibida correctamente";
+    public ResponseEntity<Donante> crearHumano(@RequestBody PersonaHumana donante) {
+        GestorDonantes.getInstance().registrarDonante(donante);
+        return ResponseEntity.status(201).body(donante);
     }
 
     @PostMapping("/juridicos")
-    public String crearJuridico(@RequestBody PersonaJuridica donante) {
-		GestorDonantes.getInstance().registrarDonante(donante);
-        return "Persona juridica recibida correctamente";
+    public ResponseEntity<Donante> crearJuridico(@RequestBody PersonaJuridica donante) {
+        GestorDonantes.getInstance().registrarDonante(donante);
+        return ResponseEntity.status(201).body(donante);
     }
-
-	@GetMapping
-	public ArrayList<Donante> getDonantes() {
-		return GestorDonantes.getInstance().getDonantes();
-	}
 }

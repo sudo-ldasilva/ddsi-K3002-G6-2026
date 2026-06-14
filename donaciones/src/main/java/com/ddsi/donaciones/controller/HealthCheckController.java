@@ -1,16 +1,17 @@
 package com.ddsi.donaciones.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/health")
 public class HealthCheckController {
 
-	@GetMapping
-	public String index() {
-		return "Health Check OK!"; // Devuelve un HTML con el texto
-	}
+    @GetMapping
+    public ResponseEntity<String> health() {
+        return ResponseEntity.ok("Health Check OK!");
+    }
 
 }
