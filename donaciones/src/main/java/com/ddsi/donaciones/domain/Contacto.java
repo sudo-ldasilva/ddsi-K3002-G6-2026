@@ -12,4 +12,7 @@ public class Contacto {
     public String getDireccion() {
         return direccion;
     }
+    public String getTipoContacto() {
+        return tipoContacto;
+    }
 }
