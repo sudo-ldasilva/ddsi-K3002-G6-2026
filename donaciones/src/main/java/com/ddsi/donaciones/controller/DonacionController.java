@@ -61,7 +61,7 @@ public class DonacionController {
     }
 
     @DeleteMapping("/{uuid}")
-    public ResponseEntity<Donacion> eliminarDonacion(@RequestBody UUID uuid) {
+    public ResponseEntity<Donacion> eliminarDonacion(@PathVariable UUID uuid) {
         Donacion donacion = GestorDonaciones.getInstance().eliminarDonacionByUUID(uuid);
         return ResponseEntity.status( (donacion != null) ? 200 : 404).body(donacion);
     }

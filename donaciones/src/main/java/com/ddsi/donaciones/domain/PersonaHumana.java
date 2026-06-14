@@ -21,6 +21,22 @@ public class PersonaHumana extends Donante{
         return nombreYApellido;
     }
 
+    public void setNombreYApellido(String nombreYApellido) {
+        this.nombreYApellido = nombreYApellido;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public void setGenero(Genero genero) {
+        this.genero = genero;
+    }
+
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
+    }
+
     public int getEdad() {
         return edad;
     }

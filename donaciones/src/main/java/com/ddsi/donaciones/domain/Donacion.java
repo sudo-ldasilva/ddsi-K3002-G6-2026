@@ -12,7 +12,7 @@ public class Donacion {
     private boolean fueSegmentada;
 
     public Donacion(Deposito deposito, Donante donante, String descripcion, ArrayList<BienDonado> bienesDonados){
-        uuid = UUID.randomUUID();
+        this.uuid = UUID.randomUUID();
         this.deposito = deposito;
         this.donante = donante;
         this.descripcion = descripcion;

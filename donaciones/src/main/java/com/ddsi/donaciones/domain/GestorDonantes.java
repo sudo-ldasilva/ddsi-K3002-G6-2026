@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class GestorDonantes {
     private static GestorDonantes gestorDonantes = null;
@@ -16,6 +17,24 @@ public class GestorDonantes {
 
     public ArrayList<Donante> getDonantes() {
         return this.donantesRegistrados;
+    }
+
+    public Donante getDonante(UUID uuid) {
+        for (int i = 0; i < donantesRegistrados.size(); i++) {
+            if (donantesRegistrados.get(i).getUUID().equals(uuid)) {
+                return donantesRegistrados.get(i);
+            }
+        }
+        return null;
+    }
+
+    public Donante eliminarDonante(UUID uuid) {
+        for (int i = 0; i < donantesRegistrados.size(); i++) {
+            if (donantesRegistrados.get(i).getUUID().equals(uuid)) {
+                return donantesRegistrados.remove(i);
+            }
+        }
+        return null;
     }
 
     public static GestorDonantes getInstance() {
