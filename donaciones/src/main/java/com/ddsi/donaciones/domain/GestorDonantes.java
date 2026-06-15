@@ -80,12 +80,12 @@ public class GestorDonantes {
             int posicionMail = posiciones.get("Email");
             boolean yaEstaCargado = donantesRegistrados
                                     .stream()
-                                    .anyMatch( (donante) -> donante.tieneMail(new ContactoMail(camposDeDonanteNuevo.get(posicionMail))));
+                                    .anyMatch( (donante) -> donante.tieneMail(new Contacto(camposDeDonanteNuevo.get(posicionMail),"mail")));
 
             if (yaEstaCargado) {
                 Donante donanteAActualizar = donantesRegistrados
                                              .stream()
-                                             .filter( (donante) -> donante.tieneMail(new ContactoMail(camposDeDonanteNuevo.get(posicionMail))))
+                                             .filter( (donante) -> donante.tieneMail(new Contacto(camposDeDonanteNuevo.get(posicionMail),"mail")))
                                              .findFirst()
                                              .orElse(null);
 

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 
- //Implementación de CargaDeDatos que lee un archivo CSV con el formato del tp (no se si funciona, matenme pls)
+//Implementación de CargaDeDatos que lee un archivo CSV con el formato del tp (no se si funciona, matenme pls)
 public class CargaDeDatosDesdeCSV implements CargaDeDatos {
 
     private final ValidadorDeDatos validador;
@@ -45,7 +45,7 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
                     System.out.printf("[ValidadorDeDatos] Posible duplicado detectado: %s%n",
                             fila.getOrDefault("Email", "(sin email)"));//detecta el donante existente y lo evita
                 } else {
-                    donantes.add(donante);
+                    donantes.add(donante);//llamar al gestor donante para que lo añada
                 }//si no esta duplicado lo suma
             }
         }
@@ -58,7 +58,7 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
 
         // Buscar donante existente por email
         Donante existente = donantesActuales.stream()
-                .filter(d -> d.tieneMail(new ContactoMail(email)))
+                .filter(d -> d.tieneMail(new Contacto(email)))
                 .findFirst()
                 .orElse(null);
 
@@ -72,7 +72,7 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
         }
     }
 
-//Actualiza los datos de contacto de un donante existente con la info del CSV.
+    //Actualiza los datos de contacto de un donante existente con la info del CSV.
     private void actualizarDonante(Donante donante, Map<String, String> fila) {
         String telefono = fila.getOrDefault("Teléfono", "").trim();
         if (!telefono.isEmpty()) {

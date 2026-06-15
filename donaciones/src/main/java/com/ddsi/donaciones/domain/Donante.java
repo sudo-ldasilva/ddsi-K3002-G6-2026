@@ -28,11 +28,8 @@ public abstract class Donante {
         return this.documento;
     }
 
-    public boolean tieneMail(ContactoMail contactoMail) {
-        return mediosDeContacto.stream()
-                .filter(c -> c != null)
-                .map(c -> (Contacto) c)
-                .anyMatch(c -> c.getDireccion().equalsIgnoreCase(contactoMail.getDireccion()));
+    public boolean tieneMail(Contacto contacto){
+        return mediosDeContacto.stream().anyMatch((e -> e.equals(contacto)));
     }
 }
 
