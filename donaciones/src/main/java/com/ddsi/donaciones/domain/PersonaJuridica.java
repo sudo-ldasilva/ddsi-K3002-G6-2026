@@ -16,6 +16,22 @@ public class PersonaJuridica extends Donante {
         this.representantes = new ArrayList<RepresentantePersonaJuridica>();
     }
 
+    public void setRepresentantes(ArrayList<RepresentantePersonaJuridica> representantes) {
+        this.representantes = representantes;
+    }
+
+    public void setRubro(String rubro) {
+        this.rubro = rubro;
+    }
+
+    public void setTipo(TipoPersonaJuridica tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
+
     public String getRazonSocial() {
         return razonSocial;
     }

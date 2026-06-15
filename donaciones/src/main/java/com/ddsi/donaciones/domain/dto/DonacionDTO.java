@@ -1,28 +1,19 @@
-package com.ddsi.donaciones.domain;
+package com.ddsi.donaciones.domain.dto;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
-public class Donacion {
-    private UUID uuid;
+import com.ddsi.donaciones.domain.Deposito;
+import com.ddsi.donaciones.domain.Donante;
+import com.ddsi.donaciones.domain.BienDonado;
+
+public class DonacionDTO {
     private Deposito deposito;
     private Donante donante;
     private String descripcion;
     private ArrayList<BienDonado> bienes;
     private boolean fueSegmentada;
 
-    public Donacion(Deposito deposito, Donante donante, String descripcion, ArrayList<BienDonado> bienesDonados){
-        this.uuid = UUID.randomUUID();
-        this.deposito = deposito;
-        this.donante = donante;
-        this.descripcion = descripcion;
-        this.bienes = bienesDonados;
-        this.fueSegmentada = false;
-    }
-
-    public UUID getUUID() {
-        return uuid;
-    }
+    public DonacionDTO() { }
 
     public Deposito getDeposito(){
         return deposito;
@@ -44,8 +35,8 @@ public class Donacion {
         return fueSegmentada;
     }
 
-    public void margarSegmentada() {
-        fueSegmentada = true;
+    public boolean getSegmentada() {
+        return fueSegmentada;
     }
 
     public void setDeposito(Deposito deposito){
@@ -62,5 +53,9 @@ public class Donacion {
 
     public void setBienes(ArrayList<BienDonado> bienes){
         this.bienes = bienes;
+    }
+
+    public void margarSegmentada() {
+        fueSegmentada = true;
     }
 }
