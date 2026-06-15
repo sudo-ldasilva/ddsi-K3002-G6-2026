@@ -2,21 +2,20 @@ package com.ddsi.donaciones.domain;
 
 import java.util.List;
 import java.util.LinkedList;
-import java.util.UUID;
 
 public abstract class Donante {
-    private UUID uuid;
+    private ContactoMail mail;
     private List<Contacto> mediosDeContacto;
     private Documento documento;
 
-    public Donante(Documento documento) {
-        this.uuid = UUID.randomUUID();
+    public Donante(ContactoMail mail, Documento documento) {
+        this.mail = mail;
         this.mediosDeContacto = new LinkedList<Contacto>();
         this.documento = documento;
     }
 
-    public UUID getUUID() {
-        return this.uuid;
+    public ContactoMail getMail() {
+        return this.mail;
     }
 
     public List<Contacto> getContactos() {

@@ -17,6 +17,7 @@ import com.ddsi.donaciones.domain.GestorDonantes;
 import com.ddsi.donaciones.domain.PersonaHumana;
 import com.ddsi.donaciones.domain.PersonaJuridica;
 import com.ddsi.donaciones.domain.Donante;
+import com.ddsi.donaciones.domain.ContactoMail;
 
 @RestController
 @RequestMapping("/donantes")
@@ -39,9 +40,9 @@ public class DonanteController {
         return ResponseEntity.status(201).body(donante);
     }
 
-    @PatchMapping("/humanos/{uuid}")
-    public ResponseEntity<Donante> modificarHumano(@PathVariable UUID uuid, @RequestBody PersonaHumana cambios) {
-        Donante donante = GestorDonantes.getInstance().getDonante(uuid);
+    @PatchMapping("/humanos/{mail}")
+    public ResponseEntity<Donante> modificarHumano(@PathVariable String mail, @RequestBody PersonaHumana cambios) {
+        Donante donante = GestorDonantes.getInstance().getDonante(new ContactoMail(mail));
 
         if ( !(donante instanceof PersonaHumana) ) {
             return ResponseEntity.status(404).body(null);
@@ -81,9 +82,9 @@ public class DonanteController {
         return ResponseEntity.status(201).body(donante);
     }
 
-    @PatchMapping("/juridicos/{uuid}")
-    public ResponseEntity<Donante> modificarJuridico(@PathVariable UUID uuid, @RequestBody PersonaJuridica cambios) {
-        Donante donante = GestorDonantes.getInstance().getDonante(uuid);
+    @PatchMapping("/juridicos/{mail}")
+    public ResponseEntity<Donante> modificarJuridico(@PathVariable String mail, @RequestBody PersonaJuridica cambios) {
+        Donante donante = GestorDonantes.getInstance().getDonante(new ContactoMail(mail));
 
         if ( !(donante instanceof PersonaJuridica) ) {
             return ResponseEntity.status(404).body(null);
@@ -119,9 +120,9 @@ public class DonanteController {
         return ResponseEntity.status(201).body(donante);
     }
 
-    @DeleteMapping("/{uuid}")
-    public ResponseEntity<Donante> deleteDonante(@PathVariable UUID uuid) {
-        Donante eliminado = GestorDonantes.getInstance().eliminarDonante(uuid);
+    @DeleteMapping("/{mail}")
+    public ResponseEntity<Donante> deleteDonante(@PathVariable String mail) {
+        Donante eliminado = GestorDonantes.getInstance().eliminarDonante(new ContactoMail(mail));
         return ResponseEntity.status((eliminado != null) ? 200 : 404).body(eliminado);
     }
 }
