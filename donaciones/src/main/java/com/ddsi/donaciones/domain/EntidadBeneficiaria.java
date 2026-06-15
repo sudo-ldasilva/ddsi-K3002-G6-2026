@@ -6,18 +6,13 @@ public class EntidadBeneficiaria {
 
     private String razonSocial;
     private String tipo;
-
-    // ContactoTelefonoFijo / ContactoCelular?
     private Contacto contacto;
-
     private Direccion direccion;
-
-    // ArrayList, LinkedList u otro?
     private ArrayList<RepresentanteEntidadBeneficiaria> representantes;
     private ArrayList<CampaniaNecesidad> necesidades;
 
-    public EntidadBeneficiaria(
-            String razonSocial, String tipo, Contacto contacto, Direccion direccion)
+    //Constructor
+    public EntidadBeneficiaria(String razonSocial, String tipo, Contacto contacto, Direccion direccion)
     {
         this.razonSocial = razonSocial;
         this.tipo = tipo;
@@ -27,14 +22,7 @@ public class EntidadBeneficiaria {
         this.necesidades = new ArrayList<>();
     }
 
-    public void agregarRepresentante(RepresentanteEntidadBeneficiaria representante) {
-        representantes.add(representante);
-    }
-
-    public void quitarRepresentante(RepresentanteEntidadBeneficiaria representante) {
-        representantes.remove(representante);
-    }
-
+    //Getters
     public ArrayList<CampaniaNecesidad> getNecesidades() {
         return necesidades;
     }
@@ -58,4 +46,36 @@ public class EntidadBeneficiaria {
     public String getRazonSocial() {
         return razonSocial;
     }
+
+    //Setters
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
+    }
+
+    public void setRepresentantes(ArrayList<RepresentanteEntidadBeneficiaria> representantes) {
+        this.representantes = representantes;
+    }
+
+    public void setNecesidades(ArrayList<CampaniaNecesidad> necesidades) {
+        this.necesidades = necesidades;
+    }
+
+    //Otros
+    public void agregarRepresentante(RepresentanteEntidadBeneficiaria representante) {
+        representantes.add(representante);
+    }
+
+    public void quitarRepresentante(RepresentanteEntidadBeneficiaria representante) {
+        representantes.remove(representante);
+    }
+
+
 }
