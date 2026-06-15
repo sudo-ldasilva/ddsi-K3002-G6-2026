@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ddsi.donaciones.domain.GestorDonaciones;
 import com.ddsi.donaciones.domain.Donacion;
+import com.ddsi.donaciones.domain.DonacionIndependiente;
 import com.ddsi.donaciones.domain.dto.DonacionDTO;
+import com.ddsi.donaciones.domain.EstadoDonacion;
 
 @RestController
-@RequestMapping("/donantes")
+@RequestMapping("/donacion")
 public class DonacionController {
 
     @GetMapping
@@ -64,5 +66,27 @@ public class DonacionController {
     public ResponseEntity<Donacion> eliminarDonacion(@PathVariable UUID uuid) {
         Donacion donacion = GestorDonaciones.getInstance().eliminarDonacionByUUID(uuid);
         return ResponseEntity.status( (donacion != null) ? 200 : 404).body(donacion);
+    }
+
+    @GetMapping("/independientes")
+    public ResponseEntity<ArrayList<DonacionIndependiente>> getDonacionIndependientes() {
+        ArrayList<DonacionIndependiente> donacion = GestorDonaciones.getInstance().getDonacionesIndependientes();
+        return ResponseEntity.status(200).body(donacion);
+    }
+
+    @GetMapping("/independientes/{uuid}")
+    public ResponseEntity<DonacionIndependiente> getDonacionIndependiente(@PathVariable UUID uuid) {
+        DonacionIndependiente donacion = GestorDonaciones.getInstance().getDonacionIndependienteByUUID(uuid);
+        return ResponseEntity.status(200).body(donacion);
+    }
+
+    @PatchMapping("/independientes/{uuid}/estado")
+    public ResponseEntity<DonacionIndependiente> actualizarEstadoDonacionIndependiente(@PathVariable UUID uuid, @RequestBody EstadoDonacion estado) {
+        DonacionIndependiente donacion = GestorDonaciones.getInstance().getDonacionIndependienteByUUID(uuid);
+        if (estado == null) return ResponseEntity.status(404).body(null);
+
+        donacion.cambiarEstado(estado);
+
+        return ResponseEntity.status(200).body(donacion);
     }
 }

@@ -28,6 +28,10 @@ public class GestorDonaciones {
         return donaciones;
     }
 
+    public ArrayList<DonacionIndependiente> getDonacionesIndependientes() {
+        return posiblesDonaciones;
+    }
+
     public boolean actualizarDonacion(Donacion nuevaDonacion) {
         for (int i = 0; i < donaciones.size(); i++) {
             if (donaciones.get(i).getUUID().equals(nuevaDonacion.getUUID())) {
@@ -36,6 +40,16 @@ public class GestorDonaciones {
             }
         }
         return false;
+    }
+
+    public DonacionIndependiente getDonacionIndependienteByUUID(UUID uuid) {
+        for (int i = 0; i < posiblesDonaciones.size(); i++) {
+            DonacionIndependiente donacion = posiblesDonaciones.get(i);
+            if (donacion.getUUID().equals(uuid)) {
+                return donacion;
+            }
+        }
+        return null;
     }
 
     public Donacion getDonacionByUUID(UUID uuid) {

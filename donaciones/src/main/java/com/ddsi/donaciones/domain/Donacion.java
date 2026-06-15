@@ -10,6 +10,8 @@ public class Donacion {
     private String descripcion;
     private ArrayList<BienDonado> bienes;
     private boolean fueSegmentada;
+    private EstadoDonacion estadoActual;
+    private ArrayList<EstadoDonacion> historialEstados;
 
     public Donacion(Deposito deposito, Donante donante, String descripcion, ArrayList<BienDonado> bienesDonados){
         this.uuid = UUID.randomUUID();
@@ -18,6 +20,8 @@ public class Donacion {
         this.descripcion = descripcion;
         this.bienes = bienesDonados;
         this.fueSegmentada = false;
+        this.estadoActual = EstadoDonacion.ENTREGADA;
+        historialEstados.add(this.estadoActual);
     }
 
     public UUID getUUID() {
@@ -38,6 +42,15 @@ public class Donacion {
 
     public ArrayList<BienDonado> getBienes(){
         return bienes;
+    }
+
+    public EstadoDonacion getEstado() {
+        return this.estadoActual;
+    }
+
+    public void cambiarEstado(EstadoDonacion estado) {
+        this.estadoActual = estado;
+        this.historialEstados.add(estado);
     }
 
     public boolean yaFueSegmentada() {
