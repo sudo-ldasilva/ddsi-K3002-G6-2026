@@ -11,4 +11,8 @@ public class RepresentanteEntidadBeneficiaria extends Representante{
     public EntidadBeneficiaria getEntidadBeneficiaria() {
         return entidadBeneficiaria;
     }
+
+    public void setEntidadBeneficiaria(EntidadBeneficiaria entidadBeneficiaria) {
+        this.entidadBeneficiaria = entidadBeneficiaria;
+    }
 }

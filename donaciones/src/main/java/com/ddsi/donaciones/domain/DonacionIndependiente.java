@@ -1,8 +1,10 @@
 package com.ddsi.donaciones.domain;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class DonacionIndependiente {
+    private UUID uuid;
     private Subcategoria subcategoria;
     private NecesidadIndividual necesidad;
     private Donacion donacion;
@@ -11,6 +13,7 @@ public class DonacionIndependiente {
     private EstadoDonacion estadoActual;
 
     public DonacionIndependiente(Subcategoria subcategoria, NecesidadIndividual necesidad, Donacion donacion) {
+        this.uuid = UUID.randomUUID();
         this.subcategoria = subcategoria;
         this.necesidad = necesidad;
         this.donacion = donacion;
@@ -18,6 +21,14 @@ public class DonacionIndependiente {
         this.historialEstados = new ArrayList<>();
         this.estadoActual = EstadoDonacion.EN_DEPOSITO;
 
+    }
+
+    public UUID getUUID() {
+        return this.uuid;
+    }
+
+    public EstadoDonacion getEstadoActual() {
+        return this.estadoActual;
     }
 
     public Subcategoria getSubcategoria() {

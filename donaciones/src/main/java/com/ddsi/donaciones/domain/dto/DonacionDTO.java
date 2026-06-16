@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.ddsi.donaciones.domain.Deposito;
 import com.ddsi.donaciones.domain.Donante;
 import com.ddsi.donaciones.domain.BienDonado;
+import com.ddsi.donaciones.domain.EstadoDonacion;
 
 public class DonacionDTO {
     private Deposito deposito;
@@ -12,6 +13,7 @@ public class DonacionDTO {
     private String descripcion;
     private ArrayList<BienDonado> bienes;
     private boolean fueSegmentada;
+    private EstadoDonacion estadoActual;
 
     public DonacionDTO() { }
 
@@ -39,6 +41,10 @@ public class DonacionDTO {
         return fueSegmentada;
     }
 
+    public EstadoDonacion getEstadoActual() {
+        return estadoActual;
+    }
+
     public void setDeposito(Deposito deposito){
         this.deposito = deposito;
     }
@@ -55,7 +61,7 @@ public class DonacionDTO {
         this.bienes = bienes;
     }
 
-    public void margarSegmentada() {
+    public void marcarSegmentada() {
         fueSegmentada = true;
     }
 }
