@@ -61,7 +61,7 @@ public class DonacionDTO {
         this.bienes = bienes;
     }
 
-    public void margarSegmentada() {
+    public void marcarSegmentada() {
         fueSegmentada = true;
     }
 }

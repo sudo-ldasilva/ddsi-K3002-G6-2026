@@ -10,4 +10,8 @@ public class Representante{
     public Contacto getContacto() {
         return contacto;
     }
+
+    public void setContacto(Contacto contacto) {
+        this.contacto = contacto;
+    }
 }

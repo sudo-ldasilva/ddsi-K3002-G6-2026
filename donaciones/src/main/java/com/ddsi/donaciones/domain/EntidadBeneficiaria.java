@@ -1,6 +1,7 @@
 package com.ddsi.donaciones.domain;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class EntidadBeneficiaria {
 
@@ -68,6 +69,29 @@ public class EntidadBeneficiaria {
         this.necesidades = necesidades;
     }
 
+    //CRUD de Necesidades
+    public void crearCampaniaNecesidad(CampaniaNecesidad campaniaNecesidad){
+        necesidades.add(campaniaNecesidad);
+    }
+
+    public CampaniaNecesidad obtenerCampaniaNecesidad(UUID uuid){
+        for (int i = 0; i < necesidades.size(); i++) {
+            if (necesidades.get(i).getUuid().equals(uuid)) {
+                return necesidades.get(i);
+            }
+        }
+        return null;
+    }
+
+    public CampaniaNecesidad eliminarCampaniaNecesidad(UUID uuid){
+        for (int i = 0; i < necesidades.size(); i++) {
+            if (necesidades.get(i).getUuid().equals(uuid)) {
+                return necesidades.remove(i);
+            }
+        }
+        return null;
+    }
+
     //Otros
     public void agregarRepresentante(RepresentanteEntidadBeneficiaria representante) {
         representantes.add(representante);
@@ -76,6 +100,7 @@ public class EntidadBeneficiaria {
     public void quitarRepresentante(RepresentanteEntidadBeneficiaria representante) {
         representantes.remove(representante);
     }
+
 
 
 }

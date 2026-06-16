@@ -56,7 +56,7 @@ public class DonacionController {
         }
 
         if (dto.yaFueSegmentada()) {
-            donacion.margarSegmentada();
+            donacion.marcarSegmentada();
         }
 
         return ResponseEntity.status(200).body(donacion);

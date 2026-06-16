@@ -57,7 +57,7 @@ public class Donacion {
         return fueSegmentada;
     }
 
-    public void margarSegmentada() {
+    public void marcarSegmentada() {
         fueSegmentada = true;
     }
 
