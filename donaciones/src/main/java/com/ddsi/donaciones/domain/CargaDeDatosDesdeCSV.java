@@ -45,7 +45,7 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
                     System.out.printf("[ValidadorDeDatos] Posible duplicado detectado: %s%n",
                             fila.getOrDefault("Email", "(sin email)"));//detecta el donante existente y lo evita
                 } else {
-                    donantes.add(donante);//llamar al gestor donante para que lo añada
+                    GestorDonantes.registrarDonante(donante);//llamar al gestor donante para que lo añada
                 }//si no esta duplicado lo suma
             }
         }
@@ -58,7 +58,7 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
 
         // Buscar donante existente por email
         Donante existente = donantesActuales.stream()
-                .filter(d -> d.tieneMail(new Contacto(email)))
+                .filter(d -> d.tieneMail(new Contacto(email,"mail")))
                 .findFirst()
                 .orElse(null);
 
@@ -80,15 +80,12 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
                     .filter(c -> c instanceof Contacto)
                     .anyMatch(c -> c.getDireccion().equals(telefono));
             if (!yaEsta) {
-                donante.agregarContacto(new Contacto(donante.getContactos(),"telefono"));
+                donante.agregarContacto(new Contacto(donante.getContactos().toString(),"telefono"));
             }
         }
     }
 
-    /**
-     * Construye un {@link Donante} a partir de una fila del CSV.
-     * Devuelve {@code null} si el tipo de persona es desconocido.
-     */
+
     private Donante construirDonante(Map<String, String> fila) {
         String tipoPersona = fila.getOrDefault("TipoPersona", "").trim().toUpperCase();
         String tipoDocStr  = fila.getOrDefault("TipoDoc", "").trim().toUpperCase();

@@ -12,9 +12,7 @@ public class ValidadorDeDatos {
 
     public static ValidadorDeDatos conCriteriosPredeterminados() {
         return new ValidadorDeDatos(List.of(
-                new CriterioDocumento(), //no se si es necesario crear uno nuevo cada vez
-                new CriterioMail(),
-                new CriterioTelefono()
+                new CriterioMail()
         ));
     }
 
