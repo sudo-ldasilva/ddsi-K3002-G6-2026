@@ -20,7 +20,7 @@ public class GestorDonantes {
         return this.donantesRegistrados;
     }
 
-    public Donante getDonante(ContactoMail mail) {
+    public Donante getDonante(Contacto mail) {
         for (int i = 0; i < donantesRegistrados.size(); i++) {
             if (donantesRegistrados.get(i).getMail().equals(mail)) {
                 return donantesRegistrados.get(i);
