@@ -6,16 +6,17 @@ import com.ddsi.donaciones.domain.dto.DestinatarioNotificacionDTO;
 import com.ddsi.donaciones.domain.dto.DestinatarioNotificacionMapper;
 import com.ddsi.donaciones.domain.dto.NotificacionRequestDTO;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
+import org.springframework.http.MediaType;
 
 @Service
 public class NotificacionDispatcherService {
 
-    private final RestTemplate restTemplate;
+    private final RestClient restClient;
     private static final String URL_NOTIFICACIONES = "http://notificaciones/notificaciones";
 
-    public NotificacionDispatcherService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public NotificacionDispatcherService() {
+        this.restClient = RestClient.builder().build();
     }
 
     public void notificarDonante(Donante donante, String mensaje) {
@@ -35,6 +36,12 @@ public class NotificacionDispatcherService {
                 mensaje
         );
 
-        restTemplate.postForEntity(URL_NOTIFICACIONES, request, Void.class);
+        restClient
+            .post()
+            .uri(URL_NOTIFICACIONES)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(request)
+            .retrieve()
+            .toBodilessEntity();
     }
 }
