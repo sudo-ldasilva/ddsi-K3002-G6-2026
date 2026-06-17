@@ -1,5 +1,8 @@
-package com.ddsi.notificaciones;
+package com.ddsi.notificaciones.domain;
+
+import java.util.List;
 
 public interface Contacto {
-    public void MandarMensaje(String mensaje); //dejamos la implementación para entrega futura, vamos a usar polimorfismo
+    public void enviarMensaje(String mensaje, String direccion);
+    //dejamos la implementación para entrega futura, vamos a usar polimorfismo
 }
