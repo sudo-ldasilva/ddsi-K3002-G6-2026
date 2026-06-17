@@ -1,23 +1,21 @@
 package com.ddsi.notificaciones.service;
 
-import com.ddsi.notificaciones.Contacto;
-import com.ddsi.notificaciones.ContactoMail;
-import com.ddsi.notificaciones.ContactoTelefono;
-import com.ddsi.notificaciones.ContactoTelegram;
-import com.ddsi.notificaciones.ContactoWhatsapp;
+import com.ddsi.notificaciones.domain.Contacto;
+import com.ddsi.notificaciones.domain.ContactoMail;
+import com.ddsi.notificaciones.domain.ContactoTelefono;
+import com.ddsi.notificaciones.domain.ContactoTelegram;
+import com.ddsi.notificaciones.domain.ContactoWhatsapp;
 import com.ddsi.notificaciones.dto.NotificacionRequestDTO;
 import com.ddsi.notificaciones.exception.ContactoInvalidoException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class NotificacionService {
-
     public void enviarNotificacion(NotificacionRequestDTO request) {
         validar(request);
 
         Contacto contacto = crearContacto(request.getTipoContacto(), request.getDireccionContacto());
         contacto.enviarMensaje(request.getMensaje());
-        // Notificacion marcada como completada (simulacion)
     }
 
     private void validar(NotificacionRequestDTO request) {
@@ -33,18 +31,12 @@ public class NotificacionService {
     }
 
     private Contacto crearContacto(String tipoContacto, String direccion) {
-        switch (tipoContacto.toUpperCase()) {
-            case "MAIL":
-                return new ContactoMail(direccion);
-            case "TELEFONO":
-            case "SMS":
-                return new ContactoTelefono(direccion);
-            case "WHATSAPP":
-                return new ContactoWhatsapp(direccion);
-            case "TELEGRAM":
-                return new ContactoTelegram(direccion, direccion);
-            default:
-                throw new ContactoInvalidoException("Tipo de contacto no soportado: " + tipoContacto);
-        }
+        return switch (tipoContacto.toUpperCase()) {
+            case "MAIL" -> new ContactoMail(direccion);
+            case "TELEFONO", "SMS" -> new ContactoTelefono(direccion);
+            case "WHATSAPP" -> new ContactoWhatsapp(direccion);
+            case "TELEGRAM" -> new ContactoTelegram(direccion, direccion);
+            default -> throw new ContactoInvalidoException("Tipo de contacto no soportado: " + tipoContacto);
+        };
     }
 }

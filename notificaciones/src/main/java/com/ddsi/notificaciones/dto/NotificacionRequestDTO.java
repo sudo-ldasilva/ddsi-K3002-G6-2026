@@ -1,9 +1,19 @@
-package com.ddsi.notificaciones.ClasesDTO;
+package com.ddsi.notificaciones.dto;
 
-import java.util.ArrayList;
-import com.ddsi.donaciones.domain.Donante;
-import com.ddsi.donaciones.domain.EntidadBeneficiaria;
+public class NotificacionRequestDTO {
+    private String tipoContacto;
+    private String direccionContacto;
+    private String mensaje;
 
-public class NotificacionDTO {
+    public NotificacionRequestDTO() {}
 
+    public NotificacionRequestDTO(String tipoContacto, String direccionContacto, String mensaje) {
+        this.tipoContacto = tipoContacto;
+        this.direccionContacto = direccionContacto;
+        this.mensaje = mensaje;
+    }
+
+    public String getTipoContacto() { return tipoContacto; }
+    public String getDireccionContacto() { return direccionContacto; }
+    public String getMensaje() { return mensaje; }
 }
