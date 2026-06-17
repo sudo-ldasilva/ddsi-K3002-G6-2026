@@ -2,6 +2,7 @@ package com.ddsi.donaciones.controller;
 
 import java.util.ArrayList;
 
+import com.ddsi.donaciones.domain.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,11 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import com.ddsi.donaciones.domain.GestorDonantes;
-import com.ddsi.donaciones.domain.PersonaHumana;
-import com.ddsi.donaciones.domain.PersonaJuridica;
-import com.ddsi.donaciones.domain.Donante;
 
 
 @RestController
@@ -41,7 +37,7 @@ public class DonanteController {
 
     @PatchMapping("/humanos/{mail}")
     public ResponseEntity<Donante> modificarHumano(@PathVariable String mail, @RequestBody PersonaHumana cambios) {
-        Donante donante = GestorDonantes.getInstance().getDonante(new Contacto(mail));
+        Donante donante = GestorDonantes.getInstance().getDonante(new Contacto(mail, "mail"));
 
         if ( !(donante instanceof PersonaHumana) ) {
             return ResponseEntity.status(404).body(null);
@@ -83,7 +79,7 @@ public class DonanteController {
 
     @PatchMapping("/juridicos/{mail}")
     public ResponseEntity<Donante> modificarJuridico(@PathVariable String mail, @RequestBody PersonaJuridica cambios) {
-        Donante donante = GestorDonantes.getInstance().getDonante(new Contacto(mail));
+        Donante donante = GestorDonantes.getInstance().getDonante(new Contacto(mail, "mail"));
 
         if ( !(donante instanceof PersonaJuridica) ) {
             return ResponseEntity.status(404).body(null);
@@ -121,7 +117,7 @@ public class DonanteController {
 
     @DeleteMapping("/{mail}")
     public ResponseEntity<Donante> deleteDonante(@PathVariable String mail) {
-        Donante eliminado = GestorDonantes.getInstance().eliminarDonante(new Contacto(mail));
+        Donante eliminado = GestorDonantes.getInstance().eliminarDonante(new Contacto(mail, "mail"));
         return ResponseEntity.status((eliminado != null) ? 200 : 404).body(eliminado);
     }
 }

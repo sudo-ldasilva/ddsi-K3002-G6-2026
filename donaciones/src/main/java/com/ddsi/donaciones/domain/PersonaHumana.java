@@ -7,11 +7,10 @@ public class PersonaHumana extends Donante{
     private Direccion direccion;
     private Contacto medioPredeterminado;
 
-    public PersonaHumana(Documento documento, String nombreYApellido, int edad, Genero genero, Direccion direccion, Contacto medioPredeterminado) {
-        super(documento);
+    public PersonaHumana(Contacto mail, Documento documento, String nombreYApellido, int edad, Genero genero, Direccion direccion, Contacto medioPredeterminado) {
+        super(mail, documento);
         this.nombreYApellido = nombreYApellido;
         this.edad = edad;
-        //this.numeroDeDocumento = numeroDeDocumento; MARCOS: este valor es el que se le pasa a super, no?
         this.genero = genero;
         this.direccion = direccion;
         this.medioPredeterminado = medioPredeterminado;

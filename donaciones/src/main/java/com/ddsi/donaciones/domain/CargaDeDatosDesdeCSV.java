@@ -45,7 +45,7 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
                     System.out.printf("[ValidadorDeDatos] Posible duplicado detectado: %s%n",
                             fila.getOrDefault("Email", "(sin email)"));//detecta el donante existente y lo evita
                 } else {
-                    GestorDonantes.registrarDonante(donante);//llamar al gestor donante para que lo añada
+                    GestorDonantes.getInstance().registrarDonante(donante);//llamar al gestor donante para que lo añada
                 }//si no esta duplicado lo suma
             }
         }
@@ -96,12 +96,14 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
 
         TipoDocumento tipoDoc = parsearTipoDocumento(tipoDocStr);
         Documento documento   = new Documento(tipoDoc, nroDoc);
+        Contacto mail =  new Contacto(email,"mail");
 
         Donante donante;
 
         switch (tipoPersona) {
             case "HUMANA" -> {
                 PersonaHumana humana = new PersonaHumana(
+                        mail,
                         documento, nombre,
                         18,           // asumimos un minimo de edad para donar?
                         Genero.OTRO,
@@ -112,6 +114,7 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
             }
             case "JURIDICA" -> {
                 PersonaJuridica juridica = new PersonaJuridica(
+                        mail,
                         documento, nombre,
                         null,
                         null

@@ -20,14 +20,14 @@ public class DestinatarioNotificacionMapper {
     }
 
     public static DestinatarioNotificacionDTO desdeEntidadBeneficiaria(EntidadBeneficiaria entidad) {
-        if (entidad.getTelefono() == null) {
+        if (entidad.getContacto() == null) {
             throw new IllegalStateException("La entidad beneficiaria no tiene un medio de contacto definido");
         }
 
         return new DestinatarioNotificacionDTO(
                 entidad.getRazonSocial(),
-                entidad.getTelefono().getTipoContacto(),
-                entidad.getTelefono().getDireccion()
+                entidad.getContacto().getTipoContacto(),
+                entidad.getContacto().getDireccion()
         );
     }
 

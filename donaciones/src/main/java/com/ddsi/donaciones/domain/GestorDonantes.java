@@ -29,9 +29,9 @@ public class GestorDonantes {
         return null;
     }
 
-    public Donante eliminarDonante(UUID uuid) {
+    public Donante eliminarDonante(Contacto mail) {
         for (int i = 0; i < donantesRegistrados.size(); i++) {
-            if (donantesRegistrados.get(i).getUUID().equals(uuid)) {
+            if (donantesRegistrados.get(i).getMail().equals(mail)) {
                 return donantesRegistrados.remove(i);
             }
         }
