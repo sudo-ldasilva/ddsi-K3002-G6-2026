@@ -11,4 +11,8 @@ public class CampaniaNecesidadRecurrente extends CampaniaNecesidad {
     public String getPeriodo() {
         return periodo;
     }
+
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
+    }
 }

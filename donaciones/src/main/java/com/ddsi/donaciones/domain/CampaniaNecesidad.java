@@ -3,14 +3,14 @@ package com.ddsi.donaciones.domain;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class CampaniaNecesidad {
+public abstract class CampaniaNecesidad {
     private UUID uuid;
     ArrayList<NecesidadIndividual> necesidades;
     EntidadBeneficiaria entidadBeneficiaria;
     String descripcion;
     String estado;
 
-    public CampaniaNecesidad(EntidadBeneficiaria entidadBeneficiaria, String descripcion, String estado, Subcategoria subcategoria) {
+    protected CampaniaNecesidad(EntidadBeneficiaria entidadBeneficiaria, String descripcion, String estado) {
         this.uuid = UUID.randomUUID();
         this.necesidades = new ArrayList<>();
         this.entidadBeneficiaria = entidadBeneficiaria;
