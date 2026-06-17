@@ -2,20 +2,28 @@ package com.ddsi.donaciones.domain;
 
 import com.ddsi.notificaciones.Contacto;
 
+@Service
 public class ContactoMail implements Contacto {
-    private String direccion;
+    private final JavaMailSender mailSender;
 
-    public ContactoMail(String dir) {
-        this.direccion = dir;
+    @Value("${spring.mail.username}")
+    private String mailUser;
+
+    public ContactoMail(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
     }
 
     @Override
-    public void enviarMensaje(String mensaje) {
-        // System.out.println("Enviando MAIL a " + direccion + ": " + mensaje);
-        // to do ..
-    }
+    public void enviarMensaje(String mensaje, String direccion) {
 
-    public String getDireccion() {
-        return direccion;
+        SimpleMailMessage mail =
+                new SimpleMailMessage();
+
+        mail.setFrom(mailUser);
+        mail.setTo(direccion);
+        mail.setSubject("Notificación");
+        mail.setText(mensaje);
+
+        mailSender.send(mail);
     }
 }
