@@ -1,7 +1,7 @@
 package com.ddsi.donaciones.domain;
 
 import java.util.List;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public abstract class Donante {
     private Contacto mail;
@@ -10,7 +10,7 @@ public abstract class Donante {
 
     public Donante(Contacto mail, Documento documento) {
         this.mail = mail;
-        this.mediosDeContacto = new LinkedList<Contacto>();
+        this.mediosDeContacto = new ArrayList<Contacto>();
         this.documento = documento;
     }
 

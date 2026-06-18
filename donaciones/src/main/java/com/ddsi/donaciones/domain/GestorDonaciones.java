@@ -2,6 +2,7 @@ package com.ddsi.donaciones.domain;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import com.ddsi.donaciones.service.NotificacionDispatcherService;
 
 public class GestorDonaciones {
     private static GestorDonaciones gestorDonaciones = null;
@@ -100,12 +101,23 @@ public class GestorDonaciones {
         posiblesDonaciones.addAll(donacionesInd);
     }
 
-    public void asignarDonacionIndependiente(DonacionIndependiente donacion, EntidadBeneficiaria entidad) {
-        // en el TP dice que elige una entidad pero puede ser mejor que se asigne directamente a una campaña
-        /*const CampaniaNecesidad campaniaElegida = this.elegirCampania(donacion, entidad);
-          campanianiaElegida.getNecesidades()
-          .find(necesidad -> necesidad.getBien().getSubcategoria() == donacion.getSubcategoria())
-          .add(donacion);
-        //*/}
+    public void asignarDonacionIndependiente(DonacionIndependiente donacion, CampaniaNecesidad campania) throws Exception {
+        NecesidadIndividual necesidadAsignada = campania.necesidades.stream().filter(n->n.getSubcategoria().equals(donacion.getSubcategoria())).findFirst().orElse(null);
+        if (necesidadAsignada == null) {
+            throw new Exception();
+        }
+
+        //Asignacion
+        necesidadAsignada.donaciones.add(donacion);
+        donacion.setNecesidad(necesidadAsignada);
+
+        //Envio de notificaciones
+        NotificacionDispatcherService notificacionDispatcherService = new NotificacionDispatcherService();
+        ArrayList<Contacto> contactosDonante = new ArrayList<>(donacion.getDonacion().getDonante().getContactos());
+        contactosDonante.add(0, donacion.getDonacion().getDonante().getMail());
+        notificacionDispatcherService.notificarDonante(contactosDonante,
+                String.format("Asignacion de Donacion: Se asigno el bien %s a la entidad %s", donacion.getSubcategoria(), campania.getEntidadBeneficiaria().getRazonSocial()));
+        notificacionDispatcherService.notificarEntidadBeneficiaria(campania.getEntidadBeneficiaria().getContacto(), String.format("Asignacion de Donacion: Se te asigno el bien %s", donacion.getSubcategoria()));
+    }
 
 }
