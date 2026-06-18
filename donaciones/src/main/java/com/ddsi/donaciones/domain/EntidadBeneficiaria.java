@@ -19,7 +19,7 @@ public class EntidadBeneficiaria {
         this.tipo = tipo;
         this.contacto = contacto;
         this.direccion = direccion;
-        this.representantes = new ArrayList<RepresentanteEntidadBeneficiaria>();
+        this.representantes = new ArrayList<>();
         this.necesidades = new ArrayList<>();
     }
 

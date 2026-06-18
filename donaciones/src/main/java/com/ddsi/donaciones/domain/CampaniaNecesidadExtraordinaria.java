@@ -3,8 +3,8 @@ package com.ddsi.donaciones.domain;
 public class CampaniaNecesidadExtraordinaria extends CampaniaNecesidad {
     private String situacionExcepcional;
 
-    public CampaniaNecesidadExtraordinaria(EntidadBeneficiaria entidadBeneficiaria, String descripcion, String estado, Subcategoria subcategoria, String situacionExcepcional) {
-        super(entidadBeneficiaria, descripcion, estado, subcategoria);
+    public CampaniaNecesidadExtraordinaria(EntidadBeneficiaria entidadBeneficiaria, String descripcion, String estado, String situacionExcepcional) {
+        super(entidadBeneficiaria, descripcion, estado);
         this.situacionExcepcional = situacionExcepcional;
     }
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import com.ddsi.donaciones.domain.*;
+import com.ddsi.donaciones.domain.dto.EntidadBeneficiariaDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +21,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class EntidadBeneficiariaController{
 
     @GetMapping
-    public ResponseEntity<ArrayList<EntidadBeneficiaria>> getEntidades(){
-        return ResponseEntity.status(200).body(GestorEntidadesBeneficiarias.getInstance().getEntidadesBeneficiarias());
+    public ResponseEntity<ArrayList<EntidadBeneficiariaDTO>> getEntidades(){
+        ArrayList<EntidadBeneficiaria> entidades = GestorEntidadesBeneficiarias.getInstance().getEntidadesBeneficiarias();
+        ArrayList<EntidadBeneficiariaDTO> entidadesDTO =  new ArrayList<>();
+        for(EntidadBeneficiaria entidad : entidades){
+            entidadesDTO.add(new EntidadBeneficiariaDTO(entidad.getRazonSocial(), entidad.getTipo(), entidad.getContacto(), entidad.getDireccion()));
+        }
+        return ResponseEntity.status(200).body(entidadesDTO);
     }
 
     @PostMapping
@@ -56,6 +62,7 @@ public class EntidadBeneficiariaController{
 
     @PostMapping("/{telefono}/necesidadesRecurrentes")
     public ResponseEntity<CampaniaNecesidad> crearCampaniaNecesidadRecurrente(@PathVariable String telefono, @RequestBody CampaniaNecesidadRecurrente campania){
+        campania.setEntidadBeneficiaria(GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono));
         GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono).crearCampaniaNecesidad(campania);
         return ResponseEntity.status(201).body(campania);
     }
@@ -76,6 +83,7 @@ public class EntidadBeneficiariaController{
 
     @PostMapping("/{telefono}/necesidadesExtraordinarias")
     public ResponseEntity<CampaniaNecesidad> crearCampaniaNecesidadExtraordinaria(@PathVariable String telefono, @RequestBody CampaniaNecesidadExtraordinaria campania){
+        campania.setEntidadBeneficiaria(GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono));
         GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono).crearCampaniaNecesidad(campania);
         return ResponseEntity.status(201).body(campania);
     }
