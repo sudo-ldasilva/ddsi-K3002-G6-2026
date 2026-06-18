@@ -18,7 +18,7 @@ public class NotificacionService {
         contacto.enviarMensaje(request.getMensaje());
     }
 
-    private void validar(NotificacionRequestDTO request) {
+    private boolean validar(NotificacionRequestDTO request) {
         if (request.getDireccionContacto() == null || request.getDireccionContacto().isBlank()) {
             return false;
         }

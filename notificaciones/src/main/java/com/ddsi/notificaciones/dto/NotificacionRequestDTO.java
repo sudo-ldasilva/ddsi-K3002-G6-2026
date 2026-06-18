@@ -1,19 +1,16 @@
 package com.ddsi.notificaciones.dto;
 
 public class NotificacionRequestDTO {
-    private String tipoContacto;
-    private String direccionContacto;
+    private List<ContactoDTO> contactos;
     private String mensaje;
 
     public NotificacionRequestDTO() {}
 
-    public NotificacionRequestDTO(String tipoContacto, String direccionContacto, String mensaje) {
-        this.tipoContacto = tipoContacto;
-        this.direccionContacto = direccionContacto;
+    public NotificacionRequestDTO(List<ContactoDTO> contactos, String mensaje) {
+        this.contactos = contactos;
         this.mensaje = mensaje;
     }
 
-    public String getTipoContacto() { return tipoContacto; }
-    public String getDireccionContacto() { return direccionContacto; }
+    public List<ContactoDTO> getContactos() { return contactos; }
     public String getMensaje() { return mensaje; }
 }
