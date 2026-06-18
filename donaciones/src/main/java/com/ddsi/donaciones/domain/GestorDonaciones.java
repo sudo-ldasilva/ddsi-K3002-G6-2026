@@ -9,10 +9,12 @@ public class GestorDonaciones {
     private static GestorDonaciones gestorDonaciones = null;
     private ArrayList<Donacion> donaciones;
     private ArrayList<DonacionIndependiente> posiblesDonaciones;
+    private ArrayList<NecesidadIndividual>  necesidadesPendientes;
 
     private GestorDonaciones() {
         this.donaciones = new ArrayList<>();
         this.posiblesDonaciones = new ArrayList<>();
+        this.necesidadesPendientes = new ArrayList<>(); //Quien agrega elementos aca??
     }
 
     public static GestorDonaciones getInstance() {
@@ -69,6 +71,27 @@ public class GestorDonaciones {
             if (donaciones.get(i).getUUID().equals(uuid)) {
                 Donacion donacion = donaciones.remove(i);
                 return donacion;
+            }
+        }
+        return null;
+    }
+
+    public void agregarNecesidadPendiente(NecesidadIndividual necesidadPendiente) {
+        necesidadesPendientes.add(necesidadPendiente);
+    }
+
+    public void eliminarNecesidadPendiente(UUID uuid) {
+        for (int i = 0; i < necesidadesPendientes.size(); i++) {
+            if(necesidadesPendientes.get(i).getUuid().equals(uuid)) {
+                necesidadesPendientes.remove(i);
+            }
+        }
+    }
+
+    public CampaniaNecesidad getCampaniaNecesidadByUUID(UUID uuid){
+        for (int i = 0; i < necesidadesPendientes.size(); i++) {
+            if (necesidadesPendientes.get(i).getUuid().equals(uuid)) {
+                return necesidadesPendientes.get(i).getCampania();
             }
         }
         return null;
