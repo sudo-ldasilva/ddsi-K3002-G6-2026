@@ -1,6 +1,7 @@
 package com.ddsi.donaciones.domain;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import com.ddsi.donaciones.service.NotificacionDispatcherService;
 
@@ -115,9 +116,11 @@ public class GestorDonaciones {
         NotificacionDispatcherService notificacionDispatcherService = new NotificacionDispatcherService();
         ArrayList<Contacto> contactosDonante = new ArrayList<>(donacion.getDonacion().getDonante().getContactos());
         contactosDonante.add(0, donacion.getDonacion().getDonante().getMail());
-        notificacionDispatcherService.notificarDonante(contactosDonante,
+        notificacionDispatcherService.notificar(contactosDonante,
                 String.format("Asignacion de Donacion: Se asigno el bien %s a la entidad %s", donacion.getSubcategoria(), campania.getEntidadBeneficiaria().getRazonSocial()));
-        notificacionDispatcherService.notificarEntidadBeneficiaria(campania.getEntidadBeneficiaria().getContacto(), String.format("Asignacion de Donacion: Se te asigno el bien %s", donacion.getSubcategoria()));
+        ArrayList<Contacto> contactoEntidad = new ArrayList<>();
+        contactoEntidad.add(campania.getEntidadBeneficiaria().getContacto());
+        notificacionDispatcherService.notificar(contactoEntidad, String.format("Asignacion de Donacion: Se te asigno el bien %s", donacion.getSubcategoria()));
     }
 
 }

@@ -1,33 +1,27 @@
 package com.ddsi.donaciones.domain.dto;
 
+import com.ddsi.donaciones.domain.Contacto;
+
+import java.util.ArrayList;
+
 public class NotificacionRequestDTO {
-    private String tipoContacto;
-    private String direccionContacto;
+    private ArrayList<Contacto> contactos;
     private String mensaje;
 
     public NotificacionRequestDTO() {
     }
 
-    public NotificacionRequestDTO(String tipoContacto, String direccionContacto, String mensaje) {
-        this.tipoContacto = tipoContacto;
-        this.direccionContacto = direccionContacto;
+    public NotificacionRequestDTO(ArrayList<Contacto> contactos, String mensaje) {
+        this.contactos = contactos;
         this.mensaje = mensaje;
     }
 
-    public String getTipoContacto() {
-        return tipoContacto;
+    public ArrayList<Contacto> getContactos() {
+        return contactos;
     }
 
-    public void setTipoContacto(String tipoContacto) {
-        this.tipoContacto = tipoContacto;
-    }
-
-    public String getDireccionContacto() {
-        return direccionContacto;
-    }
-
-    public void setDireccionContacto(String direccionContacto) {
-        this.direccionContacto = direccionContacto;
+    public void setContactos(ArrayList<Contacto> contactos) {
+        this.contactos = contactos;
     }
 
     public String getMensaje() {
