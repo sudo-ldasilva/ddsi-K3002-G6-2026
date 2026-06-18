@@ -1,18 +1,35 @@
 package com.ddsi.donaciones.domain;
 
 import java.util.ArrayList;
+import java.util.UUID;
 import java.util.function.ToIntFunction;
 
 public class NecesidadIndividual {
+    private UUID uuid;
     private Bien bien;//que se necesita,ej)sillas,ropa,comida
     public int cantidadNecesaria;//cuanto se necesita
     public ArrayList<DonacionIndependiente> donaciones;//las donaciones independientes que se van juntando para satisfacer
     public Boolean cubierta;
+    public CampaniaNecesidad campania;
 
-    public NecesidadIndividual(Bien bien, int casntidadNecesaria) {
+    public NecesidadIndividual(UUID uuid, Bien bien, int cantidadNecesaria, CampaniaNecesidad campania) {
+        this.uuid = UUID.randomUUID();
         this.bien = bien;
-        this.cantidadNecesaria = casntidadNecesaria;
+        this.cantidadNecesaria = cantidadNecesaria;
+        this.campania = campania;
         this.donaciones = new ArrayList<>();
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public int getCantidadNecesaria() {
+        return cantidadNecesaria;
+    }
+
+    public CampaniaNecesidad getCampania() {
+        return campania;
     }
 
     public Bien getBien() {

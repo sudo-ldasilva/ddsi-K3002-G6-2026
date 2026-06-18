@@ -1,6 +1,6 @@
 package com.ddsi.notificaciones.domain;
 
-import com.ddsi.donaciones.domain.Contacto;
+import com.ddsi.notificaciones.dto.ContactoDTO;
 
 public class GestorNotificaciones {
 
@@ -15,7 +15,7 @@ public class GestorNotificaciones {
         return gestorNotificaciones;
     }
 
-    public boolean enviarMensaje(Contacto contacto, String mensaje) {
+    public boolean enviarMensaje(ContactoDTO contacto, String mensaje) {
         try {
             switch (contacto.getTipoContacto().toUpperCase()) {
                 case "MAIL"            -> new ContactoMail().enviarMensaje(mensaje, contacto.getDireccion());

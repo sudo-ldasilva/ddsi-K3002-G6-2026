@@ -1,8 +1,9 @@
 package com.ddsi.notificaciones.controller;
 
-import com.ddsi.donaciones.domain.Contacto;
+import com.ddsi.notificaciones.domain.Contacto
 import com.ddsi.notificaciones.domain.GestorNotificaciones;
 import com.ddsi.notificaciones.dto.NotificacionRequestDTO;
+import com.ddsi.notificaciones.dto.ContactoDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ public class NotificacionController {
 
     @PostMapping
     public ResponseEntity<?> enviar(@RequestBody NotificacionRequestDTO request) {
-        for (Contacto contacto : request.getContactos()) {
+        for (ContactoDTO contacto : request.getContactos()) {
             if (GestorNotificaciones.getInstance().enviarMensaje(contacto, request.getMensaje())) {
                 return ResponseEntity.ok().build();
             }

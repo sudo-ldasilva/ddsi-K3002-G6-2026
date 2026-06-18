@@ -3,6 +3,7 @@ package com.ddsi.donaciones.controller;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import com.ddsi.donaciones.domain.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,14 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.ddsi.donaciones.domain.GestorDonaciones;
-import com.ddsi.donaciones.domain.Donacion;
-import com.ddsi.donaciones.domain.DonacionIndependiente;
 import com.ddsi.donaciones.domain.dto.DonacionDTO;
-import com.ddsi.donaciones.domain.EstadoDonacion;
 
 @RestController
-@RequestMapping("/donacion")
+@RequestMapping("/donaciones")
 public class DonacionController {
 
     @GetMapping
@@ -88,5 +85,16 @@ public class DonacionController {
         donacion.cambiarEstado(estado);
 
         return ResponseEntity.status(200).body(donacion);
+    }
+
+    @PostMapping("independientes/{uuidDonacion}/asignaciones/{uuidNecesidad}")
+    public ResponseEntity<String> asignarDonacion(@PathVariable UUID uuidDonacion, @PathVariable UUID uuidNecesidad) throws Exception {
+        DonacionIndependiente donacion = GestorDonaciones.getInstance().getDonacionIndependienteByUUID(uuidDonacion);
+        if (donacion == null) return ResponseEntity.status(404).body(null);
+        CampaniaNecesidad necesidad = GestorDonaciones.getInstance().getCampaniaNecesidadByUUID(uuidNecesidad);
+        if (necesidad == null) return ResponseEntity.status(404).body(null);
+
+        GestorDonaciones.getInstance().asignarDonacionIndependiente(donacion, necesidad);
+        return ResponseEntity.status(200).body("Donacion asignada correctamente");
     }
 }
