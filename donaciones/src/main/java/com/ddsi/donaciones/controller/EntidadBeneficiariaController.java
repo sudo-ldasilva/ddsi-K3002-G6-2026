@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.ddsi.donaciones.domain.*;
 import com.ddsi.donaciones.domain.dto.EntidadBeneficiariaDTO;
+import com.ddsi.donaciones.domain.dto.CampaniaNecesidadDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,8 +57,19 @@ public class EntidadBeneficiariaController{
     }
 
     @GetMapping("/{telefono}/necesidades")
-    public ResponseEntity<ArrayList<CampaniaNecesidad>> getNecesidades(@PathVariable String telefono){
-        return ResponseEntity.status(200).body(GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono).getNecesidades());
+    public ResponseEntity<ArrayList<CampaniaNecesidadDTO>> getNecesidades(@PathVariable String telefono){
+        ArrayList<CampaniaNecesidad> necesidades = GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono).getNecesidades();
+        ArrayList<CampaniaNecesidadDTO> necesidadesDTO =  new ArrayList<>();
+        for(CampaniaNecesidad nec : necesidades){
+            CampaniaNecesidadDTO necDTO = null;
+            if(nec instanceof CampaniaNecesidadRecurrente){
+                necDTO = new CampaniaNecesidadDTO(nec.getUuid(), "Recurrente", nec.getNecesidades(), nec.getDescripcion(), nec.getEstado(), ((CampaniaNecesidadRecurrente) nec).getPeriodo(), null);
+            } else if (nec instanceof CampaniaNecesidadExtraordinaria){
+                necDTO = new CampaniaNecesidadDTO(nec.getUuid(), "Extraordinaria", nec.getNecesidades(), nec.getDescripcion(), nec.getEstado(), null, ((CampaniaNecesidadExtraordinaria) nec).getSituacionExcepcional());
+            }
+            necesidadesDTO.add(necDTO);
+        }
+        return ResponseEntity.status(200).body(necesidadesDTO);
     }
 
     @PostMapping("/{telefono}/necesidadesRecurrentes")

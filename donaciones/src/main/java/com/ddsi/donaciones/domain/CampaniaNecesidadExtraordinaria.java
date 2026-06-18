@@ -15,4 +15,12 @@ public class CampaniaNecesidadExtraordinaria extends CampaniaNecesidad {
     public void setSituacionExcepcional(String situacionExcepcional) {
         this.situacionExcepcional = situacionExcepcional;
     }
+
+    public boolean esRecurrente(){
+        return false;
+    }
+
+    public boolean esExtraordinaria(){
+        return true;
+    }
 }
