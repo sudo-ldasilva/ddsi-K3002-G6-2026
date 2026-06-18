@@ -35,7 +35,5 @@ public class NotificacionDispatcherService {
                 .body(request)
                 .retrieve()
                 .toBodilessEntity();
-    }    }
-
-
+    }
 }
