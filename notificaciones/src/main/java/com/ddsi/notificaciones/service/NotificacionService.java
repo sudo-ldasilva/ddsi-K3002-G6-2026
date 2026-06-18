@@ -20,23 +20,13 @@ public class NotificacionService {
 
     private void validar(NotificacionRequestDTO request) {
         if (request.getDireccionContacto() == null || request.getDireccionContacto().isBlank()) {
-            throw new ContactoInvalidoException("No se recibio un contacto valido para enviar la notificacion");
+            return false;
         }
         if (request.getTipoContacto() == null || request.getTipoContacto().isBlank()) {
-            throw new ContactoInvalidoException("No se especifico el tipo de contacto");
+            return false;
         }
         if (request.getMensaje() == null || request.getMensaje().isBlank()) {
-            throw new ContactoInvalidoException("El mensaje no puede estar vacio");
+            return false;
         }
-    }
-
-    private Contacto crearContacto(String tipoContacto, String direccion) {
-        return switch (tipoContacto.toUpperCase()) {
-            case "MAIL" -> new ContactoMail(direccion);
-            case "TELEFONO", "SMS" -> new ContactoTelefono(direccion);
-            case "WHATSAPP" -> new ContactoWhatsapp(direccion);
-            case "TELEGRAM" -> new ContactoTelegram(direccion, direccion);
-            default -> throw new ContactoInvalidoException("Tipo de contacto no soportado: " + tipoContacto);
-        };
     }
 }

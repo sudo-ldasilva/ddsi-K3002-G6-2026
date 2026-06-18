@@ -10,7 +10,13 @@ public class GestorNotificaciones{
         return gestorNotificaciones;
     }
 
-    public void enviarMensaje(String mensaje, String tipoContacto, String direccion){
-        //to do
+    public void enviarMensaje(String mensaje, String tipoContacto, String direccion) {
+        return switch (tipoContacto.toUpperCase()) {
+            case "MAIL" -> new ContactoMail(mensaje,direccion);
+            case "TELEFONO", "SMS" -> new ContactoTelefono(mensaje, direccion);
+            case "WHATSAPP" -> new ContactoWhatsapp(mensaje, direccion);
+            case "TELEGRAM" -> new ContactoTelegram(mensaje, direccion, direccion);
+            default -> return false;
+        };
     }
 }
