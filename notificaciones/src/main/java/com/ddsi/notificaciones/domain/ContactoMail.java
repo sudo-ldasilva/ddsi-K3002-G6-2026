@@ -1,6 +1,4 @@
-package com.ddsi.donaciones.domain;
-
-import com.ddsi.notificaciones.Contacto;
+package com.ddsi.notificaciones.domain;
 
 @Service
 public class ContactoMail implements Contacto {
