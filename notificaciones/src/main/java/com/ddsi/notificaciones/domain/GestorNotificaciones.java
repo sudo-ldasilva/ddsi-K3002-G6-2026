@@ -19,7 +19,7 @@ public class GestorNotificaciones {
         try {
             switch (contacto.getTipoContacto().toUpperCase()) {
                 case "MAIL"            -> new ContactoMail().enviarMensaje(mensaje, contacto.getDireccion());
-                case "SMS", "TELEFONO" -> new ContactoSMS().enviarMensaje(mensaje, contacto.getDireccion());
+                case "SMS" -> new ContactoSMS().enviarMensaje(mensaje, contacto.getDireccion());
                 case "WHATSAPP"        -> new ContactoWhatsapp().enviarMensaje(mensaje, contacto.getDireccion());
                 default                -> { return false; }
             }
