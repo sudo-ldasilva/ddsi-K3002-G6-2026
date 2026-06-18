@@ -77,4 +77,8 @@ public abstract class CampaniaNecesidad {
         }
         return list;
     }
+
+    public abstract boolean esRecurrente();
+
+    public abstract boolean esExtraordinaria();
 }
