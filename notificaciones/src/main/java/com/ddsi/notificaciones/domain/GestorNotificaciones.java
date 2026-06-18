@@ -1,7 +1,12 @@
 package com.ddsi.notificaciones.domain;
 
-public class GestorNotificaciones{
+import com.ddsi.donaciones.domain.Contacto;
+
+public class GestorNotificaciones {
+
     private static GestorNotificaciones gestorNotificaciones = null;
+
+    private GestorNotificaciones() {}
 
     public static GestorNotificaciones getInstance() {
         if (gestorNotificaciones == null) {
@@ -10,13 +15,17 @@ public class GestorNotificaciones{
         return gestorNotificaciones;
     }
 
-    public void enviarMensaje(String mensaje, String tipoContacto, String direccion) {
-        return switch (tipoContacto.toUpperCase()) {
-            case "MAIL" -> new ContactoMail(mensaje,direccion);
-            case "TELEFONO", "SMS" -> new ContactoTelefono(mensaje, direccion);
-            case "WHATSAPP" -> new ContactoWhatsapp(mensaje, direccion);
-            case "TELEGRAM" -> new ContactoTelegram(mensaje, direccion, direccion);
-            default -> return false;
-        };
+    public boolean enviarMensaje(Contacto contacto, String mensaje) {
+        try {
+            switch (contacto.getTipoContacto().toUpperCase()) {
+                case "MAIL"            -> new ContactoMail().enviarMensaje(mensaje, contacto.getDireccion());
+                case "SMS", "TELEFONO" -> new ContactoSMS().enviarMensaje(mensaje, contacto.getDireccion());
+                case "WHATSAPP"        -> new ContactoWhatsapp().enviarMensaje(mensaje, contacto.getDireccion());
+                default                -> { return false; }
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
