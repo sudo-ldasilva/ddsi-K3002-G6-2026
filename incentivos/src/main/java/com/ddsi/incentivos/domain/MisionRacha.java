@@ -11,7 +11,7 @@ public class MisionRacha extends Mision {
         ArrayList<DonacionIndependienteDTO> donaciones = donante.getDonaciones();
         java.util.Date fecha = new Date();
         int mesActual = fecha.getMonth();
-        for (int i = 0; i <this.getCantidadNecesaria(); i++){
+        for (int i = 0; i < this.getCantidadNecesaria(); i++){
             int a = this.esteMes(donaciones, mesActual);
             if (a == 0) {
                 return progreso;

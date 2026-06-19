@@ -1,16 +1,17 @@
 package com.ddsi.incentivos.domain;
 
-public class Insignia {
+import java.util.Date;
 
-    private Fecha fechaCompletada;
+public class Insignia {
+    private Date fechaCompletada;
     private Mision mision;
 
-    public Insignia(Fecha fechaCompletada, Mision mision) {
+    public Insignia(Date fechaCompletada, Mision mision) {
         this.fechaCompletada = fechaCompletada;
         this.mision = mision;
     }
 
-    public Fecha getFechaCompletada() {
+    public Date getFechaCompletada() {
         return fechaCompletada;
     }
 }

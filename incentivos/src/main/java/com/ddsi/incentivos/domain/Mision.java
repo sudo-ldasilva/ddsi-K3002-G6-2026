@@ -1,4 +1,5 @@
 package com.ddsi.incentivos.domain;
+
 import java.util.Date;
 
 public abstract class Mision {
@@ -9,7 +10,7 @@ public abstract class Mision {
     public Insignia misionCumplida(Donante donante){
         Mision misionActual = donante.getMisionActual();
         if (misionActual.getProgresoActual(donante) == misionActual.cantidadNecesaria){
-            return insignia = new Insignia (new Date(),self);
+            return new Insignia(new Date(), this);
         }
         return null;
     }
