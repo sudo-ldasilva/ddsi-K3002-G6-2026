@@ -33,6 +33,8 @@ public class Donante {
         return donacionesService.getDonaciones(mail.getDireccion());
     }
 
+    public void siguienteMision() { this.indiceMisionActual = this.indiceMisionActual + 1; }
+
     public Categoria getCategoriaActual() {
         return this.categoriaActual;
     }
@@ -43,6 +45,7 @@ public class Donante {
         }
 
         categoriaActual = categoriaActual.getSiguiente();
+        indiceMisionActual = 0;
     }
 
     public ArrayList<Insignia> getInsignias() {

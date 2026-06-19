@@ -3,6 +3,7 @@ package com.ddsi.incentivos.services;
 import com.ddsi.incentivos.domain.dto.DonacionIndependienteDTO;
 import com.ddsi.incentivos.domain.Contacto;
 
+import com.ddsi.incentivos.domain.dto.DonacionesPorMailDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,24 +21,29 @@ public class DonacionesService {
         this.restClient = RestClient.builder().build();
     }
 
-    public ArrayList<DonacionIndependienteDTO> getDonaciones(String mailDonante) {
-        String endpoint = URL_BASE + "donante/" + mailDonante + "/donaciones";
+    public ArrayList<DonacionesPorMailDTO> getDonacionesPorMail() {
+        String endpoint = URL_BASE + "donaciones/independientesPorMail";
         return restClient
-                .post()
+                .get()
                 .uri(endpoint)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(mailDonante)
+                .retrieve()
+                .body(new ParameterizedTypeReference<ArrayList<DonacionesPorMailDTO>>() {});
+    }
+
+    public ArrayList<DonacionIndependienteDTO> getDonaciones(String mailDonante) {
+        String endpoint = URL_BASE + "donantes/" + mailDonante + "/independientesPorMail";
+        return restClient
+                .get()
+                .uri(endpoint)
                 .retrieve()
                 .body(new ParameterizedTypeReference<ArrayList<DonacionIndependienteDTO>>() {});
     }
 
     public ArrayList<Contacto> getMediosDeContacto(String mailDonante) {
-        String endpoint = URL_BASE + "donante/" + mailDonante + "/contactos";
+        String endpoint = URL_BASE + "donantes/" + mailDonante + "/contactos";
         return restClient
-                .post()
+                .get()
                 .uri(endpoint)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(mailDonante)
                 .retrieve()
                 .body(new ParameterizedTypeReference<ArrayList<Contacto>>() {});
     }

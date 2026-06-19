@@ -14,11 +14,11 @@ public class Categoria {
     }
 
     public boolean puedePasarASiguienteCategoria(Donante donante) {
-        return misionesACompletar.stream().allMatch( m -> m.misionCumplida(donante));
+        return misionesACompletar.stream().allMatch( m -> m.misionCumplida(donante) != null);
     }
 
     public Mision getMision(int indice) {
-        return misionesACompletar.get(indice);
+        return indice < misionesACompletar.size() ? misionesACompletar.get(indice) : null;
     }
 
     public Categoria getSiguiente() {
