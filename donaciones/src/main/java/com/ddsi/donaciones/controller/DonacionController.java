@@ -71,6 +71,12 @@ public class DonacionController {
         return ResponseEntity.status(200).body(donacion);
     }
 
+    @GetMapping("/independientesPorMail")
+    public ResponseEntity<ArrayList<DonacionIndependienteDTO>> getDonacionIndependientes() {
+        ArrayList<DonacionIndependienteDTO> donaciones = GestorDonaciones.getInstance().getDonacionesIndependientes();
+        return ResponseEntity.status(200).body(donacion);
+    }
+
     @GetMapping("/independientes/{uuid}")
     public ResponseEntity<DonacionIndependiente> getDonacionIndependiente(@PathVariable UUID uuid) {
         DonacionIndependiente donacion = GestorDonaciones.getInstance().getDonacionIndependienteByUUID(uuid);

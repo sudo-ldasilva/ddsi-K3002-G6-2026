@@ -23,6 +23,18 @@ public class DonanteController {
         return ResponseEntity.status(200).body(GestorDonantes.getInstance().getDonantes());
     }
 
+    @GetMapping("/{mailDonante}/independientesPorMail")
+    public ResponseEntity<ArrayList<DonacionIndependienteDTO>> getDonacionIndependientes() {
+        ArrayList<DonacionIndependienteDTO> donacion = GestorDonaciones.getInstance().getDonacionesIndependientes();
+        return ResponseEntity.status(200).body(donacion);
+    }
+
+    @GetMapping("/{mail}/contactos")
+    public ResponseEntity<DonacionIndependienteDTO> getDonacionIndependientes() {
+        DonacionIndependienteDTO donacion = GestorDonaciones.getInstance().getDonacionesIndependientes();
+        return ResponseEntity.status(200).body(donacion);
+    }
+
     @PostMapping("/humanos")
     public ResponseEntity<Donante> crearHumano(@RequestBody PersonaHumana donante) {
         GestorDonantes.getInstance().registrarDonante(donante);
