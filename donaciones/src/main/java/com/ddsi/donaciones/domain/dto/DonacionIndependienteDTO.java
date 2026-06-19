@@ -1,4 +1,4 @@
-package com.ddsi.incentivos.domain.dto;
+package com.ddsi.donaciones.domain.dto;
 
 import java.util.ArrayList;
 import java.util.UUID;

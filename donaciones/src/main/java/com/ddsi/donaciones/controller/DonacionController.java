@@ -2,8 +2,10 @@ package com.ddsi.donaciones.controller;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.ddsi.donaciones.domain.*;
+import com.ddsi.donaciones.domain.dto.DonacionIndependienteDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,9 +74,20 @@ public class DonacionController {
     }
 
     @GetMapping("/independientesPorMail")
-    public ResponseEntity<ArrayList<DonacionIndependienteDTO>> getDonacionIndependientes() {
-        ArrayList<DonacionIndependienteDTO> donaciones = GestorDonaciones.getInstance().getDonacionesIndependientes();
-        return ResponseEntity.status(200).body(donacion);
+    public ResponseEntity<ArrayList<DonacionIndependienteDTO>> getDonacionIndependientesPorMail() {
+        ArrayList<DonacionIndependienteDTO> donaciones = GestorDonaciones.getInstance()
+                .getDonacionesIndependientes()
+                .stream()
+                .map(d -> new DonacionIndependienteDTO(
+                        d.getUUID(),
+                        d.getSubcategoria().getCategoria().getNombre(),
+                        d.getDonacion().getDonante().getMail().getDireccion(),
+                        d.getBienes().stream().mapToInt(BienDonado::getCantidad).sum(),
+                        d.getEstadoActual().ordinal(),
+                        d.getFecha()
+                ))
+                .collect(Collectors.toCollection(ArrayList::new));
+        return ResponseEntity.status(200).body(donaciones);
     }
 
     @GetMapping("/independientes/{uuid}")

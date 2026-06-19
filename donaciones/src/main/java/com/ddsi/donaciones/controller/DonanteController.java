@@ -1,8 +1,10 @@
 package com.ddsi.donaciones.controller;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import com.ddsi.donaciones.domain.*;
+import com.ddsi.donaciones.domain.dto.DonacionIndependienteDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,16 +25,28 @@ public class DonanteController {
         return ResponseEntity.status(200).body(GestorDonantes.getInstance().getDonantes());
     }
 
-    @GetMapping("/{mailDonante}/independientesPorMail")
-    public ResponseEntity<ArrayList<DonacionIndependienteDTO>> getDonacionIndependientes() {
-        ArrayList<DonacionIndependienteDTO> donacion = GestorDonaciones.getInstance().getDonacionesIndependientes();
-        return ResponseEntity.status(200).body(donacion);
+    @GetMapping("/{mail}/independientesPorMail")
+    public ResponseEntity<ArrayList<DonacionIndependienteDTO>> getDonacionIndependientes(@PathVariable String mail) {
+        ArrayList<DonacionIndependienteDTO> donaciones = GestorDonaciones.getInstance()
+                .getDonacionesIndependientes()
+                .stream()
+                .filter(d -> d.getDonacion().getDonante().getMail().getDireccion().equalsIgnoreCase(mail))
+                .map(d -> new DonacionIndependienteDTO(
+                        d.getUUID(),
+                        d.getSubcategoria().getCategoria().getNombre(),
+                        mail,
+                        d.getBienes().stream().mapToInt(BienDonado::getCantidad).sum(),
+                        d.getEstadoActual().ordinal(),
+                        d.getFecha()
+                ))
+                .collect(Collectors.toCollection(ArrayList::new));
+        return ResponseEntity.status(200).body(donaciones);
     }
 
     @GetMapping("/{mail}/contactos")
-    public ResponseEntity<DonacionIndependienteDTO> getDonacionIndependientes() {
-        DonacionIndependienteDTO donacion = GestorDonaciones.getInstance().getDonacionesIndependientes();
-        return ResponseEntity.status(200).body(donacion);
+    public ResponseEntity<ArrayList<Contacto>> getContactos(@PathVariable String mail) {
+        ArrayList<Contacto> medios = GestorDonantes.getInstance().getDonante(new Contacto(mail, "mail")).getContactos();
+        return ResponseEntity.status(200).body(medios);
     }
 
     @PostMapping("/humanos")
