@@ -1,6 +1,7 @@
 package com.ddsi.donaciones.domain.dto;
 
-import java.util.ArrayList;
+import com.ddsi.donaciones.domain.EstadoDonacion;
+
 import java.util.UUID;
 import java.util.Date;
 
@@ -9,10 +10,10 @@ public class DonacionIndependienteDTO {
     private String categoriaBien;
     private String mailDonante;
     private int cantidadBienes;
-    private int estadoActual;
+    private EstadoDonacion estadoActual;
     private Date fecha;
 
-    public DonacionIndependienteDTO(UUID uuid, String categoriaBien, String mailDonante, int cantidadBienes, int estadoActual, Date fecha) {
+    public DonacionIndependienteDTO(UUID uuid, String categoriaBien, String mailDonante, int cantidadBienes, EstadoDonacion estadoActual, Date fecha) {
         this.uuid = uuid;
         this.categoriaBien = categoriaBien;
         this.mailDonante = mailDonante;
@@ -49,11 +50,11 @@ public class DonacionIndependienteDTO {
         this.cantidadBienes = cantidadBienes;
     }
 
-    public int getEstadoActual() {
+    public EstadoDonacion getEstadoActual() {
         return estadoActual;
     }
 
-    public void setEstadoActual(int estadoActual) {
+    public void setEstadoActual(EstadoDonacion estadoActual) {
         this.estadoActual = estadoActual;
     }
 
