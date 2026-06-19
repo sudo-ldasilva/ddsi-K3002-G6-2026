@@ -126,25 +126,34 @@ public class GestorDonaciones {
         posiblesDonaciones.addAll(donacionesInd);
     }
 
-    public void asignarDonacionIndependiente(DonacionIndependiente donacion, CampaniaNecesidad campania) throws Exception {
-        NecesidadIndividual necesidadAsignada = campania.necesidades.stream().filter(n->n.getSubcategoria().equals(donacion.getSubcategoria())).findFirst().orElse(null);
+    public void asignarDonacionIndependiente(UUID donacionUUID, UUID campaniaUUID) throws Exception {
+        DonacionIndependiente donacionIndependiente = this.getDonacionIndependienteByUUID(donacionUUID);
+        if (donacionIndependiente != null) {
+            throw new Exception();
+        }
+
+        CampaniaNecesidad campania = GestorEntidadesBeneficiarias.getInstance().obtenerCampaniaDeNecesidad(campaniaUUID);
+        NecesidadIndividual necesidadAsignada = campania.necesidades.stream().filter(n->n.getSubcategoria().equals(donacionIndependiente.getSubcategoria())).findFirst().orElse(null);
         if (necesidadAsignada == null) {
             throw new Exception();
         }
 
         //Asignacion
-        necesidadAsignada.donaciones.add(donacion);
-        donacion.setNecesidad(necesidadAsignada);
+        necesidadAsignada.donaciones.add(donacionIndependiente);
+        donacionIndependiente.setNecesidad(necesidadAsignada);
+
+        //Cambio de Estado
+        donacionIndependiente.cambiarEstado(EstadoDonacion.ASIGNACION_REALIZADA);
 
         //Envio de notificaciones
         NotificacionDispatcherService notificacionDispatcherService = new NotificacionDispatcherService();
-        ArrayList<Contacto> contactosDonante = new ArrayList<>(donacion.getDonacion().getDonante().getContactos());
-        contactosDonante.add(0, donacion.getDonacion().getDonante().getMail());
+        ArrayList<Contacto> contactosDonante = new ArrayList<>(donacionIndependiente.getDonacion().getDonante().getContactos());
+        contactosDonante.add(0, donacionIndependiente.getDonacion().getDonante().getMail());
         notificacionDispatcherService.notificar(contactosDonante,
-                String.format("Asignacion de Donacion: Se asigno el bien %s a la entidad %s", donacion.getSubcategoria(), campania.getEntidadBeneficiaria().getRazonSocial()));
+                String.format("Asignacion de Donacion: Se asigno el bien %s a la entidad %s", donacionIndependiente.getSubcategoria(), campania.getEntidadBeneficiaria().getRazonSocial()));
         ArrayList<Contacto> contactoEntidad = new ArrayList<>();
         contactoEntidad.add(campania.getEntidadBeneficiaria().getContacto());
-        notificacionDispatcherService.notificar(contactoEntidad, String.format("Asignacion de Donacion: Se te asigno el bien %s", donacion.getSubcategoria()));
+        notificacionDispatcherService.notificar(contactoEntidad, String.format("Asignacion de Donacion: Se te asigno el bien %s", donacionIndependiente.getSubcategoria()));
     }
 
 }

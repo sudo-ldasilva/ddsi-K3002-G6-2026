@@ -108,12 +108,7 @@ public class DonacionController {
 
     @PostMapping("independientes/{uuidDonacion}/asignaciones/{uuidNecesidad}")
     public ResponseEntity<String> asignarDonacion(@PathVariable UUID uuidDonacion, @PathVariable UUID uuidNecesidad) throws Exception {
-        DonacionIndependiente donacion = GestorDonaciones.getInstance().getDonacionIndependienteByUUID(uuidDonacion);
-        if (donacion == null) return ResponseEntity.status(404).body(null);
-        CampaniaNecesidad necesidad = GestorDonaciones.getInstance().getCampaniaNecesidadByUUID(uuidNecesidad);
-        if (necesidad == null) return ResponseEntity.status(404).body(null);
-
-        GestorDonaciones.getInstance().asignarDonacionIndependiente(donacion, necesidad);
+        GestorDonaciones.getInstance().asignarDonacionIndependiente(uuidDonacion, uuidDonacion);
         return ResponseEntity.status(200).body("Donacion asignada correctamente");
     }
 }
