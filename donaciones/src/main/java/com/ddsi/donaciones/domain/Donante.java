@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public abstract class Donante {
     private Contacto mail;
-    private List<Contacto> mediosDeContacto;
+    private ArrayList<Contacto> mediosDeContacto;
     private Documento documento;
 
     public Donante(Contacto mail, Documento documento) {
@@ -18,7 +18,7 @@ public abstract class Donante {
         return this.mail;
     }
 
-    public List<Contacto> getContactos() {
+    public ArrayList<Contacto> getContactos() {
         return mediosDeContacto;
     }
 
@@ -30,7 +30,7 @@ public abstract class Donante {
         this.mediosDeContacto.remove(contacto);
     }
 
-    public void setMediosDeContacto(List<Contacto> mediosDeContacto) {
+    public void setMediosDeContacto(ArrayList<Contacto> mediosDeContacto) {
         this.mediosDeContacto = mediosDeContacto;
     }
 
