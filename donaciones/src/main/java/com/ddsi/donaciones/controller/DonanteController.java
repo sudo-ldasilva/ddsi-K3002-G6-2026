@@ -36,7 +36,7 @@ public class DonanteController {
                         d.getSubcategoria().getCategoria().getNombre(),
                         mail,
                         d.getBienes().stream().mapToInt(BienDonado::getCantidad).sum(),
-                        d.getEstadoActual().ordinal(),
+                        d.getEstadoActual(),
                         d.getFecha()
                 ))
                 .collect(Collectors.toCollection(ArrayList::new));

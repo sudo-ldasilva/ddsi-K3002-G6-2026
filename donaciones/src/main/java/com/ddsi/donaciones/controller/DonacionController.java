@@ -1,11 +1,13 @@
 package com.ddsi.donaciones.controller;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.ddsi.donaciones.domain.*;
 import com.ddsi.donaciones.domain.dto.DonacionIndependienteDTO;
+import com.ddsi.donaciones.domain.dto.DonacionesPorMailDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -74,7 +76,7 @@ public class DonacionController {
     }
 
     @GetMapping("/independientesPorMail")
-    public ResponseEntity<ArrayList<DonacionIndependienteDTO>> getDonacionIndependientesPorMail() {
+    public ResponseEntity<ArrayList<DonacionesPorMailDTO>> getDonacionIndependientesPorMail() {
         ArrayList<DonacionIndependienteDTO> donaciones = GestorDonaciones.getInstance()
                 .getDonacionesIndependientes()
                 .stream()
@@ -83,11 +85,21 @@ public class DonacionController {
                         d.getSubcategoria().getCategoria().getNombre(),
                         d.getDonacion().getDonante().getMail().getDireccion(),
                         d.getBienes().stream().mapToInt(BienDonado::getCantidad).sum(),
-                        d.getEstadoActual().ordinal(),
+                        d.getEstadoActual(),
                         d.getFecha()
                 ))
                 .collect(Collectors.toCollection(ArrayList::new));
-        return ResponseEntity.status(200).body(donaciones);
+
+        Map<String, ArrayList<DonacionIndependienteDTO>> agrupadas = donaciones.stream()
+                .collect(Collectors.groupingBy(
+                        DonacionIndependienteDTO::getMailDonante,
+                        Collectors.toCollection(ArrayList::new)
+                ));
+
+        ArrayList<DonacionesPorMailDTO> resultado = agrupadas.entrySet().stream()
+                .map(entry -> new DonacionesPorMailDTO(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toCollection(ArrayList::new));
+        return ResponseEntity.status(200).body(resultado);
     }
 
     @GetMapping("/independientes/{uuid}")
