@@ -15,12 +15,4 @@ public class CampaniaNecesidadRecurrente extends CampaniaNecesidad {
     public void setPeriodo(String periodo) {
         this.periodo = periodo;
     }
-
-    public boolean esRecurrente(){
-        return true;
-    }
-
-    public boolean esExtraordinaria(){
-        return false;
-    }
 }

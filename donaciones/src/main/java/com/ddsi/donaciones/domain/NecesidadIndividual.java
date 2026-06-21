@@ -35,11 +35,7 @@ public class NecesidadIndividual {
     public Bien getBien() {
         return bien;
     }
-
-    public int getCasntidadNecesaria() {
-        return cantidadNecesaria;
-    }
-
+    
     public ArrayList<DonacionIndependiente> getDonaciones() {
         return donaciones;
     }

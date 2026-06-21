@@ -16,11 +16,4 @@ public class CampaniaNecesidadExtraordinaria extends CampaniaNecesidad {
         this.situacionExcepcional = situacionExcepcional;
     }
 
-    public boolean esRecurrente(){
-        return false;
-    }
-
-    public boolean esExtraordinaria(){
-        return true;
-    }
 }
