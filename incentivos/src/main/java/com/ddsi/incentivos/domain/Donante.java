@@ -41,7 +41,7 @@ public class Donante {
 
     public void cambiarCategoria() throws Exception {
         if (!categoriaActual.puedePasarASiguienteCategoria(this)) {
-            throw new Exception("No se puede pasar a la siguiente categoria");
+            throw new Exception(); //No se puede pasar a la siguiente categoria (usar codificacion o booleano, no un string)
         }
 
         categoriaActual = categoriaActual.getSiguiente();

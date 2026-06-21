@@ -89,18 +89,9 @@ public class GestorDonaciones {
         }
     }
 
-    public CampaniaNecesidad getCampaniaNecesidadByUUID(UUID uuid){
-        for (int i = 0; i < necesidadesPendientes.size(); i++) {
-            if (necesidadesPendientes.get(i).getUuid().equals(uuid)) {
-                return necesidadesPendientes.get(i).getCampania();
-            }
-        }
-        return null;
-    }
-
     public void generarDonacionesIndependientes(Donacion donacion) throws Exception {
         if (donacion.yaFueSegmentada()) {
-            throw new Exception("La donación ya fue segmentada");
+            throw new Exception(); //La donación ya fue segmentada (usar codificacion o booleano, no devolver mensaje de error)
         }
 
         ArrayList<DonacionIndependiente> donacionesInd = new ArrayList<>();
@@ -139,7 +130,7 @@ public class GestorDonaciones {
         }
 
         //Asignacion
-        necesidadAsignada.donaciones.add(donacionIndependiente);
+        necesidadAsignada.recibir(donacionIndependiente);
         donacionIndependiente.setNecesidad(necesidadAsignada);
 
         //Cambio de Estado

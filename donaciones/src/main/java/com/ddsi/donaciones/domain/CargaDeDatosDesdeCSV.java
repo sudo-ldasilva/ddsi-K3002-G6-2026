@@ -122,7 +122,6 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
                 donante = juridica;
             }
             default -> {
-                System.out.printf("[CargaCSV] Tipo de persona desconocido: '%s'%n", tipoPersona);
                 return null;
             }
         }
@@ -142,7 +141,7 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String headerLine = br.readLine();
-            if (headerLine == null) throw new Exception("El archivo CSV está vacío: " + path);
+            if (headerLine == null) throw new Exception(); //"El archivo CSV está vacío: " + path (Usar codificacion en lugar de un string)
 
             String delimitador = headerLine.contains(";") ? ";" : ",";
             String[] headers   = headerLine.split(delimitador, -1);

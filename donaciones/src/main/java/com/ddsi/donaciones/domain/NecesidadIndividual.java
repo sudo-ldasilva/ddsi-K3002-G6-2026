@@ -9,7 +9,6 @@ public class NecesidadIndividual {
     private Bien bien;//que se necesita,ej)sillas,ropa,comida
     public int cantidadNecesaria;//cuanto se necesita
     public ArrayList<DonacionIndependiente> donaciones;//las donaciones independientes que se van juntando para satisfacer
-    public Boolean cubierta;
     public CampaniaNecesidad campania;
 
     public NecesidadIndividual(UUID uuid, Bien bien, int cantidadNecesaria, CampaniaNecesidad campania) {
@@ -40,20 +39,12 @@ public class NecesidadIndividual {
         return donaciones;
     }
 
-    public Boolean getCubierta() {
-        return cubierta;
-    }
-
     public Subcategoria getSubcategoria() {
         return bien.getSubcategoria();
     }
 
     public Boolean estaCubierta() {
-        ToIntFunction<DonacionIndependiente> funcionGetCantidadBienes
-            = d -> d.getBienes().stream().mapToInt(b -> b.getCantidad()).sum();
-
-        //conviete a stream,lleva el campo unidad minima de bien a int y suma todo, desp compara con la cantidad necesaria
-        return donaciones.stream().mapToInt(funcionGetCantidadBienes).sum() >= cantidadNecesaria;
+        return this.getCantidadRecibida() >= cantidadNecesaria;
     }
 
     public int getCantidadRecibida() {
