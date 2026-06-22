@@ -10,16 +10,14 @@ public class CampaniaNecesidadDTO {
     private String tipo;
     private ArrayList<NecesidadIndividual> necesidades;
     private String descripcion;
-    private String estado;
     private String periodo;
     private String situacionExcepcional;
 
-    public CampaniaNecesidadDTO(UUID uuid, String tipo, ArrayList<NecesidadIndividual> necesidades, String descripcion, String estado, String periodo, String situacionExcepcional) {
+    public CampaniaNecesidadDTO(UUID uuid, String tipo, ArrayList<NecesidadIndividual> necesidades, String descripcion, String periodo, String situacionExcepcional) {
         this.uuid = uuid;
         this.tipo = tipo;
         this.necesidades = necesidades;
         this.descripcion = descripcion;
-        this.estado = estado;
         this.periodo = periodo;
         this.situacionExcepcional = situacionExcepcional;
     }
@@ -38,10 +36,6 @@ public class CampaniaNecesidadDTO {
 
     public String getDescripcion() {
         return descripcion;
-    }
-
-    public String getEstado() {
-        return estado;
     }
 
     public String getPeriodo() {

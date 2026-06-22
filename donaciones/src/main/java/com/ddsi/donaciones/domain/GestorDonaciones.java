@@ -10,12 +10,10 @@ public class GestorDonaciones {
     private static GestorDonaciones gestorDonaciones = null;
     private ArrayList<Donacion> donaciones;
     private ArrayList<DonacionIndependiente> posiblesDonaciones;
-    private ArrayList<NecesidadIndividual>  necesidadesPendientes;
 
     private GestorDonaciones() {
         this.donaciones = new ArrayList<>();
         this.posiblesDonaciones = new ArrayList<>();
-        this.necesidadesPendientes = new ArrayList<>(); //Quien agrega elementos aca??
     }
 
     public static GestorDonaciones getInstance() {
@@ -35,16 +33,6 @@ public class GestorDonaciones {
 
     public ArrayList<DonacionIndependiente> getDonacionesIndependientes() {
         return posiblesDonaciones;
-    }
-
-    public boolean actualizarDonacion(Donacion nuevaDonacion) {
-        for (int i = 0; i < donaciones.size(); i++) {
-            if (donaciones.get(i).getUUID().equals(nuevaDonacion.getUUID())) {
-                donaciones.set(i, nuevaDonacion);
-                return true;
-            }
-        }
-        return false;
     }
 
     public DonacionIndependiente getDonacionIndependienteByUUID(UUID uuid) {
@@ -75,18 +63,6 @@ public class GestorDonaciones {
             }
         }
         return null;
-    }
-
-    public void agregarNecesidadPendiente(NecesidadIndividual necesidadPendiente) {
-        necesidadesPendientes.add(necesidadPendiente);
-    }
-
-    public void eliminarNecesidadPendiente(UUID uuid) {
-        for (int i = 0; i < necesidadesPendientes.size(); i++) {
-            if(necesidadesPendientes.get(i).getUuid().equals(uuid)) {
-                necesidadesPendientes.remove(i);
-            }
-        }
     }
 
     public void generarDonacionesIndependientes(Donacion donacion) throws Exception {
@@ -125,7 +101,7 @@ public class GestorDonaciones {
 
         CampaniaNecesidad campania = GestorEntidadesBeneficiarias.getInstance().obtenerCampaniaDeNecesidad(campaniaUUID);
         NecesidadIndividual necesidadAsignada = campania.necesidades.stream().filter(n->n.getSubcategoria().equals(donacionIndependiente.getSubcategoria())).findFirst().orElse(null);
-        if (necesidadAsignada == null) {
+        if (necesidadAsignada == null || necesidadAsignada.estaCubierta()) {
             throw new Exception();
         }
 

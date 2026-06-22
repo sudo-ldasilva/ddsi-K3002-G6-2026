@@ -41,12 +41,9 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
         for (Map<String, String> fila : filas) {
             Donante donante = construirDonante(fila);
             if (donante != null) {
-                if (validador.existeElDonante(donantesActuales, donante)) {
-                    System.out.printf("[ValidadorDeDatos] Posible duplicado detectado: %s%n",
-                            fila.getOrDefault("Email", "(sin email)"));//detecta el donante existente y lo evita
-                } else {
+                if (!validador.existeElDonante(donantesActuales, donante)) {
                     GestorDonantes.getInstance().registrarDonante(donante);//llamar al gestor donante para que lo añada
-                }//si no esta duplicado lo suma
+                }
             }
         }
 
@@ -67,7 +64,7 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
         } else {
             Donante nuevo = construirDonante(fila);
             if (nuevo != null) {
-                donantesActuales.add(nuevo);
+                GestorDonantes.getInstance().registrarDonante(nuevo);
             }
         }
     }

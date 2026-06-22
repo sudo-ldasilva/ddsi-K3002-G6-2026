@@ -1,10 +1,6 @@
 package com.ddsi.donaciones.service;
 
 import com.ddsi.donaciones.domain.Contacto;
-import com.ddsi.donaciones.domain.Donante;
-import com.ddsi.donaciones.domain.EntidadBeneficiaria;
-import com.ddsi.donaciones.domain.dto.DestinatarioNotificacionDTO;
-import com.ddsi.donaciones.domain.dto.DestinatarioNotificacionMapper;
 import com.ddsi.donaciones.domain.dto.NotificacionRequestDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;

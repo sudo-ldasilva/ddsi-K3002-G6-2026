@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.ArrayList;
 
 public abstract class Donante {
-    private Contacto mail;
-    private ArrayList<Contacto> mediosDeContacto;
-    private Documento documento;
+    protected Contacto mail;
+    protected ArrayList<Contacto> mediosDeContacto;
+    protected Documento documento;
 
     public Donante(Contacto mail, Documento documento) {
         this.mail = mail;

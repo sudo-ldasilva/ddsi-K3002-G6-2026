@@ -2,6 +2,7 @@ package com.ddsi.donaciones.domain;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 public class DonacionIndependiente {
@@ -12,7 +13,7 @@ public class DonacionIndependiente {
     private ArrayList<BienDonado> bienes;
     private ArrayList<EstadoDonacion> historialEstados;
     private EstadoDonacion estadoActual;
-    private java.util.Date fecha;
+    private java.util.Date fechaCreacion;
 
     public DonacionIndependiente(Subcategoria subcategoria, NecesidadIndividual necesidad, Donacion donacion) {
         this.uuid = UUID.randomUUID();
@@ -22,7 +23,7 @@ public class DonacionIndependiente {
         this.bienes = new ArrayList<>();
         this.historialEstados = new ArrayList<>();
         this.estadoActual = EstadoDonacion.EN_DEPOSITO;
-        this.fecha = new Date();
+        this.fechaCreacion = new Date();
     }
 
     public UUID getUUID() {
@@ -49,14 +50,13 @@ public class DonacionIndependiente {
         return bienes;
     }
 
-    public java.util.Date getFecha() {return fecha;}
+    public java.util.Date getFecha() {return fechaCreacion;}
 
-    public void agregarBien(BienDonado bien) {
+    public void agregarBien(BienDonado bien) throws Exception{
+        if(!bien.getBien().getSubcategoria().equals(this.subcategoria)) {
+            throw new Exception();
+        }
         bienes.add(bien);
-    }
-
-    public void setSubcategoria(Subcategoria subcategoria) {
-        this.subcategoria = subcategoria;
     }
 
     public void setNecesidad(NecesidadIndividual necesidad) {

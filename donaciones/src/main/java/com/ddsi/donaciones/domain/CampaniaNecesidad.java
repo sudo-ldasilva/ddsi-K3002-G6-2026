@@ -8,14 +8,12 @@ public abstract class CampaniaNecesidad {
     ArrayList<NecesidadIndividual> necesidades;
     EntidadBeneficiaria entidadBeneficiaria;
     String descripcion;
-    String estado;
 
-    protected CampaniaNecesidad(EntidadBeneficiaria entidadBeneficiaria, String descripcion, String estado) {
+    protected CampaniaNecesidad(EntidadBeneficiaria entidadBeneficiaria, String descripcion) {
         this.uuid = UUID.randomUUID();
         this.necesidades = new ArrayList<>();
         this.entidadBeneficiaria = entidadBeneficiaria;
         this.descripcion = descripcion;
-        this.estado = estado;
     }
 
     //Getters
@@ -35,9 +33,6 @@ public abstract class CampaniaNecesidad {
         return descripcion;
     }
 
-    public String getEstado() {
-        return estado;
-    }
 
     //Setters
     public void setNecesidades(ArrayList<NecesidadIndividual> necesidades) {
@@ -52,18 +47,11 @@ public abstract class CampaniaNecesidad {
         this.descripcion = descripcion;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
 
 
     //Otros
     public boolean estaCubierta() {
-        return necesidades
-            .stream()
-            .filter(n -> !n.estaCubierta())
-            .findAny()
-            .isEmpty();
+        return necesidades.stream().allMatch(n -> n.estaCubierta());
     }
 
     public void agregarNecesidad(NecesidadIndividual necesidad) {

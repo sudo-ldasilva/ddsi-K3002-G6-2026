@@ -1,21 +1,21 @@
 package com.ddsi.donaciones.domain;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class BienPerecedero extends Bien {
-    private int fechaVencimiento;
+    private Date fechaVencimiento;
 
-    public BienPerecedero(String descripcion, String foto, Subcategoria subcategoria, int fechaVencimiento) {
+    public BienPerecedero(String descripcion, String foto, Subcategoria subcategoria, Date fechaVencimiento) {
         super(descripcion, foto, subcategoria);
         this.fechaVencimiento = fechaVencimiento;
     }
 
     public boolean estaVencido() {
-        int anioActual = LocalDate.now().getYear();
-        return fechaVencimiento < anioActual;
+        return fechaVencimiento.before(new Date());
     }
 
-    public int getFechaVencimiento() {
+    public Date getFechaVencimiento() {
         return fechaVencimiento;
     }
 }

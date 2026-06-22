@@ -1,5 +1,7 @@
 package com.ddsi.donaciones.domain;
 
+import com.ddsi.donaciones.service.NotificacionDispatcherService;
+
 import java.util.ArrayList;
 
 public class GestorDonantes {
@@ -42,6 +44,10 @@ public class GestorDonantes {
 
     public void registrarDonante(Donante donante) {
         this.donantesRegistrados.add(donante);
+        NotificacionDispatcherService notificacionDispatcherService = new NotificacionDispatcherService();
+        ArrayList<Contacto> contactosDonante = donante.getContactos();
+        contactosDonante.add(0, donante.getMail());
+        notificacionDispatcherService.notificar(contactosDonante, "Bienvenida: Gracias por unirte a la iniciativa");
     }
 
 }
