@@ -2,13 +2,10 @@ package com.ddsi.donaciones.domain.dto;
 
 import java.util.ArrayList;
 
-import com.ddsi.donaciones.domain.Deposito;
-import com.ddsi.donaciones.domain.Donante;
-import com.ddsi.donaciones.domain.BienDonado;
-import com.ddsi.donaciones.domain.EstadoDonacion;
+import com.ddsi.donaciones.domain.*;
 
 public class DonacionDTO {
-    private Deposito deposito;
+    private Direccion direccionDeposito;
     private Donante donante;
     private String descripcion;
     private ArrayList<BienDonado> bienes;
@@ -17,8 +14,8 @@ public class DonacionDTO {
 
     public DonacionDTO() { }
 
-    public Deposito getDeposito(){
-        return deposito;
+    public Direccion getDireccionDeposito(){
+        return direccionDeposito;
     }
 
     public Donante getDonante(){
@@ -45,8 +42,8 @@ public class DonacionDTO {
         return estadoActual;
     }
 
-    public void setDeposito(Deposito deposito){
-        this.deposito = deposito;
+    public void setDireccionDeposito(Direccion direccionDeposito){
+        this.direccionDeposito = direccionDeposito;
     }
 
     public void setDonante(Donante donante){

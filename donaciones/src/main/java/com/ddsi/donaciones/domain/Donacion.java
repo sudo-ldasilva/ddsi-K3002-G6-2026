@@ -5,16 +5,16 @@ import java.util.UUID;
 
 public class Donacion {
     private UUID uuid;
-    private Deposito deposito;
+    private Direccion direccionDeposito;
     private Donante donante;
     private String descripcion;
     private ArrayList<BienDonado> bienes;
     private boolean fueSegmentada;
 
 
-    public Donacion(Deposito deposito, Donante donante, String descripcion, ArrayList<BienDonado> bienesDonados){
+    public Donacion(Direccion direccionDeposito, Donante donante, String descripcion, ArrayList<BienDonado> bienesDonados){
         this.uuid = UUID.randomUUID();
-        this.deposito = deposito;
+        this.direccionDeposito = direccionDeposito;
         this.donante = donante;
         this.descripcion = descripcion;
         this.bienes = bienesDonados;
@@ -25,8 +25,8 @@ public class Donacion {
         return uuid;
     }
 
-    public Deposito getDeposito(){
-        return deposito;
+    public Direccion getDireccionDeposito(){
+        return direccionDeposito;
     }
 
     public Donante getDonante(){
@@ -49,8 +49,8 @@ public class Donacion {
         fueSegmentada = true;
     }
 
-    public void setDeposito(Deposito deposito){
-        this.deposito = deposito;
+    public void setDeposito(Direccion direccionDeposito){
+        this.direccionDeposito = direccionDeposito;
     }
 
     public void setDonante(Donante donante){

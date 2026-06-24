@@ -40,8 +40,8 @@ public class DonacionController {
         Donacion donacion = GestorDonaciones.getInstance().getDonacionByUUID(uuid);
         if (donacion == null) return ResponseEntity.status(404).body(null);
 
-        if (dto.getDeposito() != null) {
-            donacion.setDeposito(dto.getDeposito());
+        if (dto.getDireccionDeposito() != null) {
+            donacion.setDeposito(dto.getDireccionDeposito());
         }
 
         if (dto.getDonante() != null) {
