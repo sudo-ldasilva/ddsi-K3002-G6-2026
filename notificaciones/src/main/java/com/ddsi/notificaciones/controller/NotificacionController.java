@@ -1,6 +1,6 @@
 package com.ddsi.notificaciones.controller;
 
-import com.ddsi.notificaciones.domain.Contacto
+import com.ddsi.notificaciones.domain.Contacto;
 import com.ddsi.notificaciones.domain.GestorNotificaciones;
 import com.ddsi.notificaciones.dto.NotificacionRequestDTO;
 import com.ddsi.notificaciones.dto.ContactoDTO;

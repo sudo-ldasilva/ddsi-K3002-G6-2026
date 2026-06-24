@@ -2,6 +2,7 @@ package com.ddsi.donaciones.domain;
 
 import java.util.List;
 
+
 public class CriterioMail implements CriterioDuplicado {
 
     @Override
@@ -13,11 +14,11 @@ public class CriterioMail implements CriterioDuplicado {
                 .anyMatch(mail -> mailsCandidato.stream()
                         .anyMatch(m -> m.equalsIgnoreCase(mail)));
     }
-    //problema de contactos
+
     private List<String> extraerMails(List<Contacto> contactos) {
         return contactos.stream()
-                .filter(c -> c != null)
-                .map(c -> ((Contacto) c).getDireccion().trim().toLowerCase())
+                .filter(c -> "mail".equalsIgnoreCase(c.getTipoContacto()))
+                .map(c -> c.getDireccion().trim().toLowerCase())
                 .toList();
     }
 }

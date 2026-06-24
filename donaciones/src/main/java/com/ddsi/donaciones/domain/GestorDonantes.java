@@ -44,10 +44,17 @@ public class GestorDonantes {
 
     public void registrarDonante(Donante donante) {
         this.donantesRegistrados.add(donante);
-        NotificacionDispatcherService notificacionDispatcherService = new NotificacionDispatcherService();
-        ArrayList<Contacto> contactosDonante = donante.getContactos();
-        contactosDonante.add(0, donante.getMail());
-        notificacionDispatcherService.notificar(contactosDonante, "Bienvenida: Gracias por unirte a la iniciativa");
+        try {
+            NotificacionDispatcherService notificacionDispatcherService = new NotificacionDispatcherService();
+            ArrayList<Contacto> contactosDonante = new ArrayList<>(donante.getContactos());
+            contactosDonante.addFirst(donante.getMail());
+            notificacionDispatcherService.notificar(contactosDonante, "Bienvenida: Gracias por unirte a la iniciativa");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    public void registrarDonanteSinNotificar(Donante donante) {
+        this.donantesRegistrados.add(donante);
+    }
 }

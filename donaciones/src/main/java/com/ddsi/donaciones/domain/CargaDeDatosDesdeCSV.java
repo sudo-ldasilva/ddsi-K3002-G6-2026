@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-//Implementación de CargaDeDatos que lee un archivo CSV con el formato del tp (no se si funciona, matenme pls)
 public class CargaDeDatosDesdeCSV implements CargaDeDatos {
 
     private final ValidadorDeDatos validador;
@@ -25,37 +23,38 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
     public List<Donante> cargarDonantes(List<Donante> donantesActuales, String origen) throws Exception {
         List<Map<String, String>> filas = leerCSV(origen);
         List<Donante> resultado = new ArrayList<>(donantesActuales);
-
         for (Map<String, String> fila : filas) {
             procesarFila(fila, resultado);
         }
-
         return resultado;
-    }//procesa fila por fila
+    }
 
     @Override
     public List<Donante> validarDatos(List<Donante> donantesActuales, String origen) throws Exception {
         List<Map<String, String>> filas = leerCSV(origen);
-        List<Donante> donantes = new ArrayList<>();
+        List<Donante> candidatos = new ArrayList<>();
 
         for (Map<String, String> fila : filas) {
-            Donante donante = construirDonante(fila);
-            if (donante != null) {
-                if (!validador.existeElDonante(donantesActuales, donante)) {
-                    GestorDonantes.getInstance().registrarDonante(donante);//llamar al gestor donante para que lo añada
+            Donante candidato = construirDonante(fila);
+            if (candidato != null) {
+                if (validador.existeElDonante(donantesActuales, candidato)) {
+                    System.out.printf("[ValidadorDeDatos] Posible duplicado: %s%n",
+                            fila.getOrDefault("Email", "(sin email)"));
+                } else {
+                    candidatos.add(candidato);
                 }
             }
         }
 
-        return donantes;
+        return candidatos;
     }
 
     private void procesarFila(Map<String, String> fila, List<Donante> donantesActuales) {
         String email = fila.getOrDefault("Email", "").trim();
+        Contacto contactoMail = new Contacto(email, "mail");
 
-        // Buscar donante existente por email
         Donante existente = donantesActuales.stream()
-                .filter(d -> d.tieneMail(new Contacto(email,"mail")))
+                .filter(d -> d.tieneMail(contactoMail))
                 .findFirst()
                 .orElse(null);
 
@@ -64,24 +63,22 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
         } else {
             Donante nuevo = construirDonante(fila);
             if (nuevo != null) {
-                GestorDonantes.getInstance().registrarDonante(nuevo);
+                donantesActuales.add(nuevo);
             }
         }
     }
 
-    //Actualiza los datos de contacto de un donante existente con la info del CSV.
     private void actualizarDonante(Donante donante, Map<String, String> fila) {
         String telefono = fila.getOrDefault("Teléfono", "").trim();
         if (!telefono.isEmpty()) {
             boolean yaEsta = donante.getContactos().stream()
-                    .filter(c -> c instanceof Contacto)
+                    .filter(c -> "telefono".equalsIgnoreCase(c.getTipoContacto()))
                     .anyMatch(c -> c.getDireccion().equals(telefono));
             if (!yaEsta) {
-                donante.agregarContacto(new Contacto(donante.getContactos().toString(),"telefono"));
+                donante.agregarContacto(new Contacto(telefono, "telefono"));
             }
         }
     }
-
 
     private Donante construirDonante(Map<String, String> fila) {
         String tipoPersona = fila.getOrDefault("TipoPersona", "").trim().toUpperCase();
@@ -93,35 +90,39 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
 
         TipoDocumento tipoDoc = parsearTipoDocumento(tipoDocStr);
         Documento documento   = new Documento(tipoDoc, nroDoc);
-        Contacto mail =  new Contacto(email,"mail");
+        Contacto contactoMail = new Contacto(email, "mail");
 
         Donante donante;
 
         switch (tipoPersona) {
             case "HUMANA" -> {
-                PersonaHumana humana = new PersonaHumana(
-                        mail,
-                        documento, nombre,
-                        18,           // asumimos un minimo de edad para donar?
+                donante = new PersonaHumana(
+                        contactoMail,
+                        documento,
+                        nombre,
+                        18,
                         Genero.OTRO,
                         null,
                         null
                 );
-                donante = humana;
             }
             case "JURIDICA" -> {
-                PersonaJuridica juridica = new PersonaJuridica(
-                        mail,
-                        documento, nombre,
+                donante = new PersonaJuridica(
+                        contactoMail,
+                        documento,
+                        nombre,
                         null,
                         null
                 );
-                donante = juridica;
             }
             default -> {
+                System.out.printf("[CargaCSV] Tipo de persona desconocido: '%s'%n", tipoPersona);
                 return null;
             }
         }
+
+        if (!telefono.isEmpty()) donante.agregarContacto(new Contacto(telefono, "telefono"));
+
         return donante;
     }
 
@@ -138,7 +139,9 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String headerLine = br.readLine();
-            if (headerLine == null) throw new Exception(); //"El archivo CSV está vacío: " + path (Usar codificacion en lugar de un string)
+            if (headerLine == null) throw new Exception("El archivo CSV está vacío: " + path);
+
+            headerLine = headerLine.replace("\uFEFF", ""); // eliminar BOM UTF-8
 
             String delimitador = headerLine.contains(";") ? ";" : ",";
             String[] headers   = headerLine.split(delimitador, -1);
@@ -146,14 +149,11 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
             String linea;
             while ((linea = br.readLine()) != null) {
                 if (linea.isBlank()) continue;
-
                 String[] valores = linea.split(delimitador, -1);
                 Map<String, String> fila = new HashMap<>();
-
                 for (int i = 0; i < headers.length; i++) {
                     fila.put(headers[i].trim(), i < valores.length ? valores[i].trim() : "");
                 }
-
                 filas.add(fila);
             }
         }
