@@ -1,32 +1,43 @@
 package com.ddsi.notificaciones.service;
 
-import com.ddsi.notificaciones.domain.Contacto;
-import com.ddsi.notificaciones.domain.ContactoMail;
-import com.ddsi.notificaciones.domain.ContactoTelefono;
-import com.ddsi.notificaciones.domain.ContactoTelegram;
-import com.ddsi.notificaciones.domain.ContactoWhatsapp;
+import com.ddsi.notificaciones.domain.GestorNotificaciones;
+import com.ddsi.notificaciones.dto.ContactoDTO;
 import com.ddsi.notificaciones.dto.NotificacionRequestDTO;
-import com.ddsi.notificaciones.exception.ContactoInvalidoException;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 
 @Service
 public class NotificacionService {
-    public void enviarNotificacion(NotificacionRequestDTO request) {
-        validar(request);
+    private final GestorNotificaciones gestor;
 
-        Contacto contacto = crearContacto(request.getTipoContacto(), request.getDireccionContacto());
-        contacto.enviarMensaje(request.getMensaje());
+    public NotificacionService(GestorNotificaciones gestor) {
+        this.gestor = gestor;
+    }
+
+    public boolean enviar(NotificacionRequestDTO request) {
+        boolean todoOk = true;
+        for (ContactoDTO contacto : request.getContactos()) {
+            boolean enviado = gestor.enviarMensaje(contacto, request.getMensaje());
+            if (!enviado) todoOk = false;
+        }
+        return todoOk;
     }
 
     private boolean validar(NotificacionRequestDTO request) {
-        if (request.getDireccionContacto() == null || request.getDireccionContacto().isBlank()) {
+        if (request.getContactos() == null) {
             return false;
         }
-        if (request.getTipoContacto() == null || request.getTipoContacto().isBlank()) {
-            return false;
+        for (ContactoDTO contacto : request.getContactos()) {
+            if (contacto.getTipoContacto() == null || contacto.getTipoContacto().isBlank()) {
+                return false;
+            }
+            if (contacto.getDireccion() == null || contacto.getDireccion().isBlank()) {
+                return false;
+            }
         }
         if (request.getMensaje() == null || request.getMensaje().isBlank()) {
             return false;
         }
+        return true;
     }
 }
