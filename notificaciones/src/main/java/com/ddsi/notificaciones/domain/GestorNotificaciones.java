@@ -1,31 +1,45 @@
 package com.ddsi.notificaciones.domain;
 
 import com.ddsi.notificaciones.dto.ContactoDTO;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GestorNotificaciones {
-
     private static GestorNotificaciones gestorNotificaciones = null;
+    private final Map<TipoContacto, NotificadorStrategy> strategies;
 
-    private GestorNotificaciones() {}
+    private GestorNotificaciones(List<NotificadorStrategy> strategyLista) {
+        this.strategies = strategyLista.stream().collect(Collectors.toMap(NotificadorStrategy::getTipo, e -> e));
+    }
 
     public static GestorNotificaciones getInstance() {
         if (gestorNotificaciones == null) {
-            gestorNotificaciones = new GestorNotificaciones();
+            List<NotificadorStrategy> strategyLista = List.of(
+                    new NotificadorEmail(new EmailAdapter()),
+                    new NotificadorSMS(new SMSAdapter()),
+                    new NotificadorWsp(new WhatsappAdapter())
+            );
+            gestorNotificaciones = new GestorNotificaciones(strategyLista);
         }
         return gestorNotificaciones;
     }
 
-    public boolean enviarMensaje(ContactoDTO contacto, String mensaje) {
-        try {
-            switch (contacto.getTipoContacto().toUpperCase()) {
-                case "MAIL"            -> new ContactoMail().enviarMensaje(mensaje, contacto.getDireccion());
-                case "SMS" -> new ContactoSMS().enviarMensaje(mensaje, contacto.getDireccion());
-                case "WHATSAPP"        -> new ContactoWhatsapp().enviarMensaje(mensaje, contacto.getDireccion());
-                default                -> { return false; }
-            }
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    public Boolean enviarMensaje(ContactoDTO contacto, String mensaje) {
+        TipoContacto tipo = TipoContacto.valueOf(contacto.getTipoContacto().toUpperCase());
+        NotificadorStrategy strategy = strategies.get(tipo);
+        if (strategy == null) return false;
+        Notificacion notificacion = crearNotificacion(contacto, mensaje);
+        strategy.enviarMensaje(notificacion);
+        return true;
+    }
+
+    private Notificacion crearNotificacion(ContactoDTO contacto, String mensaje) {
+        return new Notificacion(
+                contacto.getDireccion(),
+                mensaje,
+                TipoContacto.valueOf(contacto.getTipoContacto()),
+                false
+        );
     }
 }

@@ -5,8 +5,8 @@ public class NotificadorSMS implements NotificadorStrategy {
     private EnvioSMSAdapter adapter;
 
     @Override
-    public NotificationType getTipo() {
-        return NotificationType.SMS;
+    public TipoContacto getTipo() {
+        return TipoContacto.SMS;
     }
     @Override
     public void enviarMensaje(Notificacion notificacion) {
