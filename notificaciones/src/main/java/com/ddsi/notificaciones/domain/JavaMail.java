@@ -1,18 +1,18 @@
 package com.ddsi.notificaciones.domain;
 
 @Service
-public class ContactoMail implements Contacto {
+public class JavaMail implements EnvioEmailAdapter {
     private final JavaMailSender mailSender;
 
     @Value("${spring.mail.username}")
     private String mailUser;
 
-    public ContactoMail(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
+    public JavaMail(String mailUser) {
+        this.mailUser = mailUser;
     }
 
     @Override
-    public void enviarMensaje(String mensaje, String direccion) {
+    public void enviarMail(String direccion, String mensaje) {
 
         SimpleMailMessage mail =
                 new SimpleMailMessage();

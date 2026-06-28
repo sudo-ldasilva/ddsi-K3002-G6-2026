@@ -1,15 +1,16 @@
 package com.ddsi.notificaciones.domain;
 
-@Service
 public class NotificadorWsp implements NotificadorStrategy {
     private EnvioWhatsAppAdapter adapter;
 
     @Override
-    public NotificationType getTipo() {
-        return NotificationType.SMS;
+    public TipoContacto getTipo() {
+        return TipoContacto.SMS;
     }
     @Override
     public void enviarMensaje(Notificacion notificacion) {
-        adapter.enviarNotificacion(notificacion);
+        String direccion = notificacion.getDirecion();
+        String mensaje = notificacion.getMensaje();
+        adapter.enviarWsp(String direccion, String mensaje);
     }
 }

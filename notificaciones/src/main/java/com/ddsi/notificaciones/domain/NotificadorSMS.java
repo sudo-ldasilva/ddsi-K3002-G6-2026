@@ -1,6 +1,5 @@
 package com.ddsi.notificaciones.domain;
 
-@Service
 public class NotificadorSMS implements NotificadorStrategy {
     private EnvioSMSAdapter adapter;
 
@@ -10,6 +9,8 @@ public class NotificadorSMS implements NotificadorStrategy {
     }
     @Override
     public void enviarMensaje(Notificacion notificacion) {
-        adapter.enviarNotificacion(notificacion);
+        String direccion = notificacion.getDirecion();
+        String mensaje = notificacion.getMensaje();
+        adapter.enviarSMS(String direccion, String mensaje);
     }
 }

@@ -16,9 +16,9 @@ public class GestorNotificaciones {
     public static GestorNotificaciones getInstance() {
         if (gestorNotificaciones == null) {
             List<NotificadorStrategy> strategyLista = List.of(
-                    new NotificadorEmail(new EmailAdapter()),
-                    new NotificadorSMS(new SMSAdapter()),
-                    new NotificadorWsp(new WhatsappAdapter())
+                    new NotificadorEmail(new EnvioEmailAdapter()),
+                    new NotificadorSMS(new EnvioSMSAdapter()),
+                    new NotificadorWsp(new EnvioWhatsAppAdapter())
             );
             gestorNotificaciones = new GestorNotificaciones(strategyLista);
         }
