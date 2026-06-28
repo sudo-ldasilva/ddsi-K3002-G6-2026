@@ -1,28 +1,17 @@
 package com.ddsi.notificaciones.domain;
-
+import org.springframework.stereotype.Service;
 import com.ddsi.notificaciones.dto.ContactoDTO;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Service
 public class GestorNotificaciones {
-    private static GestorNotificaciones gestorNotificaciones = null;
+    //spring boot considera a los services como singleton
     private final Map<TipoContacto, NotificadorStrategy> strategies;
 
     private GestorNotificaciones(List<NotificadorStrategy> strategyLista) {
         this.strategies = strategyLista.stream().collect(Collectors.toMap(NotificadorStrategy::getTipo, e -> e));
-    }
-
-    public static GestorNotificaciones getInstance() {
-        if (gestorNotificaciones == null) {
-            List<NotificadorStrategy> strategyLista = List.of(
-                    new NotificadorEmail(new EnvioEmailAdapter()),
-                    new NotificadorSMS(new EnvioSMSAdapter()),
-                    new NotificadorWsp(new EnvioWhatsAppAdapter())
-            );
-            gestorNotificaciones = new GestorNotificaciones(strategyLista);
-        }
-        return gestorNotificaciones;
     }
 
     public Boolean enviarMensaje(ContactoDTO contacto, String mensaje) {

@@ -1,4 +1,6 @@
 package com.ddsi.notificaciones.dto;
+import java.util.ArrayList;
+//import java.util.List;
 
 public class NotificacionRequestDTO {
     private ArrayList<ContactoDTO> contactos;
@@ -6,7 +8,7 @@ public class NotificacionRequestDTO {
 
     public NotificacionRequestDTO() {}
 
-    public NotificacionRequestDTO(List<ContactoDTO> contactos, String mensaje) {
+    public NotificacionRequestDTO(ArrayList<ContactoDTO> contactos, String mensaje) {
         this.contactos = contactos;
         this.mensaje = mensaje;
     }
