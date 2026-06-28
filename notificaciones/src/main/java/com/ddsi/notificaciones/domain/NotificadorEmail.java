@@ -11,7 +11,7 @@ public class NotificadorEmail implements NotificadorStrategy{
     public void enviarMensaje(Notificacion notificacion){
         String direccion = notificacion.getDirecion();
         String mensaje = notificacion.getMensaje();
-        adapter.enviarMail(String direccion, String mensaje);
+        adapter.enviarMail(direccion, mensaje);
     }
 
     @Override

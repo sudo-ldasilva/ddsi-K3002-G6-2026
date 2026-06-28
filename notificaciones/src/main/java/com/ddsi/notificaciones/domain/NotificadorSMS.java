@@ -11,6 +11,6 @@ public class NotificadorSMS implements NotificadorStrategy {
     public void enviarMensaje(Notificacion notificacion) {
         String direccion = notificacion.getDirecion();
         String mensaje = notificacion.getMensaje();
-        adapter.enviarSMS(String direccion, String mensaje);
+        adapter.enviarSMS(direccion, mensaje);
     }
 }

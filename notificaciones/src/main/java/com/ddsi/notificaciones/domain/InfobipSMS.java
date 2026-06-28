@@ -1,7 +1,7 @@
 package com.ddsi.notificaciones.domain;
 
 @Service
-public class InfobipSMS extends EnvioSMSAdapter {
+public class InfobipSMS implements EnvioSMSAdapter {
 
     @Override
     public void enviarSMS(String direccion, String mensaje) {
