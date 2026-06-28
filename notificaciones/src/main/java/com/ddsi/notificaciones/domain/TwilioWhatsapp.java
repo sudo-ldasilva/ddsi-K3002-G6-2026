@@ -1,5 +1,7 @@
 package com.ddsi.notificaciones.domain;
 
+import org.springframework.stereotype.Service;
+
 @Service
 public class TwilioWhatsapp implements EnvioWhatsAppAdapter {
 

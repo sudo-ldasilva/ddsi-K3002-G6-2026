@@ -16,11 +16,13 @@ public class Notificacion {
     public String getDirecion() {
         return direcion;
     }
-
     public String getMensaje() {
         return mensaje;
     }
     public TipoContacto getTipoContacto() {
         return tipoContacto;
+    }
+    public boolean setEstaCompletada(boolean valor) {
+        return estaCompletada = valor;
     }
 }

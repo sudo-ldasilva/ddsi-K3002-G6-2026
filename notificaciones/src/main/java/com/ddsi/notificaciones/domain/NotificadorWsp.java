@@ -1,16 +1,24 @@
 package com.ddsi.notificaciones.domain;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class NotificadorWsp implements NotificadorStrategy {
-    private EnvioWhatsAppAdapter adapter;
+
+    private final EnvioWhatsAppAdapter adapter;
+
+    public NotificadorWsp(EnvioWhatsAppAdapter adapter) {
+        this.adapter = adapter;
+    }
+
+    @Override
+    public void enviarMensaje(Notificacion notificacion) {
+        adapter.enviarWsp(notificacion.getDirecion(), notificacion.getMensaje());
+        notificacion.setEstaCompletada(true);
+    }
 
     @Override
     public TipoContacto getTipo() {
-        return TipoContacto.SMS;
-    }
-    @Override
-    public void enviarMensaje(Notificacion notificacion) {
-        String direccion = notificacion.getDirecion();
-        String mensaje = notificacion.getMensaje();
-        adapter.enviarWsp(direccion, mensaje);
+        return TipoContacto.WHATSAPP;
     }
 }

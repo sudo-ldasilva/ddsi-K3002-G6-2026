@@ -1,5 +1,7 @@
 package com.ddsi.notificaciones.domain;
 
+import org.springframework.stereotype.Service;
+
 @Service
 public class JavaMail implements EnvioEmailAdapter {
     private final JavaMailSender mailSender;
