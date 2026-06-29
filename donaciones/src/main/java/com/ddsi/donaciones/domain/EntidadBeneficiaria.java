@@ -2,6 +2,7 @@ package com.ddsi.donaciones.domain;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class EntidadBeneficiaria {
 
@@ -11,6 +12,7 @@ public class EntidadBeneficiaria {
     private Direccion direccion;
     private ArrayList<RepresentanteEntidadBeneficiaria> representantes;
     private ArrayList<CampaniaNecesidad> necesidades;
+    private int cantidadDeDonacionesDelCuatrimestre;
 
     //Constructor
     public EntidadBeneficiaria(String razonSocial, String tipo, Contacto contacto, Direccion direccion)
@@ -21,6 +23,7 @@ public class EntidadBeneficiaria {
         this.direccion = direccion;
         this.representantes = new ArrayList<>();
         this.necesidades = new ArrayList<>();
+        this.cantidadDeDonacionesDelCuatrimestre = 0;
     }
 
     //Getters
@@ -48,6 +51,11 @@ public class EntidadBeneficiaria {
         return razonSocial;
     }
 
+    public int getCantidadDeDonacionesDelCuatrimestre() {return cantidadDeDonacionesDelCuatrimestre;}
+
+    public ArrayList<CampaniaNecesidad> getNecesidadesPorSubcategoria(Subcategoria subcategoria) { return necesidades.stream()
+            .filter(n -> n.necesitaEstaSubcategoria(subcategoria)).collect(Collectors.toCollection(ArrayList::new));}
+
     //Setters
     public void setRazonSocial(String razonSocial) {
         this.razonSocial = razonSocial;
@@ -68,6 +76,8 @@ public class EntidadBeneficiaria {
     public void setNecesidades(ArrayList<CampaniaNecesidad> necesidades) {
         this.necesidades = necesidades;
     }
+
+    public void setCantidadDeDonacionesDelCuatrimestre(int nuevaCantidad) {this.cantidadDeDonacionesDelCuatrimestre = nuevaCantidad;}
 
     //CRUD de Necesidades
     public void crearCampaniaNecesidad(CampaniaNecesidad campaniaNecesidad){
@@ -101,6 +111,12 @@ public class EntidadBeneficiaria {
         representantes.remove(representante);
     }
 
+    public void sumarDonacionCuatrimestral() {
+        this.cantidadDeDonacionesDelCuatrimestre++;
+    }
 
+    public boolean necesitaEstaSubcategoria(Subcategoria subcategoria){
+        return necesidades.stream().anyMatch(n -> n.necesitaEstaSubcategoria(subcategoria));
+    }
 
 }

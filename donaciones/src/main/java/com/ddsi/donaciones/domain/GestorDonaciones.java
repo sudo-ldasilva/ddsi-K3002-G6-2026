@@ -69,7 +69,7 @@ public class GestorDonaciones {
         if (donacion.yaFueSegmentada()) {
             throw new Exception(); //La donación ya fue segmentada (usar codificacion o booleano, no devolver mensaje de error)
         }
-
+//TODO:agregar fecha de vencimiento
         ArrayList<DonacionIndependiente> donacionesInd = new ArrayList<>();
 
         for (BienDonado bien : donacion.getBienes()) {
@@ -108,6 +108,7 @@ public class GestorDonaciones {
         //Asignacion
         necesidadAsignada.recibir(donacionIndependiente);
         donacionIndependiente.setNecesidad(necesidadAsignada);
+        campania.getEntidadBeneficiaria().sumarDonacionCuatrimestral();
 
         //Cambio de Estado
         donacionIndependiente.cambiarEstado(EstadoDonacion.ASIGNACION_REALIZADA);

@@ -65,4 +65,7 @@ public abstract class CampaniaNecesidad {
         }
         return list;
     }
+    public boolean necesitaEstaSubcategoria(Subcategoria subcategoria) {
+        return necesidades.stream().anyMatch(n -> !n.estaCubierta() && n.getSubcategoria().equals(subcategoria));
+    }
 }
