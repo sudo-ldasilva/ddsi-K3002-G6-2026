@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class NotificacionDispatcherService {
 
     private final RestClient restClient;
-    private static final String URL_NOTIFICACIONES = "http://notificaciones/notificaciones";
+    private static final String URL_NOTIFICACIONES = "http://localhost:8081/notificaciones/enviar";
 
     public NotificacionDispatcherService() {
         this.restClient = RestClient.builder().build();
