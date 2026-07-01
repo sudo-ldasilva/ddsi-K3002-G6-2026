@@ -146,9 +146,4 @@ public class DonanteController {
         Donante eliminado = GestorDonantes.getInstance().eliminarDonante(new Contacto(mail, "mail"));
         return ResponseEntity.status((eliminado != null) ? 200 : 404).body(eliminado);
     }
-
-    @GetMapping("/{mail}/contacto")
-    public ResponseEntity<ArrayList<Contacto>> getContacto(@PathVariable String mail) {
-        return ResponseEntity.status(200).body(GestorDonantes.getInstance().getDonante(new Contacto(mail, "mail")).getContactos());
-    }
 }

@@ -111,7 +111,7 @@ public class GestorDonaciones {
         campania.getEntidadBeneficiaria().sumarDonacionCuatrimestral();
 
         //Cambio de Estado
-        donacionIndependiente.cambiarEstado(EstadoDonacion.ASIGNACION_REALIZADA);
+        donacionIndependiente.cambiarEstado(EstadoDeDonacion.ASIGNACION_REALIZADA);
 
         //Envio de notificaciones
         NotificacionDispatcherService notificacionDispatcherService = new NotificacionDispatcherService();

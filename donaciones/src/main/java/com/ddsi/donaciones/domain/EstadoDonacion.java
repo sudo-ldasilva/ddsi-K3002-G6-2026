@@ -1,11 +1,21 @@
 package com.ddsi.donaciones.domain;
 
-public enum EstadoDonacion {
-     EN_DEPOSITO,
-     ASIGNACION_REALIZADA,
-     LISTA_PARA_ENTREGAR,
-     EN_TRASLADO,
-     ENTREGADA,
-     ENTREGA_FALLIDA,
-     VENCIDA
+import java.util.Date;
+
+public class EstadoDonacion {
+    protected EstadoDeDonacion estado;
+    protected Date fechaInicio ;
+
+    public EstadoDonacion(EstadoDeDonacion estado, Date fechaInicio) {
+        this.estado = estado;
+        this.fechaInicio = fechaInicio;
+    }
+
+    public EstadoDeDonacion getEstado() {
+        return estado;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
 }

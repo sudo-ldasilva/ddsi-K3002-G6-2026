@@ -22,7 +22,7 @@ public class DonacionIndependiente {
         this.donacion = donacion;
         this.bienes = new ArrayList<>();
         this.historialEstados = new ArrayList<>();
-        this.estadoActual = EstadoDonacion.EN_DEPOSITO;
+        this.estadoActual = new EstadoDonacion(EstadoDeDonacion.EN_DEPOSITO, new Date());
         this.fechaCreacion = new Date();
     }
 
@@ -63,8 +63,13 @@ public class DonacionIndependiente {
         this.necesidad = necesidad;
     }
 
-    public void cambiarEstado(EstadoDonacion estado) {
-        historialEstados.add(estado);
-        estadoActual = estado;
+    public void cambiarEstado(EstadoDeDonacion estado) {
+        estadoActual = new EstadoDonacion(estado, new Date());
+        historialEstados.add(estadoActual);
+    }
+
+    public void cambiarEstadoEntregaFallida(String justificacion) {
+        estadoActual = new EstadoEntregaFallida(new Date(), justificacion);
+        historialEstados.add(estadoActual);
     }
 }

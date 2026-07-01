@@ -109,7 +109,7 @@ public class DonacionController {
     }
 
     @PatchMapping("/independientes/{uuid}/estado")
-    public ResponseEntity<DonacionIndependiente> actualizarEstadoDonacionIndependiente(@PathVariable UUID uuid, @RequestBody EstadoDonacion estado) {
+    public ResponseEntity<DonacionIndependiente> actualizarEstadoDonacionIndependiente(@PathVariable UUID uuid, @RequestBody EstadoDeDonacion estado) {
         DonacionIndependiente donacion = GestorDonaciones.getInstance().getDonacionIndependienteByUUID(uuid);
         if (estado == null) return ResponseEntity.status(404).body(null);
 
