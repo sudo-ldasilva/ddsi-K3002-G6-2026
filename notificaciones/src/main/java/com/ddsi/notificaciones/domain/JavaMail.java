@@ -6,7 +6,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JavaMail implements EnvioEmailAdapter {
+public class
+JavaMail implements EnvioEmailAdapter {
 
     private final JavaMailSender mailSender;
 
@@ -22,7 +23,7 @@ public class JavaMail implements EnvioEmailAdapter {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setFrom(mailUser);
         mail.setTo(direccion);
-        mail.setSubject("Notificación");
+        mail.setSubject("no-reply-donatrack");
         mail.setText(mensaje);
         mailSender.send(mail);
     }
