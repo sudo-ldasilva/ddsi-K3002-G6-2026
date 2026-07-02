@@ -65,10 +65,12 @@ public class GestorDonaciones {
         return null;
     }
 
-    public void generarDonacionesIndependientes(Donacion donacion) throws Exception {
-        if (donacion.yaFueSegmentada()) {
-            throw new Exception(); //La donación ya fue segmentada (usar codificacion o booleano, no devolver mensaje de error)
-        }
+    public void segmentarDonaciones() {
+        donaciones.stream().filter(d->d.yaFueSegmentada()).forEach(d->{this.generarDonacionesIndependientes(d);});
+    }
+
+    public void generarDonacionesIndependientes(Donacion donacion){
+
 //TODO:agregar fecha de vencimiento
         ArrayList<DonacionIndependiente> donacionesInd = new ArrayList<>();
 

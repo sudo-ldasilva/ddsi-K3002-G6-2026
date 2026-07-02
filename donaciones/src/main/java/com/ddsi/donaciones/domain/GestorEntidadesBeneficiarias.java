@@ -67,5 +67,9 @@ public class GestorEntidadesBeneficiarias {
         return null;
     }
 
+    public void reiniciarContadoresDeDonaciones(){
+        entidadesBeneficiarias.forEach(e->e.setCantidadDeDonacionesDelCuatrimestre(0));
+    }
+
 
 }

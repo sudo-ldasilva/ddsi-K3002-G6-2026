@@ -52,10 +52,7 @@ public class DonacionIndependiente {
 
     public java.util.Date getFecha() {return fechaCreacion;}
 
-    public void agregarBien(BienDonado bien) throws Exception{
-        if(!bien.getBien().getSubcategoria().equals(this.subcategoria)) {
-            throw new Exception();
-        }
+    public void agregarBien(BienDonado bien){
         bienes.add(bien);
     }
 

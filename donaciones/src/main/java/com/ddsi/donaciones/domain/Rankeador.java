@@ -7,7 +7,7 @@ public class Rankeador {
     private ArrayList<AlgoritmoSeleccion> algoritmos;
 
     public Rankeador(ArrayList<AlgoritmoSeleccion> algoritmos) {
-        this.algoritmos = algoritmos;
+        this.algoritmos = new ArrayList<>();
     }
 
     public List<Ranking> generarRankings(DonacionIndependiente donacionIndependiente) {
