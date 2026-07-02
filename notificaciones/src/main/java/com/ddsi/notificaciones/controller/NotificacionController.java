@@ -17,12 +17,12 @@ public class NotificacionController {
     }
 
     @PostMapping("/enviar")
-    public ResponseEntity<String> enviar(@RequestBody NotificacionRequestDTO request) {
+    public ResponseEntity<Integer> enviar(@RequestBody NotificacionRequestDTO request) {
         boolean resultado = notificacionService.enviar(request);
         if (resultado) {
-            return ResponseEntity.ok("Notificaciones enviadas correctamente");
+            return ResponseEntity.ok(0);
         } else {
-            return ResponseEntity.status(207).body("Algunas notificaciones fallaron");
+            return ResponseEntity.status(207).body(1);
         }
     }
 }
