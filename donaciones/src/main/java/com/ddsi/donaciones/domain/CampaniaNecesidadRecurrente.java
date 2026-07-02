@@ -1,18 +1,20 @@
 package com.ddsi.donaciones.domain;
 
-public class CampaniaNecesidadRecurrente extends CampaniaNecesidad {
-    private String periodo;
+import java.util.Date;
 
-    public CampaniaNecesidadRecurrente(EntidadBeneficiaria entidadBeneficiaria, String descripcion, String periodo) {
+public class CampaniaNecesidadRecurrente extends CampaniaNecesidad {
+    private Periodo periodo;
+
+    public CampaniaNecesidadRecurrente(EntidadBeneficiaria entidadBeneficiaria, String descripcion, Periodo periodo) {
         super(entidadBeneficiaria, descripcion);
         this.periodo = periodo;
     }
 
-    public String getPeriodo() {
+    public Periodo getPeriodo() {
         return periodo;
     }
 
-    public void setPeriodo(String periodo) {
+    public void setPeriodo(Periodo periodo) {
         this.periodo = periodo;
     }
 }

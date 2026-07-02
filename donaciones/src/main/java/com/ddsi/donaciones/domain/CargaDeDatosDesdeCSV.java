@@ -54,7 +54,7 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
         Contacto contactoMail = new Contacto(email, "mail");
 
         Donante existente = donantesActuales.stream()
-                .filter(d -> d.tieneMail(contactoMail))
+                .filter(d -> d.tienEsteMail(contactoMail))
                 .findFirst()
                 .orElse(null);
 
