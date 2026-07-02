@@ -66,7 +66,7 @@ public class GestorDonaciones {
     }
 
     public void segmentarDonaciones() {
-        donaciones.stream().filter(d->d.yaFueSegmentada()).forEach(d->{this.generarDonacionesIndependientes(d);});
+        donaciones.stream().filter(d->!d.yaFueSegmentada()).forEach(d->{this.generarDonacionesIndependientes(d);});
     }
 
     public void generarDonacionesIndependientes(Donacion donacion){
@@ -91,6 +91,8 @@ public class GestorDonaciones {
 
             donacionInd.agregarBien(bien);
         }
+
+        donacion.marcarSegmentada();
 
         posiblesDonaciones.addAll(donacionesInd);
     }
