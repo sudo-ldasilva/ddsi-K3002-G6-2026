@@ -1,0 +1,213 @@
+{
+  "name": "DonaTrack",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.mensaje = \n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        416,
+        -96
+      ],
+      "id": "7ce38da6-4269-4bdd-8296-20d761ea97a9",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "=10973e82-bed5-4563-9f2f-b2b37f836b00",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -768,
+        -240
+      ],
+      "id": "523c3439-3be9-493f-9053-693c14b6367d",
+      "name": "Webhook",
+      "webhookId": "10973e82-bed5-4563-9f2f-b2b37f836b00"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "months"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -768,
+        112
+      ],
+      "id": "1f8aee98-9d54-4964-b643-cc9e481ab8b4",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -528,
+        112
+      ],
+      "id": "494775cc-8a4b-4915-9ed2-20c055ba0df2",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.mensaje = \"Felicitaciones \" + item.json.body.user + \"! Sos un \" + item.json.body.badge + \". \" + item.json.body.description\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -256,
+        112
+      ],
+      "id": "2ae7cfe2-4791-4294-8093-87c756a96495",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "url": "https://picsum.photos/800/600",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -480,
+        -384
+      ],
+      "id": "c8175ead-dd25-4a23-82e4-be6798d38c70",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        16,
+        -240
+      ],
+      "id": "c3d0fc71-7cda-44b9-8ee5-6d562c9371e2",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "text": "=\"Felicitaciones {{ $json.body.user }}! Sos un {{ $json.body.badge }}. {{ $json.body.description }}",
+        "shareMediaCategory": "IMAGE",
+        "additionalFields": {
+          "title": "=Felicidades  {{ $json.body.user }}"
+        }
+      },
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        -240
+      ],
+      "id": "cda6f4f4-7461-4cfe-bb6c-3e0a3a5ca959",
+      "name": "Create a post",
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "gziJDgZQO6sA5Cj3",
+          "name": "LinkedIn account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create a post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Create a post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        []
+      ]
+    },
+    "Create a post": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "3add4787-b457-4656-a9e0-ce3b0505c324",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "45d3fe1300633f68f726d0817c055db4096d5f85a16cae803cb69190bd92377b"
+  },
+  "nodeGroups": [],
+  "id": "Jz79f02WeJVM6Lei",
+  "tags": []
+}
