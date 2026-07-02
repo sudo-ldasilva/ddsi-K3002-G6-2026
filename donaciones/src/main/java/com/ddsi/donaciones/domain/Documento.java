@@ -12,4 +12,6 @@ public class Documento {
     public String getDocumento() {
         return documento;
     }
+
+    public TipoDocumento getTipoDocumento() { return tipoDocumento; }
 }

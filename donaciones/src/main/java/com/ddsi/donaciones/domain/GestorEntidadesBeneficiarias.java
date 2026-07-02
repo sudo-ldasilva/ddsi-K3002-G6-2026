@@ -48,14 +48,6 @@ public class GestorEntidadesBeneficiarias {
         this.entidadesBeneficiarias.add(entidadBeneficiaria);
     }
 
-
-
-    public ArrayList<CampaniaNecesidad> obtenerCampaniasDeNecesidad(){
-        ArrayList<CampaniaNecesidad> campanias = new ArrayList<CampaniaNecesidad>();
-        this.entidadesBeneficiarias.forEach(e -> campanias.addAll(e.getNecesidades()));
-        return campanias;
-    }
-
     public CampaniaNecesidad obtenerCampaniaDeNecesidad(UUID id){
         for (int i = 0; i < entidadesBeneficiarias.size(); i++) {
             for (int j = 0; j < entidadesBeneficiarias.get(i).getNecesidades().size(); j++) {

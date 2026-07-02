@@ -41,7 +41,7 @@ public abstract class Donante {
         return this.documento;
     }
 
-    public boolean tieneMail(Contacto contacto) {
+    public boolean tienEsteMail(Contacto contacto) {
         if (this.mail != null &&
                 "mail".equalsIgnoreCase(this.mail.getTipoContacto()) &&
                 this.mail.getDireccion().equalsIgnoreCase(contacto.getDireccion())) {

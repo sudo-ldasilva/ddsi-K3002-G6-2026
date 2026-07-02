@@ -8,7 +8,7 @@ public class EntidadBeneficiaria {
 
     private String razonSocial;
     private String tipo;
-    private Contacto contacto;
+    private Contacto contactoTelefono;
     private Direccion direccion;
     private ArrayList<RepresentanteEntidadBeneficiaria> representantes;
     private ArrayList<CampaniaNecesidad> necesidades;
@@ -19,7 +19,7 @@ public class EntidadBeneficiaria {
     {
         this.razonSocial = razonSocial;
         this.tipo = tipo;
-        this.contacto = contacto;
+        this.contactoTelefono = contacto;
         this.direccion = direccion;
         this.representantes = new ArrayList<>();
         this.necesidades = new ArrayList<>();
@@ -40,7 +40,7 @@ public class EntidadBeneficiaria {
     }
 
     public Contacto getContacto() {
-        return contacto;
+        return contactoTelefono;
     }
 
     public String getTipo() {

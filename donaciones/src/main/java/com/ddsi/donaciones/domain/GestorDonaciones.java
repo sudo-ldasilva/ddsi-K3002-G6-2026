@@ -74,8 +74,14 @@ public class GestorDonaciones {
 //TODO:agregar fecha de vencimiento
         ArrayList<DonacionIndependiente> donacionesInd = new ArrayList<>();
 
-        for (BienDonado bien : donacion.getBienes()) {
+        for (BienDonado bien : donacion.getBienes()) {//para vencidos
+            if (bien.getBien() instanceof BienPerecedero bienPerecedero) {
+                if (bienPerecedero.estaVencido()) {
+                    continue;
+                }
+            }
             Subcategoria sc = bien.getBien().getSubcategoria();
+            Categoria categoria = sc.getCategoria();
 
             DonacionIndependiente donacionInd =
                 donacionesInd
@@ -83,6 +89,8 @@ public class GestorDonaciones {
                 .filter(d -> d.getSubcategoria().equals(sc))
                 .findFirst()
                 .orElse(null); // Devuelve el objeto si lo encuentra, o null si no
+
+
 
             if (donacionInd == null) {
                 donacionInd = new DonacionIndependiente(sc, null, donacion);
