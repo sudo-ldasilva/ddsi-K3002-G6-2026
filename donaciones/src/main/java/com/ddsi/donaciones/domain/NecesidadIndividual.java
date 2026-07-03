@@ -57,4 +57,5 @@ public class NecesidadIndividual {
     public void recibir(DonacionIndependiente donacion) {
         donaciones.add(donacion);
     }
+    public void reiniciar(){this.donaciones.clear();}
 }
