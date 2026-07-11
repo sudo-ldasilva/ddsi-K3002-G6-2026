@@ -6,9 +6,8 @@ import com.ddsi.incentivos.domain.dto.DonacionIndependienteDTO;
 
 public class MisionRacha extends Mision {
     @Override
-    public int getProgresoActual(Donante donante) {
+    public int getProgresoActual(Donante donante, ArrayList<DonacionIndependienteDTO> donaciones) {
         int progreso = 0;
-        ArrayList<DonacionIndependienteDTO> donaciones = donante.getDonaciones();
         java.util.Date fecha = new Date();
         int mesActual = fecha.getMonth();
         for (int i = 0; i < this.getCantidadNecesaria(); i++){

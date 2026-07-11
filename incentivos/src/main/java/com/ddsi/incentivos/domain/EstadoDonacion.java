@@ -1,4 +1,4 @@
-package com.ddsi.donaciones.domain;
+package com.ddsi.incentivos.domain;
 
 public enum EstadoDonacion {
      EN_DEPOSITO,

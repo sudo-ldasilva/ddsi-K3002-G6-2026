@@ -1,7 +1,7 @@
-package com.ddsi.donaciones.service;
+package com.ddsi.incentivos.services;
 
-import com.ddsi.donaciones.domain.Contacto;
-import com.ddsi.donaciones.domain.dto.NotificacionRequestDTO;
+import com.ddsi.incentivos.domain.Contacto;
+import com.ddsi.incentivos.domain.dto.NotificacionRequestDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.http.MediaType;

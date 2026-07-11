@@ -39,8 +39,8 @@ public class Donante {
         return this.categoriaActual;
     }
 
-    public void cambiarCategoria() throws Exception {
-        if (!categoriaActual.puedePasarASiguienteCategoria(this)) {
+    public void cambiarCategoria(ArrayList<DonacionIndependienteDTO> donaciones) throws Exception {
+        if (!categoriaActual.puedePasarASiguienteCategoria(this, donaciones)) {
             throw new Exception(); //No se puede pasar a la siguiente categoria (usar codificacion o booleano, no un string)
         }
 

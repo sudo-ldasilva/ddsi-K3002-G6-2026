@@ -5,8 +5,7 @@ import com.ddsi.incentivos.domain.dto.DonacionIndependienteDTO;
 
 public class MisionCompletitud extends Mision {
     @Override
-    public int getProgresoActual(Donante donante) {
-        ArrayList<DonacionIndependienteDTO> donaciones = donante.getDonaciones();
+    public int getProgresoActual(Donante donante, ArrayList<DonacionIndependienteDTO> donaciones) {
         ArrayList<String> categorias = new ArrayList<>();
         for(int i = 0; i < donaciones.size();i++){
             DonacionIndependienteDTO donacion = donaciones.get(i);

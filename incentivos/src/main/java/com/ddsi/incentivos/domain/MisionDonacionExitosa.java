@@ -5,8 +5,7 @@ import java.util.ArrayList;
 
 public class MisionDonacionExitosa extends Mision {
     @Override
-    public int getProgresoActual(Donante donante) {
-        ArrayList<DonacionIndependienteDTO> donaciones = donante.getDonaciones();
+    public int getProgresoActual(Donante donante, ArrayList<DonacionIndependienteDTO> donaciones) {
         int recibidas = 0;
         for (int i = 0; i < donaciones.size(); i++){
             DonacionIndependienteDTO donacion = donaciones.get(i);

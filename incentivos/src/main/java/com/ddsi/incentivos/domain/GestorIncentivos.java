@@ -55,7 +55,7 @@ public class GestorIncentivos {
     private Donante progresarEnCategoria(Donante donante, ArrayList<DonacionIndependienteDTO> donaciones) {
         donante = progresarEnMision(donante, donaciones);
         try {
-            donante.cambiarCategoria();
+            donante.cambiarCategoria(donaciones);
             donante = progresarEnCategoria(donante, donaciones);
         } catch (Exception error) {
             return donante;

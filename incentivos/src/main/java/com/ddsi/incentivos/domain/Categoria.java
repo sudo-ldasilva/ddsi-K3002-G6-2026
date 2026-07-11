@@ -1,6 +1,7 @@
 package com.ddsi.incentivos.domain;
 
 import java.util.ArrayList;
+import com.ddsi.incentivos.domain.dto.DonacionIndependienteDTO;
 
 public class Categoria {
     private String nombre;
@@ -13,8 +14,8 @@ public class Categoria {
         this.categoriaSiguiente = categoriaSiguiente;
     }
 
-    public boolean puedePasarASiguienteCategoria(Donante donante) {
-        return misionesACompletar.stream().allMatch( m -> m.misionCumplida(donante) != null);
+    public boolean puedePasarASiguienteCategoria(Donante donante, ArrayList<DonacionIndependienteDTO> donaciones) {
+        return misionesACompletar.stream().allMatch( m -> m.misionCumplida(donante, donaciones) != null);
     }
 
     public Mision getMision(int indice) {
