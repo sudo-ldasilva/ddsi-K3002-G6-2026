@@ -3,20 +3,6 @@
   "nodes": [
     {
       "parameters": {
-        "mode": "runOnceForEachItem",
-        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.mensaje = \n}\n\nreturn $input.all();"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        416,
-        -96
-      ],
-      "id": "7ce38da6-4269-4bdd-8296-20d761ea97a9",
-      "name": "Code in JavaScript"
-    },
-    {
-      "parameters": {
         "rule": {
           "interval": [
             {
@@ -36,6 +22,7 @@
     },
     {
       "parameters": {
+        "url": "http://host.docker.internal:8082/rankingIncentivos",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -49,7 +36,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.mensaje = \"Felicitaciones \" + item.json.body.user + \"! Sos un \" + item.json.body.badge + \". \" + item.json.body.description\n}\n\nreturn $input.all();"
+        "jsCode": "const items = $input.all();\n\nfor (const [index, item] of items.entries()) {\n  item.json.ranking = [{ posicion: index+1, identificador: item.json.mail.direccion }]\n}\n\nreturn items;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -67,34 +54,11 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.5,
       "position": [
-        16,
+        -48,
         -240
       ],
       "id": "c3d0fc71-7cda-44b9-8ee5-6d562c9371e2",
       "name": "Respond to Webhook"
-    },
-    {
-      "parameters": {
-        "text": "=\"Felicitaciones {{ $json.body.user }}! Sos un {{ $json.body.badge }}. {{ $json.body.description }}",
-        "shareMediaCategory": "IMAGE",
-        "additionalFields": {
-          "title": "=Felicidades  {{ $json.body.user }}"
-        }
-      },
-      "type": "n8n-nodes-base.linkedIn",
-      "typeVersion": 1,
-      "position": [
-        560,
-        -448
-      ],
-      "id": "cda6f4f4-7461-4cfe-bb6c-3e0a3a5ca959",
-      "name": "Create a post",
-      "credentials": {
-        "linkedInOAuth2Api": {
-          "id": "gziJDgZQO6sA5Cj3",
-          "name": "LinkedIn account"
-        }
-      }
     },
     {
       "parameters": {
@@ -168,6 +132,43 @@
       "id": "523c3439-3be9-493f-9053-693c14b6367d",
       "name": "Discord Webhook",
       "webhookId": "10973e82-bed5-4563-9f2f-b2b37f836b00"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "1525233519595487315",
+          "mode": "id"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "1525623809091174512",
+          "mode": "list",
+          "cachedResultName": "rankings",
+          "cachedResultUrl": "https://discord.com/channels/1525233519595487315/1525623809091174512"
+        },
+        "content": "=Ranking del mes {{ new Date().toLocaleString('es-AR', { month: 'long', year: 'numeric' }) }}:\n\n{{\n$input.all()\n  .map(item => {\n    const r = item.json.ranking[0];\n    return `${r.posicion}. ${r.identificador}`;\n  })\n  .join('\\n')\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        16,
+        112
+      ],
+      "id": "4c361def-de12-4846-9b8e-8814b54fd1c8",
+      "name": "Send a message1",
+      "webhookId": "986d6482-edae-4d55-8fa3-420d3b0af2f2",
+      "executeOnce": false,
+      "retryOnFail": false,
+      "credentials": {
+        "discordOAuth2Api": {
+          "id": "EXBwObtNa7dhjgQM",
+          "name": "Discord account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -192,16 +193,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "Code in JavaScript": {
-      "main": [
-        []
-      ]
-    },
-    "Create a post": {
-      "main": [
-        []
       ]
     },
     "Send a message": {
@@ -236,6 +227,17 @@
           }
         ]
       ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -244,7 +246,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "2cf422e2-7d8f-4905-896c-58676b311b5b",
+  "versionId": "ef7b53c3-cf32-4231-ae71-d7851c26c579",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "45d3fe1300633f68f726d0817c055db4096d5f85a16cae803cb69190bd92377b"
