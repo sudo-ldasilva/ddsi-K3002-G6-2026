@@ -15,6 +15,9 @@ public class CampaniaNecesidadRecurrente extends CampaniaNecesidad {
     public Periodo getPeriodo() {
         return periodo;
     }
+    public void setPeriodo(Periodo periodo) {
+        this.periodo = periodo;
+    }
     private void asignarFinal(Periodo periodo){
         switch(periodo){
             case ANUAL:

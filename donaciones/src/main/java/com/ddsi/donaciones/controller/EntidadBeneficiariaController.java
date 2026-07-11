@@ -63,7 +63,7 @@ public class EntidadBeneficiariaController{
         for(CampaniaNecesidad nec : necesidades){
             CampaniaNecesidadDTO necDTO = null;
             if(nec instanceof CampaniaNecesidadRecurrente){
-                necDTO = new CampaniaNecesidadDTO(nec.getUuid(), "Recurrente", nec.getNecesidades(), nec.getDescripcion(), ((CampaniaNecesidadRecurrente) nec).getPeriodo(), null);
+                necDTO = new CampaniaNecesidadDTO(nec.getUuid(), "Recurrente", nec.getNecesidades(), nec.getDescripcion(), ((CampaniaNecesidadRecurrente) nec).getPeriodo().toString(), null);
             } else if (nec instanceof CampaniaNecesidadExtraordinaria){
                 necDTO = new CampaniaNecesidadDTO(nec.getUuid(), "Extraordinaria", nec.getNecesidades(), nec.getDescripcion(), null, ((CampaniaNecesidadExtraordinaria) nec).getSituacionExcepcional());
             }
@@ -107,7 +107,7 @@ public class EntidadBeneficiariaController{
         if(!(GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono).obtenerCampaniaNecesidad(uuid) instanceof CampaniaNecesidadExtraordinaria)){
             return ResponseEntity.status(404).body(cambios);
         }
-        
+
         CampaniaNecesidadExtraordinaria campaniaRegistrada = (CampaniaNecesidadExtraordinaria) GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono).obtenerCampaniaNecesidad(uuid);
 
         campaniaRegistrada.setNecesidades(cambios.getNecesidades());
