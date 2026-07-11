@@ -28,6 +28,10 @@ public class Donante {
         return this.categoriaActual.getMision(indiceMisionActual);
     }
 
+    public int getIndiceMisionActual() {
+        return this.indiceMisionActual;
+    }
+
     public ArrayList<DonacionIndependienteDTO> getDonaciones() {
         DonacionesService donacionesService = new DonacionesService();
         return donacionesService.getDonaciones(mail.getDireccion());
