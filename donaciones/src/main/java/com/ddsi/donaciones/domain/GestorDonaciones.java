@@ -2,7 +2,6 @@ package com.ddsi.donaciones.domain;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 import com.ddsi.donaciones.service.NotificacionDispatcherService;
 
@@ -125,7 +124,7 @@ public class GestorDonaciones {
         campania.getEntidadBeneficiaria().sumarDonacionCuatrimestral();
 
         //Cambio de Estado
-        donacionIndependiente.cambiarEstado(EstadoDeDonacion.ASIGNACION_REALIZADA);
+        donacionIndependiente.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ASIGNACION_REALIZADA, new Date()));
 
         //Envio de notificaciones
         NotificacionDispatcherService notificacionDispatcherService = new NotificacionDispatcherService();
@@ -136,6 +135,17 @@ public class GestorDonaciones {
         ArrayList<Contacto> contactoEntidad = new ArrayList<>();
         contactoEntidad.add(campania.getEntidadBeneficiaria().getContacto());
         notificacionDispatcherService.notificar(contactoEntidad, String.format("Asignacion de Donacion: Se te asigno el bien %s", donacionIndependiente.getSubcategoria()));
+    }
+
+    public void cambiarEstadoDonacionesVencidas() {
+        posiblesDonaciones
+            .stream()
+            .filter(d ->
+                d.getEstadoActual().getEstado() == EstadoDeDonacion.EN_DEPOSITO
+                && d.getSubcategoria().getCategoria().esPerecedero()
+                && ((BienPerecedero) d.getBienes().get(0).getBien()).estaVencido()
+            )
+            .forEach(d -> d.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.VENCIDA, new Date())));
     }
 
 }

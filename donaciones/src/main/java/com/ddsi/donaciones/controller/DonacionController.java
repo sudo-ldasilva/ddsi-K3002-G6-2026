@@ -1,6 +1,7 @@
 package com.ddsi.donaciones.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -113,7 +114,7 @@ public class DonacionController {
         DonacionIndependiente donacion = GestorDonaciones.getInstance().getDonacionIndependienteByUUID(uuid);
         if (estado == null) return ResponseEntity.status(404).body(null);
 
-        donacion.cambiarEstado(estado);
+        donacion.cambiarEstado(new EstadoDonacion(estado, new Date()));
 
         return ResponseEntity.status(200).body(donacion);
     }

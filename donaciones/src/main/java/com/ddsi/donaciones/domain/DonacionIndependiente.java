@@ -60,13 +60,9 @@ public class DonacionIndependiente {
         this.necesidad = necesidad;
     }
 
-    public void cambiarEstado(EstadoDeDonacion estado) {
-        estadoActual = new EstadoDonacion(estado, new Date());
-        historialEstados.add(estadoActual);
+    public void cambiarEstado(EstadoDonacion estado) {
+        this.estadoActual = estado;
+        historialEstados.add(estado);
     }
 
-    public void cambiarEstadoEntregaFallida(String justificacion) {
-        estadoActual = new EstadoEntregaFallida(new Date(), justificacion);
-        historialEstados.add(estadoActual);
-    }
 }
