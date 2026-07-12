@@ -70,8 +70,6 @@ public class GestorDonaciones {
     }
 
     public void generarDonacionesIndependientes(Donacion donacion){
-
-//TODO:agregar fecha de vencimiento
         ArrayList<DonacionIndependiente> donacionesInd = new ArrayList<>();
 
         for (BienDonado bien : donacion.getBienes()) {//para vencidos
@@ -81,16 +79,20 @@ public class GestorDonaciones {
                 }
             }
             Subcategoria sc = bien.getBien().getSubcategoria();
-            Categoria categoria = sc.getCategoria();
 
             DonacionIndependiente donacionInd =
                 donacionesInd
                 .stream()
-                .filter(d -> d.getSubcategoria().equals(sc))
+                .filter(
+                        d -> d.getSubcategoria().equals(sc)
+                        && (
+                            !sc.getCategoria().esPerecedero()
+                            || !d.getSubcategoria().getCategoria().esPerecedero()
+                            || ((BienPerecedero) d.getBienes().get(0).getBien()).getFechaVencimiento().equals(((BienPerecedero) bien.getBien()).getFechaVencimiento())
+                        )
+                )
                 .findFirst()
                 .orElse(null); // Devuelve el objeto si lo encuentra, o null si no
-
-
 
             if (donacionInd == null) {
                 donacionInd = new DonacionIndependiente(sc, null, donacion);
