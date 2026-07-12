@@ -1,5 +1,6 @@
 package com.ddsi.donaciones.domain;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -10,15 +11,20 @@ public class Donacion {
     private String descripcion;
     private ArrayList<BienDonado> bienes;
     private boolean fueSegmentada;
+    private Date fecha;
 
-
-    public Donacion(Direccion direccionDeposito, Donante donante, String descripcion, ArrayList<BienDonado> bienesDonados){
+    public Donacion(Direccion direccionDeposito, Donante donante, String descripcion, ArrayList<BienDonado> bienesDonados, Date fecha){
         this.uuid = UUID.randomUUID();
         this.direccionDeposito = direccionDeposito;
         this.donante = donante;
         this.descripcion = descripcion;
         this.bienes = bienesDonados;
         this.fueSegmentada = false;
+        this.fecha = fecha;
+    }
+
+    public Date getFecha() {
+        return this.fecha;
     }
 
     public UUID getUUID() {

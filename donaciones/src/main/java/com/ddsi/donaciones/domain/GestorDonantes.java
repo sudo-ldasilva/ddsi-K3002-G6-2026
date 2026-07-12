@@ -2,7 +2,11 @@ package com.ddsi.donaciones.domain;
 
 import com.ddsi.donaciones.service.NotificacionDispatcherService;
 
+import java.util.Date;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 public class GestorDonantes {
     private static GestorDonantes gestorDonantes = null;
@@ -56,5 +60,22 @@ public class GestorDonantes {
 
     public void registrarDonanteSinNotificar(Donante donante) {
         this.donantesRegistrados.add(donante);
+    }
+
+    public void notificarDonantesInactivos() {
+        donantesRegistrados.stream().filter(d -> {
+            return GestorDonaciones.getInstance()
+                .getDonacionesByDonante(d)
+                .stream()
+                .max(Comparator.comparing(Donacion::getFecha))
+                .map(donacion -> {
+                    return TimeUnit.DAYS.convert(new Date().getTime() - donacion.getFecha().getTime(),TimeUnit.MILLISECONDS) == 20;
+                })
+                .orElse(false); // si no tiene donaciones
+        })
+        .forEach( d -> {
+            NotificacionDispatcherService notif = new NotificacionDispatcherService();
+            notif.notificar(d.getContactos(), "No has donado hace tiempo! Considera realiza una donación :)");
+        });
     }
 }

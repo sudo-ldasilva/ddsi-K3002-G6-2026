@@ -3,6 +3,8 @@ package com.ddsi.donaciones.domain;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 import com.ddsi.donaciones.service.NotificacionDispatcherService;
 
 public class GestorDonaciones {
@@ -32,6 +34,10 @@ public class GestorDonaciones {
 
     public ArrayList<DonacionIndependiente> getDonacionesIndependientes() {
         return posiblesDonaciones;
+    }
+
+    public ArrayList<Donacion> getDonacionesByDonante(Donante donante) {
+        return donaciones.stream().filter(d -> d.getDonante().equals(donante)).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public DonacionIndependiente getDonacionIndependienteByUUID(UUID uuid) {
