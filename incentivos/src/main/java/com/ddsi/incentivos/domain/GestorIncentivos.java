@@ -92,4 +92,12 @@ public class GestorIncentivos {
                         && i.getFechaCompletada().getYear() == anio)
                 .count();
     }
+
+    public ArrayList<Donante> getDonantes() {
+        return donantes;
+    }
+
+    public Optional<Donante> getDonante(Contacto mail) {
+        return donantes.stream().filter(d -> d.getMail().equals(mail)).findFirst();
+    }
 }
