@@ -14,4 +14,8 @@ public class Insignia {
     public Date getFechaCompletada() {
         return fechaCompletada;
     }
+
+    public Mision getMision() {
+        return this.mision;
+    }
 }

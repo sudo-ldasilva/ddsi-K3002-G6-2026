@@ -22,4 +22,8 @@ public abstract class Mision {
     }
 
     public abstract int getProgresoActual(Donante donante, ArrayList<DonacionIndependienteDTO> donaciones);
+
+    public String getNombre() {
+        return this.nombre;
+    }
 }

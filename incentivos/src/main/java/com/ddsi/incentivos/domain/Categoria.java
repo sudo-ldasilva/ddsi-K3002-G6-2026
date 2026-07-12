@@ -25,4 +25,8 @@ public class Categoria {
     public Categoria getSiguiente() {
         return categoriaSiguiente;
     }
+
+    public String getNombre() {
+        return this.nombre;
+    }
 }

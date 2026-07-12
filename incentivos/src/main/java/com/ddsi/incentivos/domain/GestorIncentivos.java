@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.ddsi.incentivos.domain.dto.DonacionIndependienteDTO;
 import com.ddsi.incentivos.domain.dto.DonacionesPorMailDTO;
 import com.ddsi.incentivos.services.DonacionesService;
+import com.ddsi.incentivos.services.NotificacionDispatcherService;
 
 public class GestorIncentivos {
     private static GestorIncentivos gestorIncentivos = null;
@@ -47,30 +48,34 @@ public class GestorIncentivos {
                 donante = new Donante(new Contacto(mailDonante,"mail"), null, 0, new ArrayList<Insignia>(), false);
             }
 
-            donante = progresarEnCategoria(donante, donacionPorMail.getDonaciones());
+            progresarEnCategoria(donante, donacionPorMail.getDonaciones());
             donantes.add(donante);
         }
     }
 
-    private Donante progresarEnCategoria(Donante donante, ArrayList<DonacionIndependienteDTO> donaciones) {
-        donante = progresarEnMision(donante, donaciones);
+    private void progresarEnCategoria(Donante donante, ArrayList<DonacionIndependienteDTO> donaciones) {
+        progresarEnMision(donante, donaciones);
+
         try {
             donante.cambiarCategoria(donaciones);
-            donante = progresarEnCategoria(donante, donaciones);
+            progresarEnCategoria(donante, donaciones);
+
+            NotificacionDispatcherService notif = new NotificacionDispatcherService();
+            notif.notificar(new ArrayList<Contacto>(List.of(donante.getMail())), "Has sido promovido a la categoría " + donante.getCategoriaActual().getNombre());
         } catch (Exception error) {
-            return donante;
         }
-        return donante;
     }
 
-    private Donante progresarEnMision(Donante donante, ArrayList<DonacionIndependienteDTO> donaciones) {
+    private void progresarEnMision(Donante donante, ArrayList<DonacionIndependienteDTO> donaciones) {
         Insignia insignia = donante.getMisionActual() != null ? donante.getMisionActual().misionCumplida(donante, donaciones) : null;
-        if(insignia != null) {
-            donante.agregarInsignia(insignia);
-            donante.siguienteMision();
-            donante = progresarEnMision(donante, donaciones);
-        }
-        return donante;
+        if (insignia == null) return;
+
+        donante.agregarInsignia(insignia);
+        donante.siguienteMision();
+        NotificacionDispatcherService notif = new NotificacionDispatcherService();
+        notif.notificar(new ArrayList<Contacto>(List.of(donante.getMail())), "Has conseguido la insignia " + insignia.getMision().getNombre());
+
+        progresarEnMision(donante, donaciones);
     }
 
     public ArrayList<Donante> rankingMensual() {

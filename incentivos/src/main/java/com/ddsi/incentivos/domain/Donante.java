@@ -4,6 +4,7 @@ import com.ddsi.incentivos.domain.dto.DonacionIndependienteDTO;
 import com.ddsi.incentivos.services.DonacionesService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Donante {
     private Contacto mail;
