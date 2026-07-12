@@ -63,7 +63,6 @@ public class DonacionIndependiente {
     public void cambiarEstado(EstadoDonacion estado) {
         this.estadoActual = estado;
         historialEstados.add(estado);
-        // TODO Notificar
     }
 
 }

@@ -148,4 +148,51 @@ public class GestorDonaciones {
             .forEach(d -> d.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.VENCIDA, new Date())));
     }
 
+    public void recibirAsignacionDeRuta(ArrayList<UUID> donacionesIndependienteUUID) {
+        donacionesIndependienteUUID.stream().forEach(donacionIndependienteUUID -> {
+            DonacionIndependiente donacionInd = getDonacionIndependienteByUUID(donacionIndependienteUUID);
+
+            donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ASIGNACION_REALIZADA, new Date()));
+            NotificacionDispatcherService notif = new NotificacionDispatcherService();
+            notif.notificar(donacionInd.getDonacion().getDonante().getContactos(), "Su donación fue asignada!");
+            ArrayList<Contacto> contactosEntidad = new ArrayList<>(); contactosEntidad.add(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto());
+            notif.notificar(contactosEntidad, "Su donación fue asignada!");
+        });
+    }
+
+    public void recibirInicioDeRuta(ArrayList<UUID> donacionesIndependienteUUID, String enlaceMapa) {
+        donacionesIndependienteUUID.stream().forEach(donacionIndependienteUUID -> {
+            DonacionIndependiente donacionInd = getDonacionIndependienteByUUID(donacionIndependienteUUID);
+
+            donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.EN_TRASLADO, new Date()));
+            NotificacionDispatcherService notif = new NotificacionDispatcherService();
+            notif.notificar(donacionInd.getDonacion().getDonante().getContactos(), "Su donación está en camino! Mapa: " + enlaceMapa);
+            ArrayList<Contacto> contactosEntidad = new ArrayList<>(); contactosEntidad.add(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto());
+            notif.notificar(contactosEntidad, "Su donación está en camino! Mapa: " + enlaceMapa);
+        });
+    }
+
+    public void recibirEntregaExitosa(UUID donacionIndependiente, ComprobanteRecepcion comprobante) {
+        DonacionIndependiente donacionInd = getDonacionIndependienteByUUID(donacionIndependiente);
+
+        donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ENTREGADA, new Date()));
+        NotificacionDispatcherService notif = new NotificacionDispatcherService();
+        notif.notificar(donacionInd.getDonacion().getDonante().getContactos(), "Su donación fue entregada! Comprobante: " + comprobante.toString());
+        ArrayList<Contacto> contactosEntidad = new ArrayList<>(); contactosEntidad.add(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto());
+        notif.notificar(contactosEntidad, "Su donación fue entregada! Comprobante: " + comprobante.toString());
+    }
+
+    public void recibirEntregaFallida(UUID donacionIndependiente, String justificacion, boolean puedeReasignarse) {
+        DonacionIndependiente donacionInd = getDonacionIndependienteByUUID(donacionIndependiente);
+
+        donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ENTREGA_FALLIDA, new Date()));
+        NotificacionDispatcherService notif = new NotificacionDispatcherService();
+        notif.notificar(donacionInd.getDonacion().getDonante().getContactos(), "Su donación no se pudo entregar :( Justificación: " + justificacion);
+        ArrayList<Contacto> contactosEntidad = new ArrayList<>(); contactosEntidad.add(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto());
+        notif.notificar(contactosEntidad, "Su donación no se pudo entregar :( Justificación: " + justificacion);
+
+        if (puedeReasignarse) {
+            donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.EN_DEPOSITO, new Date()));
+        }
+    }
 }
