@@ -22,7 +22,7 @@
     },
     {
       "parameters": {
-        "url": "http://host.docker.internal:8082/rankingIncentivos",
+        "url": "http://host.docker.internal:8082/rankingDonantes",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",

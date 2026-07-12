@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/rankings")
+@RequestMapping("/rankingNecesidades")
 public class RankingController {
 
     @GetMapping("/{uuidDonacionIndependiente}")
