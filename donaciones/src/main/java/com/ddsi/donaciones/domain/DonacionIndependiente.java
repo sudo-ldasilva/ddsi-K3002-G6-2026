@@ -13,7 +13,8 @@ public class DonacionIndependiente {
     private ArrayList<BienDonado> bienes;
     private ArrayList<EstadoDonacion> historialEstados;
     private EstadoDonacion estadoActual;
-    private java.util.Date fechaCreacion;
+    private Date fechaCreacion;
+    private ComprobanteRecepcion comprobante;
 
     public DonacionIndependiente(Subcategoria subcategoria, NecesidadIndividual necesidad, Donacion donacion) {
         this.uuid = UUID.randomUUID();
@@ -63,6 +64,14 @@ public class DonacionIndependiente {
     public void cambiarEstado(EstadoDonacion estado) {
         this.estadoActual = estado;
         historialEstados.add(estado);
+    }
+
+    public void setComprobante(ComprobanteRecepcion comprobante) {
+        this.comprobante = comprobante;
+    }
+
+    public void agregarFotoRecepcion(String foto) {
+        comprobante.cargarFoto(foto);
     }
 
 }

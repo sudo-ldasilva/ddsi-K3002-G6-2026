@@ -109,6 +109,20 @@ public class DonacionController {
         return ResponseEntity.status(200).body(donacion);
     }
 
+    @PostMapping("/independientes/{uuid}/comprobante")
+    public ResponseEntity<DonacionIndependiente> adjuntarComprobanteEntrega(@PathVariable UUID uuid, @RequestBody String camion, @RequestBody Date fechaHora) {
+        DonacionIndependiente donacion = GestorDonaciones.getInstance().getDonacionIndependienteByUUID(uuid);
+        donacion.setComprobante(new ComprobanteRecepcion(fechaHora, camion));
+        return ResponseEntity.status(200).body(donacion);
+    }
+
+    @PostMapping("/independientes/{uuid}/comprobante/fotoEntrega")
+    public ResponseEntity<DonacionIndependiente> subirFotoRecepcionEntidadBeneficiaria(@PathVariable UUID uuid, @RequestBody String foto) {
+        DonacionIndependiente donacion = GestorDonaciones.getInstance().getDonacionIndependienteByUUID(uuid);
+        donacion.agregarFotoRecepcion(foto);
+        return ResponseEntity.status(200).body(donacion);
+    }
+
     @PatchMapping("/independientes/{uuid}/estado")
     public ResponseEntity<DonacionIndependiente> actualizarEstadoDonacionIndependiente(@PathVariable UUID uuid, @RequestBody EstadoDeDonacion estado) {
         DonacionIndependiente donacion = GestorDonaciones.getInstance().getDonacionIndependienteByUUID(uuid);
