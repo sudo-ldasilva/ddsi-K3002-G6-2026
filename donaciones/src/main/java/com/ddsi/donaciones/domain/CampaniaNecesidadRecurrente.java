@@ -3,16 +3,17 @@ package com.ddsi.donaciones.domain;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CampaniaNecesidadRecurrente {
     private Periodo periodo;
     private List<CampaniaNecesidadPeriodo> campanias;
     private String descripcion;
     private Boolean activo;
-    private ArrayList<NecesidadIndividual> necesidadesBase;
+    private ArrayList<NecesidadBase> necesidadesBase;
     private EntidadBeneficiaria entidadBeneficiaria;
 
-    public CampaniaNecesidadRecurrente(Periodo periodo, String descripcion, Boolean activo, ArrayList<NecesidadIndividual> necesidadesBase, EntidadBeneficiaria entidadBeneficiaria) {
+    public CampaniaNecesidadRecurrente(Periodo periodo, String descripcion, Boolean activo, ArrayList<NecesidadBase> necesidadesBase, EntidadBeneficiaria entidadBeneficiaria) {
         this.periodo = periodo;
         this.campanias = new ArrayList<>();
         this.descripcion = descripcion;
@@ -47,8 +48,9 @@ public class CampaniaNecesidadRecurrente {
     public void crearSiguientePeriodo(){
         if(!activo && this.seCumplioUltimoPeriodo()) return;
 
-
-        CampaniaNecesidadPeriodo nuevaCampania = new CampaniaNecesidadPeriodo(entidadBeneficiaria, descripcion, this.siguienteFechaInicio(), this, necesidadesBase);
+        ArrayList<NecesidadIndividual> necesidadesEfectivas = necesidadesBase.stream().map(nec -> new NecesidadIndividual(nec.getBien(), nec.getCantidadNecesaria(), null)).collect(Collectors.toCollection(ArrayList::new));
+        CampaniaNecesidadPeriodo nuevaCampania = new CampaniaNecesidadPeriodo(entidadBeneficiaria, descripcion, this.siguienteFechaInicio(), this, necesidadesEfectivas);
+        nuevaCampania.getNecesidades().forEach(nec -> nec.setCampania(nuevaCampania));
         this.agregarCampania(nuevaCampania);
     }
 

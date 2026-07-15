@@ -11,7 +11,7 @@ public class NecesidadIndividual {
     public ArrayList<DonacionIndependiente> donaciones;//las donaciones independientes que se van juntando para satisfacer
     public CampaniaNecesidad campania;
 
-    public NecesidadIndividual(UUID uuid, Bien bien, int cantidadNecesaria, CampaniaNecesidad campania) {
+    public NecesidadIndividual(Bien bien, int cantidadNecesaria, CampaniaNecesidad campania) {
         this.uuid = UUID.randomUUID();
         this.bien = bien;
         this.cantidadNecesaria = cantidadNecesaria;
@@ -41,6 +41,10 @@ public class NecesidadIndividual {
 
     public Subcategoria getSubcategoria() {
         return bien.getSubcategoria();
+    }
+
+    public void setCampania(CampaniaNecesidad campania) {
+        this.campania = campania;
     }
 
     public Boolean estaCubierta() {
