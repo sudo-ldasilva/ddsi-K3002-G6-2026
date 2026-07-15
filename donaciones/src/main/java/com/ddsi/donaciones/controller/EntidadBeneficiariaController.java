@@ -62,8 +62,8 @@ public class EntidadBeneficiariaController{
         ArrayList<CampaniaNecesidadDTO> necesidadesDTO =  new ArrayList<>();
         for(CampaniaNecesidad nec : necesidades){
             CampaniaNecesidadDTO necDTO = null;
-            if(nec instanceof CampaniaNecesidadRecurrente){
-                necDTO = new CampaniaNecesidadDTO(nec.getUuid(), "Recurrente", nec.getNecesidades(), nec.getDescripcion(), ((CampaniaNecesidadRecurrente) nec).getPeriodo().toString(), null);
+            if(nec instanceof CampaniaNecesidadPeriodo){
+                necDTO = new CampaniaNecesidadDTO(nec.getUuid(), "Recurrente", nec.getNecesidades(), nec.getDescripcion(), ((CampaniaNecesidadPeriodo) nec).getFechaInicio(), null);
             } else if (nec instanceof CampaniaNecesidadExtraordinaria){
                 necDTO = new CampaniaNecesidadDTO(nec.getUuid(), "Extraordinaria", nec.getNecesidades(), nec.getDescripcion(), null, ((CampaniaNecesidadExtraordinaria) nec).getSituacionExcepcional());
             }
@@ -72,25 +72,25 @@ public class EntidadBeneficiariaController{
         return ResponseEntity.status(200).body(necesidadesDTO);
     }
 
-    @PostMapping("/{telefono}/necesidadesRecurrentes")
-    public ResponseEntity<CampaniaNecesidad> crearCampaniaNecesidadRecurrente(@PathVariable String telefono, @RequestBody CampaniaNecesidadRecurrente campania){
+    @PostMapping("/{telefono}/necesidadesPeriodo")
+    public ResponseEntity<CampaniaNecesidad> crearCampaniaNecesidadRecurrente(@PathVariable String telefono, @RequestBody CampaniaNecesidadPeriodo campania){
         campania.setEntidadBeneficiaria(GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono));
         GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono).crearCampaniaNecesidad(campania);
         return ResponseEntity.status(201).body(campania);
     }
 
-    @PutMapping("/{telefono}/necesidadesRecurrentes/{uuid}")
-    public ResponseEntity<CampaniaNecesidad> modificarCampaniaNecesidad(@PathVariable String telefono, @PathVariable UUID uuid, @RequestBody CampaniaNecesidadRecurrente cambios){
-        if(!(GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono).obtenerCampaniaNecesidad(uuid) instanceof CampaniaNecesidadRecurrente)){
+    @PutMapping("/{telefono}/necesidadesPeriodo/{uuid}")
+    public ResponseEntity<CampaniaNecesidad> modificarCampaniaNecesidad(@PathVariable String telefono, @PathVariable UUID uuid, @RequestBody CampaniaNecesidadPeriodo cambios){
+        if(!(GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono).obtenerCampaniaNecesidad(uuid) instanceof CampaniaNecesidadPeriodo)){
             return ResponseEntity.status(404).body(cambios);
         }
 
-        CampaniaNecesidadRecurrente campaniaRegistrada = (CampaniaNecesidadRecurrente) GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono).obtenerCampaniaNecesidad(uuid);
+        CampaniaNecesidadPeriodo campaniaRegistrada = (CampaniaNecesidadPeriodo) GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono).obtenerCampaniaNecesidad(uuid);
 
         campaniaRegistrada.setNecesidades(cambios.getNecesidades());
         campaniaRegistrada.setEntidadBeneficiaria(cambios.getEntidadBeneficiaria());
         campaniaRegistrada.setDescripcion(cambios.getDescripcion());
-        campaniaRegistrada.setPeriodo(cambios.getPeriodo());
+        campaniaRegistrada.setFechaInicio(cambios.getFechaInicio());
 
         return ResponseEntity.status(201).body(campaniaRegistrada);
     }
