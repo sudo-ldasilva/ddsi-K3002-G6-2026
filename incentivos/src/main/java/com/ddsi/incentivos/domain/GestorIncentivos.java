@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.ddsi.incentivos.domain.dto.DonacionIndependienteDTO;
 import com.ddsi.incentivos.domain.dto.DonacionesPorMailDTO;
 import com.ddsi.incentivos.services.DonacionesService;
+import com.ddsi.incentivos.services.N8nService;
 import com.ddsi.incentivos.services.NotificacionDispatcherService;
 
 public class GestorIncentivos {
@@ -74,6 +75,12 @@ public class GestorIncentivos {
         donante.siguienteMision();
         NotificacionDispatcherService notif = new NotificacionDispatcherService();
         notif.notificar(new ArrayList<Contacto>(List.of(donante.getMail())), "Has conseguido la insignia " + insignia.getMision().getNombre());
+        N8nService n8n = new N8nService();
+        n8n.notificar(
+            donante.getMail().getDireccion(),
+            donante.getCategoriaActual().getNombre(),
+            "Ha conseguido la insignia " + insignia.getMision().getNombre()
+        );
 
         progresarEnMision(donante, donaciones);
     }
