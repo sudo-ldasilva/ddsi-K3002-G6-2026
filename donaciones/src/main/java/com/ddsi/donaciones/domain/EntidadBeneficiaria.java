@@ -3,6 +3,7 @@ package com.ddsi.donaciones.domain;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import com.ddsi.donaciones.domain.dto.EntidadBeneficiariaDTO;
 
 public class EntidadBeneficiaria {
 
@@ -25,6 +26,11 @@ public class EntidadBeneficiaria {
         this.representantes = new ArrayList<>();
         this.necesidades = new ArrayList<>();
         this.cantidadDeDonacionesDelCuatrimestre = 0;
+    }
+
+    //Constructor
+    public EntidadBeneficiaria(EntidadBeneficiariaDTO dto) {
+        this(dto.getRazonSocial(), dto.getTipo(), dto.getContacto(), dto.getDireccion());
     }
 
     //Getters

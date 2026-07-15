@@ -32,22 +32,26 @@ public class EntidadBeneficiariaController{
     }
 
     @PostMapping
-    public ResponseEntity<EntidadBeneficiaria> agregarEntidadBeneficiaria(@RequestBody EntidadBeneficiaria entidad){
+    public ResponseEntity<EntidadBeneficiariaDTO> agregarEntidadBeneficiaria(@RequestBody EntidadBeneficiariaDTO entidad){
         GestorEntidadesBeneficiarias.getInstance().agregarEntidadBeneficiaria(entidad);
         return ResponseEntity.status(201).body(entidad);
     }
 
+    @GetMapping("/{telefono}")
+    public ResponseEntity<EntidadBeneficiaria> getEntidadBeneficiaria(@PathVariable String telefono){
+        EntidadBeneficiaria entidadRegistrada = GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono);
+        return ResponseEntity.status( (entidadRegistrada == null) ? 404 : 200).body(entidadRegistrada);
+    }
+
     @PutMapping("/{telefono}")
-    public ResponseEntity<EntidadBeneficiaria> actualizarEntidadBeneficiaria(@PathVariable String telefono, @RequestBody EntidadBeneficiaria entidadCambiada){
+    public ResponseEntity<EntidadBeneficiariaDTO> actualizarEntidadBeneficiaria(@PathVariable String telefono, @RequestBody EntidadBeneficiariaDTO entidadCambiada){
         EntidadBeneficiaria entidadRegistrada = GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono);
 
         entidadRegistrada.setRazonSocial(entidadCambiada.getRazonSocial());
         entidadRegistrada.setTipo(entidadCambiada.getTipo());
         entidadRegistrada.setDireccion(entidadCambiada.getDireccion());
-        entidadRegistrada.setRepresentantes(entidadCambiada.getRepresentantes());
-        entidadRegistrada.setNecesidades(entidadCambiada.getNecesidades());
 
-        return ResponseEntity.status(201).body(entidadRegistrada);
+        return ResponseEntity.status(201).body(new EntidadBeneficiariaDTO(entidadRegistrada));
     }
 
     @DeleteMapping("/{telefono}")

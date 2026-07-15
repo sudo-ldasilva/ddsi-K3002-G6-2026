@@ -1,5 +1,6 @@
 package com.ddsi.donaciones.domain;
 
+import com.ddsi.donaciones.domain.dto.EntidadBeneficiariaDTO;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -42,6 +43,10 @@ public class GestorEntidadesBeneficiarias {
             }
         }
         return null;
+    }
+
+    public void agregarEntidadBeneficiaria(EntidadBeneficiariaDTO ebDto){
+        agregarEntidadBeneficiaria(new EntidadBeneficiaria(ebDto));
     }
 
     public void agregarEntidadBeneficiaria(EntidadBeneficiaria entidadBeneficiaria){
