@@ -95,6 +95,20 @@ public class EntidadBeneficiariaController{
         return ResponseEntity.status(201).body(campaniaRegistrada);
     }
 
+    @PostMapping("/{telefono}/necesidadesRecurrentes")
+    public ResponseEntity<EntidadBeneficiaria> subirCampaniaNecesidad(@PathVariable String telefono, @RequestBody CampaniaNecesidadRecurrente cnr){
+        EntidadBeneficiaria eb = GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono);
+        eb.agregarCampañaRecurrente(cnr);
+        return ResponseEntity.status(201).body(eb);
+    }
+
+    @GetMapping("/{telefono}/necesidadesRecurrentes/{uuid}")
+    public ResponseEntity<CampaniaNecesidadRecurrente> getCampaniaNecesidad(@PathVariable String telefono, @PathVariable UUID uuid){
+        EntidadBeneficiaria eb = GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono);
+        CampaniaNecesidadRecurrente cnr = eb.getCampañaRecurrente(uuid);
+        return ResponseEntity.status(201).body(cnr);
+    }
+
     @PostMapping("/{telefono}/necesidadesExtraordinarias")
     public ResponseEntity<CampaniaNecesidad> crearCampaniaNecesidadExtraordinaria(@PathVariable String telefono, @RequestBody CampaniaNecesidadExtraordinaria campania){
         campania.setEntidadBeneficiaria(GestorEntidadesBeneficiarias.getInstance().getEntidad(telefono));

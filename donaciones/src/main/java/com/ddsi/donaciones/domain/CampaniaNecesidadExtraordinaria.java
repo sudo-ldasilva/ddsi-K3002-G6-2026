@@ -1,10 +1,12 @@
 package com.ddsi.donaciones.domain;
 
+import java.util.ArrayList;
+
 public class CampaniaNecesidadExtraordinaria extends CampaniaNecesidad {
     private String situacionExcepcional;
 
-    public CampaniaNecesidadExtraordinaria(EntidadBeneficiaria entidadBeneficiaria, String descripcion, String situacionExcepcional) {
-        super(entidadBeneficiaria, descripcion);
+    public CampaniaNecesidadExtraordinaria(EntidadBeneficiaria entidadBeneficiaria, String descripcion, ArrayList<NecesidadIndividual> necesidades, String situacionExcepcional) {
+        super(entidadBeneficiaria, descripcion, necesidades);
         this.situacionExcepcional = situacionExcepcional;
     }
 

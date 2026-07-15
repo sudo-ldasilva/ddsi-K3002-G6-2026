@@ -3,9 +3,11 @@ package com.ddsi.donaciones.domain;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class CampaniaNecesidadRecurrente {
+    private UUID uuid;
     private Periodo periodo;
     private List<CampaniaNecesidadPeriodo> campanias;
     private String descripcion;
@@ -13,13 +15,18 @@ public class CampaniaNecesidadRecurrente {
     private ArrayList<NecesidadBase> necesidadesBase;
     private EntidadBeneficiaria entidadBeneficiaria;
 
-    public CampaniaNecesidadRecurrente(Periodo periodo, String descripcion, Boolean activo, ArrayList<NecesidadBase> necesidadesBase, EntidadBeneficiaria entidadBeneficiaria) {
+    public CampaniaNecesidadRecurrente(UUID uuid, Periodo periodo, String descripcion, Boolean activo, ArrayList<NecesidadBase> necesidadesBase, EntidadBeneficiaria entidadBeneficiaria) {
+        this.uuid = uuid;
         this.periodo = periodo;
         this.campanias = new ArrayList<>();
         this.descripcion = descripcion;
         this.activo = activo;
         this.necesidadesBase = necesidadesBase;
         this.entidadBeneficiaria = entidadBeneficiaria;
+    }
+
+    public UUID getUUID() {
+        return this.uuid;
     }
 
     public Periodo getPeriodo() {

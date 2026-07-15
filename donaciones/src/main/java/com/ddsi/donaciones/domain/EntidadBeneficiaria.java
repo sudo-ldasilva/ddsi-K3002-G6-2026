@@ -13,6 +13,7 @@ public class EntidadBeneficiaria {
     private ArrayList<RepresentanteEntidadBeneficiaria> representantes;
     private ArrayList<CampaniaNecesidad> necesidades;
     private int cantidadDeDonacionesDelCuatrimestre;
+    private ArrayList<CampaniaNecesidadRecurrente> campañasRecurrentes;
 
     //Constructor
     public EntidadBeneficiaria(String razonSocial, String tipo, Contacto contacto, Direccion direccion)
@@ -117,6 +118,14 @@ public class EntidadBeneficiaria {
 
     public boolean necesitaEstaSubcategoria(Subcategoria subcategoria){
         return necesidades.stream().anyMatch(n -> n.necesitaEstaSubcategoria(subcategoria));
+    }
+
+    public void agregarCampañaRecurrente(CampaniaNecesidadRecurrente cnr) {
+        campañasRecurrentes.add(cnr);
+    }
+
+    public CampaniaNecesidadRecurrente getCampañaRecurrente(UUID uuid) {
+        return campañasRecurrentes.stream().filter(c -> c.getUUID().equals(uuid)).findFirst().orElse(null);
     }
 
 }
