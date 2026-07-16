@@ -3,13 +3,13 @@ package com.ddsi.logistica.domain;
 public class DonacionIndependiente {
     private float peso;
     private float volumen;
-    private String entidad;
+    private String razonSocial;
     private String direccionEntidad;
 
     public DonacionIndependiente(float peso, float volumen, String entidad, String direccionEntidad) {
         this.peso = peso;
         this.volumen = volumen;
-        this.entidad = entidad;
+        this.razonSocial = entidad;
         this.direccionEntidad = direccionEntidad;
     }
 
@@ -21,8 +21,8 @@ public class DonacionIndependiente {
         return volumen;
     }
 
-    public String getEntidad() {
-        return entidad;
+    public String getRazonSocial() {
+        return razonSocial;
     }
 
     public String getDireccionEntidad() {

@@ -11,6 +11,7 @@ public class Entrega {
     private float volumen;
     private Image fotoConfirmacion;
     private Estado estadoEntrega;
+    private Ruta ruta;
 
     public Entrega(ArrayList<DonacionIndependiente> donaciones, String razonSocial, String direccionEntidad, float peso, float volumen) {
         this.donaciones = new ArrayList<>();
@@ -31,5 +32,9 @@ public class Entrega {
 
     public void setEstadoEntrega(Estado estadoEntrega) {
         this.estadoEntrega = estadoEntrega;
+    }
+
+    public Ruta getRuta() {
+        return ruta;
     }
 }
