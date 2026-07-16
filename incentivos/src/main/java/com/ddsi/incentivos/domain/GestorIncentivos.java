@@ -14,6 +14,7 @@ public class GestorIncentivos {
     private static GestorIncentivos gestorIncentivos = null;
     private ArrayList<Donante> donantes;
     private ArrayList<Categoria> categorias;
+    private Ranking ranking;
 
     private GestorIncentivos() {
         this.donantes = new ArrayList<>();
@@ -88,17 +89,16 @@ public class GestorIncentivos {
     public ArrayList<Donante> rankingMensual() {
         LocalDate hoy = LocalDate.now();
         int mesActual = hoy.getMonthValue();
-        int anioActual = hoy.getYear();
+        int añoActual = hoy.getYear();
 
-        return donantes.stream()
-                .map(d -> new AbstractMap.SimpleEntry<>(d, contarInsigniasDelMes(d, mesActual, anioActual)))
-                .filter(entry -> entry.getValue() > 0)
-                .sorted(Comparator.comparingLong((Map.Entry<Donante, Long> e) -> e.getValue()).reversed())
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toCollection(ArrayList::new));
+        if (mesActual != ranking.getMes() && añoActual != ranking.getAño()) {
+            ranking = new Ranking(añoActual, mesActual);
+        }
+
+        return ranking.getDonantes();
     }
 
-    private long contarInsigniasDelMes(Donante donante, int mes, int anio) {
+    public long contarInsigniasDelMes(Donante donante, int mes, int anio) {
         return donante.getInsignias().stream()
                 .filter(i -> i.getFechaCompletada().getMonth() == mes
                         && i.getFechaCompletada().getYear() == anio)
