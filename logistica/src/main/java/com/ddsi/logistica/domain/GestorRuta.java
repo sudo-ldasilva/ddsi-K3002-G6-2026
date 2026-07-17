@@ -25,7 +25,7 @@ public class GestorRuta {
     }
 
     public ArrayList<Entrega> armarEntregas(ArrayList<DonacionIndependiente> donaciones) {
-        HashMap<String, ArrayList<DonacionIndependiente>> grupos = new HashMap<>();
+        HashMap<Direccion, ArrayList<DonacionIndependiente>> grupos = new HashMap<>();
         ArrayList<Entrega> entregas = new ArrayList<>();
         for (DonacionIndependiente donacion : donaciones) { //Arma en el hashMap los pares de las direcciones de entrega y las donaciones a entregar en dicha direccion
             if(!grupos.containsKey(donacion.getDireccionEntidad()))
@@ -35,16 +35,18 @@ public class GestorRuta {
 
         }
 
-        for (Map.Entry<String, ArrayList<DonacionIndependiente>> entry : grupos.entrySet()) {
+        for (Map.Entry<Direccion, ArrayList<DonacionIndependiente>> entry : grupos.entrySet()) {
             if(this.entraEnAlgunCamion(entry.getValue())){ //Si todas las donaciones entran en algun camion, arma la entrega
                 Entrega entrega = new Entrega(entry.getValue(), entry.getValue().getFirst().getRazonSocial(), entry.getValue().getFirst().getDireccionEntidad() ,
-                        (float) entry.getValue().stream().mapToDouble(DonacionIndependiente::getPeso).sum(), (float) entry.getValue().stream().mapToDouble(DonacionIndependiente::getVolumen).sum());
+                        entry.getValue().getFirst().getDireccionDeposito(), (float) entry.getValue().stream().mapToDouble(DonacionIndependiente::getPeso).sum(),
+                        (float) entry.getValue().stream().mapToDouble(DonacionIndependiente::getVolumen).sum());
                 entregas.add(entrega);
             } else {
                 ArrayList<ArrayList<DonacionIndependiente>> listasDonaciones = separarEntrega(entry.getValue()); //Si no hay ningun camion donde entre, separa las donaciones para poder armar entregas que entren en camiones
                 for (ArrayList<DonacionIndependiente> lista : listasDonaciones) { //Por cada lista de donaciones que separo, construye la entrega
                     Entrega entrega = new Entrega(lista, lista.getFirst().getRazonSocial(), lista.getFirst().getDireccionEntidad() ,
-                            (float) lista.stream().mapToDouble(DonacionIndependiente::getPeso).sum(), (float) lista.stream().mapToDouble(DonacionIndependiente::getVolumen).sum());
+                            entry.getValue().getFirst().getDireccionDeposito(), (float) lista.stream().mapToDouble(DonacionIndependiente::getPeso).sum(),
+                            (float) lista.stream().mapToDouble(DonacionIndependiente::getVolumen).sum());
                     entregas.add(entrega);
                 }
             }
@@ -62,7 +64,7 @@ public class GestorRuta {
             ArrayList<ArrayList<DonacionIndependiente>> listasDonaciones3 = listasDonaciones.stream().filter(ld -> !this.entraEnAlgunCamion(ld)).collect(Collectors.toCollection(ArrayList::new));
             for(ArrayList<DonacionIndependiente> lista : listasDonaciones3) {
                 listasDonaciones.add((ArrayList<DonacionIndependiente>) lista.subList(0, lista.size()/2));
-                listasDonaciones.add((ArrayList<DonacionIndependiente>)  lista.subList(lista.size()/2, lista.size());
+                listasDonaciones.add((ArrayList<DonacionIndependiente>)  lista.subList(lista.size()/2, lista.size()));
             }
             listasDonaciones.clear(); //Vacio la lista para armar la nueva (donde posiblemente entren todas las listas en algun camion)
             listasDonaciones.addAll(listasDonaciones2); //Agrego las donaciones que entraban originalmente
@@ -86,7 +88,7 @@ public class GestorRuta {
 
 
     private String crearMapa(ArrayList<DonacionIndependiente> donaciones){
-        ArrayList<String> direcciones = donaciones.stream().map(d -> d.getDireccionEntidad()).distinct().collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<String> direcciones = donaciones.stream().map(d -> d.getDireccionEntidad().getDireccion()).distinct().collect(Collectors.toCollection(ArrayList::new));
 
         StringBuilder url = new StringBuilder("https://www.google.com/maps/dir/");
 
