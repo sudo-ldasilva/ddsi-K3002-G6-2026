@@ -1,5 +1,7 @@
 package com.ddsi.logistica.domain;
 
+import com.ddsi.logistica.dto.RequestDTO;
+
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -8,20 +10,18 @@ import java.util.stream.Collectors;
 public class GestorRuta {
     private ArrayList<Ruta> rutas;
     private ArrayList<Camion> camiones;
+    private ArrayList<Entrega> entregasPendientes;
 
     public GestorRuta(ArrayList<Ruta> rutas, ArrayList<Camion> camiones) {
         this.rutas = new ArrayList<>();
         this.camiones = new ArrayList<>();
     }
 
-    public ArrayList<Ruta> crearRutas(ArrayList<DonacionIndependiente> donaciones) {
+    public void solicitarCreacionRutas(ArrayList<DonacionIndependiente> donaciones) { //No retorna nada porque la recepcion debe ser realizada por otro metodo
         ArrayList<Camion> camionesDisponibles = camiones.stream().filter(c -> c.getDisponible()).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Entrega> entregas = this.armarEntregas(donaciones);
+        ArrayList<RequestDTO> peticiones =  new ArrayList<>();
 
-        for (DonacionIndependiente donacion : donaciones) {
-            //todo (ya esta la segmentacion de las entregas, falta ver como se asignan a los camiones disponibles y definir que hacemos con las entregas que no se pueden meter en ningun camion, no hay suficientes/disponibles)
-        }
-
-        return null;
     }
 
     public ArrayList<Entrega> armarEntregas(ArrayList<DonacionIndependiente> donaciones) {
