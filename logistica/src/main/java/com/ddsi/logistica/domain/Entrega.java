@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Entrega {
-    private UUID id;
+    private UUID uuid;
     private ArrayList<DonacionIndependiente> donaciones;
     private String razonSocial;
     private Direccion direccionEntidad;
@@ -17,8 +17,8 @@ public class Entrega {
     private Parada parada;
 
     public Entrega(ArrayList<DonacionIndependiente> donaciones, String razonSocial, Direccion direccionEntidad, Direccion direccionDeposito,float peso, float volumen) {
-        this.id = UUID.randomUUID();
-        this.donaciones = new ArrayList<>();
+        this.uuid = UUID.randomUUID();
+        this.donaciones = donaciones;
         this.razonSocial = razonSocial;
         this.direccionEntidad = direccionEntidad;
         this.direccionDeposito = direccionDeposito;
