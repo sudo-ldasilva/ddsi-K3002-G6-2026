@@ -196,6 +196,8 @@ public class GestorDonaciones {
         notif.notificar(donacionInd.getDonacion().getDonante().getContactos(), "Su donación no se pudo entregar :( Justificación: " + justificacion);
         ArrayList<Contacto> contactosEntidad = new ArrayList<>(); contactosEntidad.add(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto());
         notif.notificar(contactosEntidad, "Su donación no se pudo entregar :( Justificación: " + justificacion);
+        ArrayList<Contacto> contactosDonante = donacionInd.getDonacion().getDonante().getContactos();
+        notif.notificar(contactosDonante, "Su donación no se pudo entregar :( Justificación: " + justificacion);
 
         if (puedeReasignarse) {
             donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.EN_DEPOSITO, new Date()));
