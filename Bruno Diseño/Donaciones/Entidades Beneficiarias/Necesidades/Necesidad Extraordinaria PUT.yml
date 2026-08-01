@@ -1,0 +1,40 @@
+info:
+  name: Necesidad Extraordinaria PUT
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:8080/entidadesBeneficiarias/123456789/necesidadesExtraordinarias
+  body:
+    type: json
+    data: |
+      {
+        "uuid": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "necesidades": [ ],
+        "descripcion": "string",
+        "situacionExcepcional": "string",
+        "subcategorias": [
+          {
+            "nombre": "string",
+            "unidadDeConteo": "string",
+            "categoria": {
+              "nombre": "string",
+              "subcategorias": [
+                "string"
+              ],
+              "esPerecedero": true,
+              "esUsable": true,
+              "perecedero": true,
+              "usable": true
+            }
+          }
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

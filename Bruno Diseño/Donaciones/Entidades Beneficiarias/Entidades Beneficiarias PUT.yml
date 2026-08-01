@@ -1,0 +1,40 @@
+info:
+  name: Entidades Beneficiarias PUT
+  type: http
+  seq: 5
+
+http:
+  method: PUT
+  url: http://localhost:8080/entidadesBeneficiarias/123456789
+  body:
+    type: json
+    data: |-
+      {
+        "razonSocial": "minga",
+        "tipo": "string",
+        "direccion": {
+          "callePrincipal": "string",
+          "calleEntre1": "string",
+          "calleEntre2": "string",
+          "altura": "string",
+          "nroDepartamento": "string",
+          "ciudad": {
+            "nombre": "string",
+            "provincia": {
+              "nombre": "string",
+              "pais": {
+                "nombre": "string"
+              },
+              "ubicacionCompleta": "string"
+            },
+            "ubicacionCompleta": "string"
+          }
+        }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

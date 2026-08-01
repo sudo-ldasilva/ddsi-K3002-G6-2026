@@ -46,6 +46,7 @@ public class GestorEntidadesBeneficiarias {
     }
 
     public void agregarEntidadBeneficiaria(EntidadBeneficiariaDTO ebDto){
+        // TODO Verificar que no haya otra Entidad Beneficiaria con el mismo telefono
         agregarEntidadBeneficiaria(new EntidadBeneficiaria(ebDto));
     }
 

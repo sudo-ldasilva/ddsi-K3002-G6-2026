@@ -1,5 +1,6 @@
 package com.ddsi.donaciones.domain;
 
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
@@ -70,7 +71,7 @@ public class DonacionIndependiente {
         this.comprobante = comprobante;
     }
 
-    public void agregarFotoRecepcion(String foto) {
+    public void agregarFotoRecepcion(Image foto) {
         comprobante.cargarFoto(foto);
     }
 

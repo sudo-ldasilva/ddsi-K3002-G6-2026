@@ -25,6 +25,7 @@ public class EntidadBeneficiaria {
         this.direccion = direccion;
         this.representantes = new ArrayList<>();
         this.necesidades = new ArrayList<>();
+        this.campañasRecurrentes = new ArrayList<>();
         this.cantidadDeDonacionesDelCuatrimestre = 0;
     }
 
@@ -128,6 +129,10 @@ public class EntidadBeneficiaria {
 
     public void agregarCampañaRecurrente(CampaniaNecesidadRecurrente cnr) {
         campañasRecurrentes.add(cnr);
+    }
+
+    public ArrayList<CampaniaNecesidadRecurrente> getCampañasRecurrentes() {
+        return campañasRecurrentes;
     }
 
     public CampaniaNecesidadRecurrente getCampañaRecurrente(UUID uuid) {

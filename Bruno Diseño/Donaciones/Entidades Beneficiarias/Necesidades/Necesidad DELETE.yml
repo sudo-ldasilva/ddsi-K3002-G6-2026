@@ -1,0 +1,15 @@
+info:
+  name: Necesidad DELETE
+  type: http
+  seq: 4
+
+http:
+  method: DELETE
+  url: http://localhost:8080/entidadesBeneficiarias/123456789/necesidades/c1545c53-f0d0-4a76-812f-25ecd8064b3f
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

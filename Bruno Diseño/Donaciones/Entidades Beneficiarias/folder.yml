@@ -1,0 +1,7 @@
+info:
+  name: Entidades Beneficiarias
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit

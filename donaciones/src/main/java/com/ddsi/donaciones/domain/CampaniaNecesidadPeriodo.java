@@ -1,7 +1,9 @@
 package com.ddsi.donaciones.domain;
 
+import com.ddsi.donaciones.domain.dto.CampaniaNecesidadDTO;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class CampaniaNecesidadPeriodo extends  CampaniaNecesidad {
     private LocalDate fechaInicio;
@@ -23,5 +25,10 @@ public class CampaniaNecesidadPeriodo extends  CampaniaNecesidad {
 
     public void setFechaInicio(LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
+    }
+
+    @Override
+    public CampaniaNecesidadDTO toDTO() {
+        return new CampaniaNecesidadDTO(getUuid(),"Periodo",necesidades.stream().map( n -> n.toDTO() ).collect(Collectors.toCollection(ArrayList::new)),descripcion,fechaInicio,null);
     }
 }

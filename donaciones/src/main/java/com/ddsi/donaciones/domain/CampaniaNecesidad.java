@@ -1,5 +1,7 @@
 package com.ddsi.donaciones.domain;
 
+import java.util.stream.Collectors;
+import com.ddsi.donaciones.domain.dto.CampaniaNecesidadDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -69,4 +71,6 @@ public abstract class CampaniaNecesidad {
     public boolean necesitaEstaSubcategoria(Subcategoria subcategoria) {
         return necesidades.stream().anyMatch(n -> !n.estaCubierta() && n.getSubcategoria().equals(subcategoria));
     }
+
+    public CampaniaNecesidadDTO toDTO() { throw new Error("Not implemented"); }
 }

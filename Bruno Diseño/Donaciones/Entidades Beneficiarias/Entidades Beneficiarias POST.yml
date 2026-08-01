@@ -1,0 +1,44 @@
+info:
+  name: Entidades Beneficiarias POST
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: http://localhost:8080/entidadesBeneficiarias
+  body:
+    type: json
+    data: |-
+      {
+        "razonSocial": "string",
+        "tipo": "string",
+        "contacto": {
+          "direccion": "123456789",
+          "tipoContacto": "string"
+        },
+        "direccion": {
+          "callePrincipal": "string",
+          "calleEntre1": "string",
+          "calleEntre2": "string",
+          "altura": "string",
+          "nroDepartamento": "string",
+          "ciudad": {
+            "nombre": "string",
+            "provincia": {
+              "nombre": "string",
+              "pais": {
+                "nombre": "string"
+              },
+              "ubicacionCompleta": "string"
+            },
+            "ubicacionCompleta": "string"
+          }
+        }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
