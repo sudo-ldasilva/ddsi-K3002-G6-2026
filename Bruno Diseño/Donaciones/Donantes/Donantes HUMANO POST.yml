@@ -1,0 +1,59 @@
+info:
+  name: Donantes HUMANO POST
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: http://localhost:8080/donantes/humanos
+  body:
+    type: json
+    data: |-
+      {
+        "mail": {
+          "direccion": "mail@mail.com",
+          "tipoContacto": "mail"
+        },
+        "mediosDeContacto": [
+          {
+            "direccion": "mail@mail.com",
+            "tipoContacto": "mail"
+          }
+        ],
+        "documento": {
+          "tipoDocumento": "CUIT",
+          "documento": "string"
+        },
+        "nombreYApellido": "string",
+        "edad": 0,
+        "genero": "FEMENINO",
+        "direccion": {
+          "callePrincipal": "string",
+          "calleEntre1": "string",
+          "calleEntre2": "string",
+          "altura": "string",
+          "nroDepartamento": "string",
+          "ciudad": {
+            "nombre": "string",
+            "provincia": {
+              "nombre": "string",
+              "pais": {
+                "nombre": "string"
+              },
+              "ubicacionCompleta": "string"
+            },
+            "ubicacionCompleta": "string"
+          }
+        },
+        "medioPredeterminado": {
+          "direccion": "mail@mail.com",
+          "tipoContacto": "mail"
+        }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

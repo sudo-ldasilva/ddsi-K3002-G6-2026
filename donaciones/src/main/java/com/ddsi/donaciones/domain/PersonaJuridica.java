@@ -1,5 +1,6 @@
 package com.ddsi.donaciones.domain;
 import java.util.ArrayList;
+import com.ddsi.donaciones.domain.dto.*;
 
 
 public class PersonaJuridica extends Donante {
@@ -7,6 +8,11 @@ public class PersonaJuridica extends Donante {
     private TipoPersonaJuridica tipo;
     private String rubro;
     private ArrayList<RepresentantePersonaJuridica> representantes;
+
+    public PersonaJuridica(PersonaJuridicaDTO persona) {
+        this(persona.getMail(), persona.getDocumento(), persona.getRazonSocial(), persona.getTipo(), persona.getRubro());
+        this.mediosDeContacto = persona.getMediosDeContacto();
+    }
 
     public PersonaJuridica(Contacto mail, Documento documento, String razonSocial, TipoPersonaJuridica tipo, String rubro) {
         super(mail, documento);
@@ -54,5 +60,9 @@ public class PersonaJuridica extends Donante {
 
     public void quitarRepresentante(RepresentantePersonaJuridica representante){
         this.representantes.remove(representante);
+    }
+
+    public PersonaJuridicaDTO toDTO() {
+        return new PersonaJuridicaDTO(mail, documento, razonSocial, tipo, rubro, mediosDeContacto);
     }
 }

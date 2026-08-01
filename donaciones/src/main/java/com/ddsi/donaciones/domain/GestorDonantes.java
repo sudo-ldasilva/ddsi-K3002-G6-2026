@@ -21,8 +21,15 @@ public class GestorDonantes {
     }
 
     public Donante getDonante(Contacto mail) {
+        System.out.println("Donantes: " + donantesRegistrados.size());
         for (int i = 0; i < donantesRegistrados.size(); i++) {
+            System.out.println(donantesRegistrados.get(i).getMail().getDireccion());
+            System.out.println(donantesRegistrados.get(i).getMail().getTipoContacto());
+            System.out.println(mail.getDireccion());
+            System.out.println(mail.getTipoContacto());
+            System.out.println("-------------------------------------");
             if (donantesRegistrados.get(i).getMail().equals(mail)) {
+                System.out.println("Resultado: true");
                 return donantesRegistrados.get(i);
             }
         }
@@ -48,14 +55,14 @@ public class GestorDonantes {
 
     public void registrarDonante(Donante donante) {
         this.donantesRegistrados.add(donante);
-        try {
-            NotificacionDispatcherService notificacionDispatcherService = new NotificacionDispatcherService();
-            ArrayList<Contacto> contactosDonante = new ArrayList<>(donante.getContactos());
-            contactosDonante.addFirst(donante.getMail());
-            notificacionDispatcherService.notificar(contactosDonante, "Bienvenida: Gracias por unirte a la iniciativa");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        // try {
+        //     NotificacionDispatcherService notificacionDispatcherService = new NotificacionDispatcherService();
+        //     ArrayList<Contacto> contactosDonante = new ArrayList<>(donante.getContactos());
+        //     contactosDonante.addFirst(donante.getMail());
+        //     notificacionDispatcherService.notificar(contactosDonante, "Bienvenida: Gracias por unirte a la iniciativa");
+        // } catch (Exception e) {
+        //     throw new RuntimeException(e);
+        // }
     }
 
     public void registrarDonanteSinNotificar(Donante donante) {
@@ -75,7 +82,7 @@ public class GestorDonantes {
         })
         .forEach( d -> {
             NotificacionDispatcherService notif = new NotificacionDispatcherService();
-            notif.notificar(d.getContactos(), "No has donado hace tiempo! Considera realiza una donación :)");
+            notif.notificar(d.getMediosDeContacto(), "No has donado hace tiempo! Considera realiza una donación :)");
         });
     }
 }

@@ -17,7 +17,7 @@ public abstract class Donante {
         return this.mail;
     }
 
-    public ArrayList<Contacto> getContactos() {
+    public ArrayList<Contacto> getMediosDeContacto() {
         return mediosDeContacto;
     }
 

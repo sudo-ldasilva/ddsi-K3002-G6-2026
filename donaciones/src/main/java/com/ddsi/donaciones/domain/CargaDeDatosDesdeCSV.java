@@ -71,7 +71,7 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
     private void actualizarDonante(Donante donante, Map<String, String> fila) {
         String telefono = fila.getOrDefault("Teléfono", "").trim();
         if (!telefono.isEmpty()) {
-            boolean yaEsta = donante.getContactos().stream()
+            boolean yaEsta = donante.getMediosDeContacto().stream()
                     .filter(c -> "telefono".equalsIgnoreCase(c.getTipoContacto()))
                     .anyMatch(c -> c.getDireccion().equals(telefono));
             if (!yaEsta) {

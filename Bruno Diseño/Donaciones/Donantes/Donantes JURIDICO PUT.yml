@@ -1,0 +1,37 @@
+info:
+  name: Donantes JURIDICO PUT
+  type: http
+  seq: 5
+
+http:
+  method: PUT
+  url: http://localhost:8080/donantes/juridicos/mail@empresa.com
+  body:
+    type: json
+    data: |-
+      {
+        "mail": {
+          "direccion": "mail@empresa.com",
+          "tipoContacto": "mail"
+        },
+        "mediosDeContacto": [
+          {
+            "direccion": "mail@empresa.com",
+            "tipoContacto": "mail"
+          }
+        ],
+        "documento": {
+          "tipoDocumento": "CUIT",
+          "documento": "string"
+        },
+        "razonSocial": "string",
+        "tipo": "GUBERNAMENTAL",
+        "rubro": "string"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

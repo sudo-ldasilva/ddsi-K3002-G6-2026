@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import com.ddsi.donaciones.domain.*;
-import com.ddsi.donaciones.domain.dto.DonacionIndependienteDTO;
+import com.ddsi.donaciones.domain.dto.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,24 +45,25 @@ public class DonanteController {
 
     @GetMapping("/{mail}/contactos")
     public ResponseEntity<ArrayList<Contacto>> getContactos(@PathVariable String mail) {
-        ArrayList<Contacto> medios = GestorDonantes.getInstance().getDonante(new Contacto(mail, "mail")).getContactos();
+        ArrayList<Contacto> medios = GestorDonantes.getInstance().getDonante(new Contacto(mail, "mail")).getMediosDeContacto();
         return ResponseEntity.status(200).body(medios);
     }
 
     @PostMapping("/humanos")
-    public ResponseEntity<Donante> crearHumano(@RequestBody PersonaHumana donante) {
+    public ResponseEntity<PersonaHumana> crearHumano(@RequestBody PersonaHumana donante) {
         GestorDonantes.getInstance().registrarDonante(donante);
         return ResponseEntity.status(201).body(donante);
     }
 
     @PostMapping("/juridicos")
-    public ResponseEntity<Donante> crearJuridico(@RequestBody PersonaJuridica donante) {
-        GestorDonantes.getInstance().registrarDonante(donante);
-        return ResponseEntity.status(201).body(donante);
+    public ResponseEntity<PersonaJuridica> crearJuridico(@RequestBody PersonaJuridicaDTO donante) {
+        PersonaJuridica pj = new PersonaJuridica(donante);
+        GestorDonantes.getInstance().registrarDonante(pj);
+        return ResponseEntity.status(201).body(pj);
     }
 
-    @PatchMapping("/humanos/{mail}")
-    public ResponseEntity<Donante> modificarHumano(@PathVariable String mail, @RequestBody PersonaHumana cambios) {
+    @PutMapping("/humanos/{mail}")
+    public ResponseEntity<PersonaHumana> modificarHumano(@PathVariable String mail, @RequestBody PersonaHumana cambios) {
         Donante donante = GestorDonantes.getInstance().getDonante(new Contacto(mail, "mail"));
 
         if ( !(donante instanceof PersonaHumana) ) {
@@ -70,75 +71,36 @@ public class DonanteController {
         }
 
         PersonaHumana humana = (PersonaHumana) donante;
-
-        if (cambios.getContactos() != null) {
-            humana.setMediosDeContacto(cambios.getContactos());
+        humana.setNombreYApellido(cambios.getNombreYApellido());
+        humana.setEdad(cambios.getEdad());
+        humana.setGenero(cambios.getGenero());
+        humana.setDireccion(cambios.getDireccion());
+        try {
+            humana.setMedioPredeterminado(cambios.getMedioPredeterminado());
+        } catch (Exception e) {
+            throw new Error("Medio predeterminado no está incluido dentro de los medios de contacto");
         }
 
-        if (cambios.getDocumento() != null) {
-            humana.setDocumento(cambios.getDocumento());
-        }
-
-        if (cambios.getNombreYApellido() != null) {
-            humana.setNombreYApellido(cambios.getNombreYApellido());
-        }
-        if (cambios.getEdad() != 0) {
-            humana.setEdad(cambios.getEdad());
-        }
-        if (cambios.getGenero() != null) {
-            humana.setGenero(cambios.getGenero());
-        }
-        if (cambios.getDireccion() != null) {
-            humana.setDireccion(cambios.getDireccion());
-        }
-        if (cambios.getMedioPredeterminado() != null) {
-            try {
-                humana.setMedioPredeterminado(cambios.getMedioPredeterminado());
-            } catch (Exception e) {
-                return ResponseEntity.status(400).body(null); // TODO Mostrar mensaje de error (?)
-            }
-        }
-
-        GestorDonantes.getInstance().registrarDonante(donante);
-        return ResponseEntity.status(201).body(donante);
+        return ResponseEntity.status(201).body(humana);
     }
 
-    @PatchMapping("/juridicos/{mail}")
-    public ResponseEntity<Donante> modificarJuridico(@PathVariable String mail, @RequestBody PersonaJuridica cambios) {
+    @PutMapping("/juridicos/{mail}")
+    public ResponseEntity<PersonaJuridicaDTO> modificarJuridico(@PathVariable String mail, @RequestBody PersonaJuridicaDTO cambios) {
         Donante donante = GestorDonantes.getInstance().getDonante(new Contacto(mail, "mail"));
 
-        if ( !(donante instanceof PersonaJuridica) ) {
-            return ResponseEntity.status(404).body(null);
-        }
+        if ( donante == null ) return ResponseEntity.status(404).body(null);
+        if ( !(donante instanceof PersonaJuridica) ) return ResponseEntity.status(400).body(null);
 
         PersonaJuridica juridica = (PersonaJuridica) donante;
 
-        if (cambios.getContactos() != null) {
-            juridica.setMediosDeContacto(cambios.getContactos());
-        }
+        juridica.setMediosDeContacto(cambios.getMediosDeContacto());
+        juridica.setDocumento(cambios.getDocumento());
+        juridica.setRazonSocial(cambios.getRazonSocial());
+        juridica.setTipo(cambios.getTipo());
+        juridica.setRubro(cambios.getRubro());
+        // TODO Tendríamos que crear un end-point de representantes
 
-        if (cambios.getDocumento() != null) {
-            juridica.setDocumento(cambios.getDocumento());
-        }
-
-        if (cambios.getRazonSocial() != null) {
-            juridica.setRazonSocial(cambios.getRazonSocial());
-        }
-
-        if (cambios.getTipo() != null) {
-            juridica.setTipo(cambios.getTipo());
-        }
-
-        if (cambios.getRubro() != null) {
-            juridica.setRubro(cambios.getRubro());
-        }
-
-        if (cambios.getRepresentantes() != null) {
-            juridica.setRepresentantes(cambios.getRepresentantes());
-        }
-
-        GestorDonantes.getInstance().registrarDonante(donante);
-        return ResponseEntity.status(201).body(donante);
+        return ResponseEntity.status(201).body(juridica.toDTO());
     }
 
     @DeleteMapping("/{mail}")

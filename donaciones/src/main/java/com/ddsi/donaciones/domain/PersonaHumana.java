@@ -53,10 +53,10 @@ public class PersonaHumana extends Donante{
     }
 
     public void setMedioPredeterminado(Contacto medioPredeterminado) throws Exception{
-        if (!this.getContactos().contains(medioPredeterminado)){
+        if (!this.getMediosDeContacto().contains(medioPredeterminado)){
             throw new Exception(); //El medio de contacto no esta definido (usar codificacion o booleano, no devolver mensaje de error)
         }
-        for(int i=0; i<this.getContactos().size(); i++){
+        for(int i=0; i<this.getMediosDeContacto().size(); i++){
             if(mediosDeContacto.get(i).equals(medioPredeterminado)){
                 Contacto temp = mediosDeContacto.get(0);
                 mediosDeContacto.set(0, medioPredeterminado);

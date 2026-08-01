@@ -134,7 +134,7 @@ public class GestorDonaciones {
 
         //Envio de notificaciones
         NotificacionDispatcherService notificacionDispatcherService = new NotificacionDispatcherService();
-        ArrayList<Contacto> contactosDonante = new ArrayList<>(donacionIndependiente.getDonacion().getDonante().getContactos());
+        ArrayList<Contacto> contactosDonante = new ArrayList<>(donacionIndependiente.getDonacion().getDonante().getMediosDeContacto());
         contactosDonante.add(0, donacionIndependiente.getDonacion().getDonante().getMail());
         notificacionDispatcherService.notificar(contactosDonante,
                 String.format("Asignacion de Donacion: Se asigno el bien %s a la entidad %s", donacionIndependiente.getSubcategoria(), campania.getEntidadBeneficiaria().getRazonSocial()));
@@ -160,7 +160,7 @@ public class GestorDonaciones {
 
             donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ASIGNACION_REALIZADA, new Date()));
             NotificacionDispatcherService notif = new NotificacionDispatcherService();
-            notif.notificar(donacionInd.getDonacion().getDonante().getContactos(), "Su donación fue asignada!");
+            notif.notificar(donacionInd.getDonacion().getDonante().getMediosDeContacto(), "Su donación fue asignada!");
             ArrayList<Contacto> contactosEntidad = new ArrayList<>(); contactosEntidad.add(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto());
             notif.notificar(contactosEntidad, "Su donación fue asignada!");
         });
@@ -172,7 +172,7 @@ public class GestorDonaciones {
 
             donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.EN_TRASLADO, new Date()));
             NotificacionDispatcherService notif = new NotificacionDispatcherService();
-            notif.notificar(donacionInd.getDonacion().getDonante().getContactos(), "Su donación está en camino! Mapa: " + enlaceMapa);
+            notif.notificar(donacionInd.getDonacion().getDonante().getMediosDeContacto(), "Su donación está en camino! Mapa: " + enlaceMapa);
             ArrayList<Contacto> contactosEntidad = new ArrayList<>(); contactosEntidad.add(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto());
             notif.notificar(contactosEntidad, "Su donación está en camino! Mapa: " + enlaceMapa);
         });
@@ -183,7 +183,7 @@ public class GestorDonaciones {
 
         donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ENTREGADA, new Date()));
         NotificacionDispatcherService notif = new NotificacionDispatcherService();
-        notif.notificar(donacionInd.getDonacion().getDonante().getContactos(), "Su donación fue entregada! Comprobante: " + comprobante.toString());
+        notif.notificar(donacionInd.getDonacion().getDonante().getMediosDeContacto(), "Su donación fue entregada! Comprobante: " + comprobante.toString());
         ArrayList<Contacto> contactosEntidad = new ArrayList<>(); contactosEntidad.add(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto());
         notif.notificar(contactosEntidad, "Su donación fue entregada! Comprobante: " + comprobante.toString());
     }
@@ -193,7 +193,7 @@ public class GestorDonaciones {
 
         donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ENTREGA_FALLIDA, new Date()));
         NotificacionDispatcherService notif = new NotificacionDispatcherService();
-        notif.notificar(donacionInd.getDonacion().getDonante().getContactos(), "Su donación no se pudo entregar :( Justificación: " + justificacion);
+        notif.notificar(donacionInd.getDonacion().getDonante().getMediosDeContacto(), "Su donación no se pudo entregar :( Justificación: " + justificacion);
         ArrayList<Contacto> contactosEntidad = new ArrayList<>(); contactosEntidad.add(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto());
         notif.notificar(contactosEntidad, "Su donación no se pudo entregar :( Justificación: " + justificacion);
         // TODO Notificar al usuario Administrador también
