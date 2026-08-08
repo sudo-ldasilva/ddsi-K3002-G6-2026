@@ -13,7 +13,7 @@ public class NecesidadIndividual {
     public CampaniaNecesidad campania;
 
     public NecesidadIndividual(NecesidadIndividualDTO dto, CampaniaNecesidad cn) {
-        this(dto.getBien(), dto.getCantidadNecesaria(), cn);
+        this(new Bien(dto.getBien()), dto.getCantidadNecesaria(), cn);
     }
 
     public NecesidadIndividual(Bien bien, int cantidadNecesaria, CampaniaNecesidad campania) {
@@ -69,6 +69,6 @@ public class NecesidadIndividual {
     public void reiniciar(){this.donaciones.clear();}
 
     public NecesidadIndividualDTO toDTO() {
-        return new NecesidadIndividualDTO(uuid, bien, cantidadNecesaria, campania.toDTO());
+        return new NecesidadIndividualDTO(uuid, bien.toDto(), cantidadNecesaria, campania.getUuid());
     }
 }

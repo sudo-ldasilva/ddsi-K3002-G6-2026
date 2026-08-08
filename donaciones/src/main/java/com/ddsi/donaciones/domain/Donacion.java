@@ -3,6 +3,9 @@ package com.ddsi.donaciones.domain;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
+import com.ddsi.donaciones.domain.dto.DonacionDTO;
 
 public class Donacion {
     private UUID uuid;
@@ -12,6 +15,19 @@ public class Donacion {
     private ArrayList<BienDonado> bienes;
     private boolean fueSegmentada;
     private Date fecha;
+
+    public Donacion(DonacionDTO dto) throws Exception{
+        Donante donante = GestorDonantes.getInstance().getDonante(new Contacto(dto.getDonante(), "mail"));
+        if (donante == null) throw new Exception("Donante no encontrado");
+
+        this(
+            dto.getDireccionDeposito(),
+            donante,
+            dto.getDescripcion(),
+            dto.getBienes().stream().map( b -> new BienDonado(b) ).collect(Collectors.toCollection(ArrayList::new)),
+            dto.getFecha()
+        );
+    }
 
     public Donacion(Direccion direccionDeposito, Donante donante, String descripcion, ArrayList<BienDonado> bienesDonados, Date fecha){
         this.uuid = UUID.randomUUID();
@@ -55,6 +71,10 @@ public class Donacion {
         fueSegmentada = true;
     }
 
+    public void setFueSegmentada(boolean segmentada) {
+        this.fueSegmentada = segmentada;
+    }
+
     public void setDeposito(Direccion direccionDeposito){
         this.direccionDeposito = direccionDeposito;
     }
@@ -69,5 +89,16 @@ public class Donacion {
 
     public void setBienes(ArrayList<BienDonado> bienes){
         this.bienes = bienes;
+    }
+
+    public DonacionDTO toDto() {
+    // public DonacionDTO(Direccion direccionDeposito, String donante, String descripcion, ArrayList<BienDonadoDTO> bienesDonados, Date fecha){
+        return new DonacionDTO(
+            direccionDeposito,
+            donante.getMail().getDireccion(),
+            descripcion,
+            bienes.stream().map( b -> b.toDto() ).collect(Collectors.toCollection(ArrayList::new)),
+            fecha
+        );
     }
 }

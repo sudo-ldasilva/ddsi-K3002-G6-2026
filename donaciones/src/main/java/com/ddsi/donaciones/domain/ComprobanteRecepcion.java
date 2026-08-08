@@ -1,13 +1,12 @@
 package com.ddsi.donaciones.domain;
 
-import java.awt.Image;
 import java.util.Date;
 import java.util.ArrayList;
 
 public class ComprobanteRecepcion {
     private Date fechaHora;
     private String camion;
-    private ArrayList<Image> fotos;
+    private ArrayList<String> fotos;
 
     public ComprobanteRecepcion(Date fechaHora, String camion) {
         this.fechaHora = fechaHora;
@@ -26,15 +25,15 @@ public class ComprobanteRecepcion {
         return "En el momento " + fechaHora.toString() + " se ha entregado la donación mediante el camión " + camion;
     }
 
-    public void cargarFoto(Image image) {
+    public void cargarFoto(String image) {
         fotos.add(image);
     }
 
-    public void eliminarFoto(Image image) {
+    public void eliminarFoto(String image) {
         fotos.remove(image);
     }
 
-    public ArrayList<Image> getFotos() {
+    public ArrayList<String> getFotos() {
         return this.fotos;
     }
 }

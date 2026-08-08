@@ -1,6 +1,5 @@
 package com.ddsi.donaciones.domain;
 
-import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
@@ -68,16 +67,20 @@ public class DonacionIndependiente {
         historialEstados.add(estado);
     }
 
+    public ComprobanteRecepcion getComprobante() {
+        return this.comprobante;
+    }
+
     public void setComprobante(ComprobanteRecepcion comprobante) {
         this.comprobante = comprobante;
     }
 
-    public void agregarFotoRecepcion(Image foto) {
+    public void agregarFotoRecepcion(String foto) {
         comprobante.cargarFoto(foto);
     }
 
     public DonacionIndependienteDTO toDto() {
-        return new DonacionIndependienteDTO(uuid, subcategoria.getNombre(), donacion.getDonante().getMail().getDireccion(), bienes.size(), estadoActual, fechaCreacion);
+        return new DonacionIndependienteDTO(uuid, subcategoria.getNombre(), donacion.getDonante().getMail().getDireccion(), bienes.size(), estadoActual, fechaCreacion, comprobante);
     }
 
 }

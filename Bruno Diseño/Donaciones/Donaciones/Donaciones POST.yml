@@ -1,0 +1,55 @@
+info:
+  name: Donaciones POST
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: http://localhost:8080/donaciones
+  body:
+    type: json
+    data: |-
+      {
+        "direccionDeposito": {
+          "callePrincipal": "string",
+          "calleEntre1": "string",
+          "calleEntre2": "string",
+          "altura": "string",
+          "nroDepartamento": "string",
+          "ciudad": {
+            "nombre": "string",
+            "provincia": {
+              "nombre": "string",
+              "pais": {
+                "nombre": "string"
+              },
+              "ubicacionCompleta": "string"
+            },
+            "ubicacionCompleta": "string"
+          }
+        },
+        "donante": "mail@empresa.com",
+        "descripcion": "string",
+        "bienes": [
+          {
+            "cantidad": 0,
+            "bien": {
+              "descripcion": "string",
+              "foto": "string",
+              "subcategoria": {
+                "nombre": "string",
+                "unidadDeConteo": "string",
+                "categoria": "string"
+              }
+            }
+          }
+        ],
+        "fecha": "2026-08-08T20:40:35.112Z"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

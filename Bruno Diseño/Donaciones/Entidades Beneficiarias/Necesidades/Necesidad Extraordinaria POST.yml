@@ -1,0 +1,73 @@
+info:
+  name: Necesidad Extraordinaria POST
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:8080/entidadesBeneficiarias/123456789/necesidadesExtraordinarias
+  body:
+    type: json
+    data: |
+      {
+        "uuid": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "necesidades": [ 
+          {
+            "bien": {
+              "descripcion": "string1",
+              "foto": "string2",
+              "subcategoria": {
+                "nombre": "string3",
+                "unidadDeConteo": "string5",
+                "categoria": "string4"
+              }
+            },
+            "cantidadNecesaria": 0,
+            "donaciones": [
+              {
+                "subcategoria": "string6",
+                "mailDonante": "string7",
+                "cantidadBienes": 0,
+                "estadoActual": {
+                  "estado": "EN_DEPOSITO",
+                  "fechaInicio": "2026-08-08T22:21:45.456Z"
+                },
+                "fecha": "2026-08-08T22:21:45.456Z",
+                "comprobante": {
+                  "fechaHora": "2026-08-08T22:21:45.456Z",
+                  "camion": "string8",
+                  "fotos": [
+                    "string9"
+                  ]
+                }
+              }
+            ],
+            "campania": "string10"
+          }
+        ],
+        "descripcion": "string",
+        "situacionExcepcional": "string",
+        "subcategorias": [
+          {
+            "nombre": "string",
+            "unidadDeConteo": "string",
+            "categoria": {
+              "nombre": "string",
+              "subcategorias": [
+                "string"
+              ],
+              "esPerecedero": true,
+              "esUsable": true,
+              "perecedero": true,
+              "usable": true
+            }
+          }
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

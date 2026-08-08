@@ -12,7 +12,7 @@ import com.ddsi.donaciones.service.NotificacionDispatcherService;
 @EnableScheduling
 public class DonacionesApplication {
 
-    private void molestarAAnto() {
+    private static void molestarAAnto() {
         NotificacionDispatcherService notif = new NotificacionDispatcherService();
         ArrayList<Contacto> cs = new ArrayList<>();
         cs.add(new Contacto("+5491168603322", "SMS"));
@@ -24,6 +24,7 @@ public class DonacionesApplication {
 
 	public static void main(String[] args) {
 		System.out.println("Hola, mundo!");
+        // molestarAAnto();
 		SpringApplication.run(DonacionesApplication.class, args);
 	}
 }

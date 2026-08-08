@@ -1,6 +1,5 @@
 package com.ddsi.donaciones.controller;
 
-import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
@@ -13,7 +12,7 @@ import com.ddsi.donaciones.domain.dto.DonacionesPorMailDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,40 +26,37 @@ import com.ddsi.donaciones.domain.dto.DonacionDTO;
 public class DonacionController {
 
     @GetMapping
-    public ResponseEntity<ArrayList<Donacion>> getDonantes() {
-        return ResponseEntity.status(200).body(GestorDonaciones.getInstance().getDonaciones());
+    public ResponseEntity<ArrayList<DonacionDTO>> getDonantes() {
+        return ResponseEntity.status(200).body(
+            GestorDonaciones.getInstance()
+                            .getDonaciones()
+                            .stream()
+                            .map( d -> d.toDto() )
+                            .collect(Collectors.toCollection(ArrayList::new))
+        );
     }
 
     @PostMapping
-    public ResponseEntity<Donacion> donar(@RequestBody Donacion donacion) {
-        GestorDonaciones.getInstance().donar(donacion);
-        return ResponseEntity.status(201).body(donacion);
+    public ResponseEntity<Donacion> donar(@RequestBody DonacionDTO dto) {
+        try {
+            Donacion donacion = new Donacion(dto);
+            GestorDonaciones.getInstance().donar(donacion);
+            return ResponseEntity.status(201).body(donacion);
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body(null);
+        }
     }
 
-    @PatchMapping("/{uuid}")
+    @PutMapping("/{uuid}")
     public ResponseEntity<Donacion> actualizarDonacion(@PathVariable UUID uuid, @RequestBody DonacionDTO dto) {
         Donacion donacion = GestorDonaciones.getInstance().getDonacionByUUID(uuid);
         if (donacion == null) return ResponseEntity.status(404).body(null);
 
-        if (dto.getDireccionDeposito() != null) {
-            donacion.setDeposito(dto.getDireccionDeposito());
-        }
-
-        if (dto.getDonante() != null) {
-            donacion.setDonante(dto.getDonante());
-        }
-
-        if (dto.getDescripcion() != null) {
-            donacion.setDescripcion(dto.getDescripcion());
-        }
-
-        if (dto.getBienes() != null) {
-            donacion.setBienes(dto.getBienes());
-        }
-
-        if (dto.yaFueSegmentada()) {
-            donacion.marcarSegmentada();
-        }
+        donacion.setDeposito(dto.getDireccionDeposito());
+        donacion.setDonante(GestorDonantes.getInstance().getDonante(new Contacto(dto.getDonante(), "mail")));
+        donacion.setDescripcion(dto.getDescripcion());
+        donacion.setBienes(dto.getBienes().stream().map(b -> new BienDonado(b)).collect(Collectors.toCollection(ArrayList::new)));
+        donacion.setFueSegmentada(dto.yaFueSegmentada());
 
         return ResponseEntity.status(200).body(donacion);
     }
@@ -72,9 +68,9 @@ public class DonacionController {
     }
 
     @GetMapping("/independientes")
-    public ResponseEntity<ArrayList<DonacionIndependiente>> getDonacionIndependientes() {
+    public ResponseEntity<ArrayList<DonacionIndependienteDTO>> getDonacionIndependientes() {
         ArrayList<DonacionIndependiente> donacion = GestorDonaciones.getInstance().getDonacionesIndependientes();
-        return ResponseEntity.status(200).body(donacion);
+        return ResponseEntity.status(200).body(donacion.stream().map(d -> d.toDto()).collect(Collectors.toCollection(ArrayList::new)));
     }
 
     @GetMapping("/independientesPorMail")
@@ -82,14 +78,7 @@ public class DonacionController {
         ArrayList<DonacionIndependienteDTO> donaciones = GestorDonaciones.getInstance()
                 .getDonacionesIndependientes()
                 .stream()
-                .map(d -> new DonacionIndependienteDTO(
-                        d.getUUID(),
-                        d.getSubcategoria().getCategoria().getNombre(),
-                        d.getDonacion().getDonante().getMail().getDireccion(),
-                        d.getBienes().stream().mapToInt(BienDonado::getCantidad).sum(),
-                        d.getEstadoActual(),
-                        d.getFecha()
-                ))
+                .map(d -> d.toDto())
                 .collect(Collectors.toCollection(ArrayList::new));
 
         Map<String, ArrayList<DonacionIndependienteDTO>> agrupadas = donaciones.stream()
@@ -105,36 +94,20 @@ public class DonacionController {
     }
 
     @GetMapping("/independientes/{uuid}")
-    public ResponseEntity<DonacionIndependiente> getDonacionIndependiente(@PathVariable UUID uuid) {
-        DonacionIndependiente donacion = GestorDonaciones.getInstance().getDonacionIndependienteByUUID(uuid);
-        return ResponseEntity.status(200).body(donacion);
+    public ResponseEntity<DonacionIndependienteDTO> getDonacionIndependiente(@PathVariable UUID uuid) {
+        DonacionIndependiente di = GestorDonaciones.getInstance().getDonacionIndependienteByUUID(uuid);
+        return ResponseEntity.status( (di == null) ? 404 : 200).body(di.toDto());
     }
 
-    @PostMapping("/independientes/{uuid}/comprobante")
-    public ResponseEntity<DonacionIndependiente> adjuntarComprobanteEntrega(@PathVariable UUID uuid, @RequestBody String camion, @RequestBody Date fechaHora) {
+    @PutMapping("/independientes/{uuid}/comprobante")
+    public ResponseEntity<DonacionIndependienteDTO> reemplazarComprobanteDonacion(@PathVariable UUID uuid, @RequestBody ComprobanteRecepcion comprobante) {
         DonacionIndependiente donacion = GestorDonaciones.getInstance().getDonacionIndependienteByUUID(uuid);
-        donacion.setComprobante(new ComprobanteRecepcion(fechaHora, camion));
-        return ResponseEntity.status(200).body(donacion);
+        if (donacion == null) return ResponseEntity.status(404).body(null);
+        donacion.setComprobante(comprobante);
+        return ResponseEntity.status(200).body(donacion.toDto());
     }
 
-    @PostMapping("/independientes/{uuid}/comprobante/fotoEntrega")
-    public ResponseEntity<DonacionIndependiente> subirFotoRecepcionEntidadBeneficiaria(@PathVariable UUID uuid, @RequestBody Image foto) {
-        DonacionIndependiente donacion = GestorDonaciones.getInstance().getDonacionIndependienteByUUID(uuid);
-        donacion.agregarFotoRecepcion(foto);
-        return ResponseEntity.status(200).body(donacion);
-    }
-
-    @PatchMapping("/independientes/{uuid}/estado")
-    public ResponseEntity<DonacionIndependiente> actualizarEstadoDonacionIndependiente(@PathVariable UUID uuid, @RequestBody EstadoDeDonacion estado) {
-        DonacionIndependiente donacion = GestorDonaciones.getInstance().getDonacionIndependienteByUUID(uuid);
-        if (estado == null) return ResponseEntity.status(404).body(null);
-
-        donacion.cambiarEstado(new EstadoDonacion(estado, new Date()));
-
-        return ResponseEntity.status(200).body(donacion);
-    }
-
-    @PostMapping("independientes/{uuidDonacion}/asignaciones/{uuidNecesidad}")
+    @PostMapping("/independientes/{uuidDonacion}/asignaciones/{uuidNecesidad}")
     public ResponseEntity<String> asignarDonacion(@PathVariable UUID uuidDonacion, @PathVariable UUID uuidNecesidad) throws Exception {
         GestorDonaciones.getInstance().asignarDonacionIndependiente(uuidDonacion, uuidNecesidad);
         return ResponseEntity.status(200).body("Donacion asignada correctamente");

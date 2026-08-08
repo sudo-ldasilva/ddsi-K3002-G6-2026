@@ -31,14 +31,7 @@ public class DonanteController {
                 .getDonacionesIndependientes()
                 .stream()
                 .filter(d -> d.getDonacion().getDonante().getMail().getDireccion().equalsIgnoreCase(mail))
-                .map(d -> new DonacionIndependienteDTO(
-                        d.getUUID(),
-                        d.getSubcategoria().getCategoria().getNombre(),
-                        mail,
-                        d.getBienes().stream().mapToInt(BienDonado::getCantidad).sum(),
-                        d.getEstadoActual(),
-                        d.getFecha()
-                ))
+                .map(d -> d.toDto())
                 .collect(Collectors.toCollection(ArrayList::new));
         return ResponseEntity.status(200).body(donaciones);
     }

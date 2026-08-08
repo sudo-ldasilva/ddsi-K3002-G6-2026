@@ -1,26 +1,37 @@
 package com.ddsi.donaciones.domain;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import com.ddsi.donaciones.domain.dto.BienDTO;
 
 public class Bien {
     private String descripcion;
-    private Path foto;
+    private String foto;
     private Subcategoria subcategoria;
+
+    public Bien(BienDTO dto) {
+        this(dto.getDescripcion(), dto.getFoto(), new Subcategoria(dto.getSubcategoria()));
+    }
 
     public Bien(String descripcion, String foto, Subcategoria subcategoria) {
         this.descripcion = descripcion;
-        this.foto = Paths.get(foto);
+        this.foto = foto;
         this.subcategoria = subcategoria;
     }
 
     public String getDescripcion() {
         return descripcion;
     }
-    public Path getFoto() {
+    public String getFoto() {
         return foto;
     }
     public Subcategoria getSubcategoria() {
         return subcategoria;
+    }
+
+    public BienDTO toDto() {
+        return new BienDTO(
+            descripcion,
+            foto,
+            subcategoria.toDto()
+        );
     }
 }
