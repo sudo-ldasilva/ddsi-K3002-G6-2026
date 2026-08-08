@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class CargaDeDatosDesdeCSV implements CargaDeDatos {
@@ -20,9 +19,9 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
     }
 
     @Override
-    public List<Donante> cargarDonantes(List<Donante> donantesActuales, String origen) throws Exception {
-        List<Map<String, String>> filas = leerCSV(origen);
-        List<Donante> resultado = new ArrayList<>(donantesActuales);
+    public ArrayList<Donante> cargarDonantes(ArrayList<Donante> donantesActuales, String origen) throws Exception {
+        ArrayList<Map<String, String>> filas = leerCSV(origen);
+        ArrayList<Donante> resultado = new ArrayList<>(donantesActuales);
         for (Map<String, String> fila : filas) {
             procesarFila(fila, resultado);
         }
@@ -30,9 +29,9 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
     }
 
     @Override
-    public List<Donante> validarDatos(List<Donante> donantesActuales, String origen) throws Exception {
-        List<Map<String, String>> filas = leerCSV(origen);
-        List<Donante> candidatos = new ArrayList<>();
+    public ArrayList<Donante> validarDatos(ArrayList<Donante> donantesActuales, String origen) throws Exception {
+        ArrayList<Map<String, String>> filas = leerCSV(origen);
+        ArrayList<Donante> candidatos = new ArrayList<>();
 
         for (Map<String, String> fila : filas) {
             Donante candidato = construirDonante(fila);
@@ -49,7 +48,7 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
         return candidatos;
     }
 
-    private void procesarFila(Map<String, String> fila, List<Donante> donantesActuales) {
+    private void procesarFila(Map<String, String> fila, ArrayList<Donante> donantesActuales) {
         String email = fila.getOrDefault("Email", "").trim();
         Contacto contactoMail = new Contacto(email, "mail");
 
@@ -134,8 +133,8 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
         }
     }
 
-    private List<Map<String, String>> leerCSV(String path) throws Exception {
-        List<Map<String, String>> filas = new ArrayList<>();
+    private ArrayList<Map<String, String>> leerCSV(String path) throws Exception {
+        ArrayList<Map<String, String>> filas = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String headerLine = br.readLine();

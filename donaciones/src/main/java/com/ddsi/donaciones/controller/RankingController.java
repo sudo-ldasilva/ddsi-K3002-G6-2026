@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -16,7 +15,7 @@ import java.util.UUID;
 public class RankingController {
 
     @GetMapping("/{uuidDonacionIndependiente}")
-    public ResponseEntity<List<Ranking>> getRanking(@PathVariable UUID uuidDonacionIndependiente) {
+    public ResponseEntity<ArrayList<Ranking>> getRanking(@PathVariable UUID uuidDonacionIndependiente) {
         ArrayList<AlgoritmoSeleccion> algoritmos = new ArrayList<>();
         algoritmos.add(new AlgoritmoPrioridadSubatendidos());
         return ResponseEntity.status(200).body(new Rankeador(algoritmos).generarRankings(GestorDonaciones.getInstance().getDonacionIndependienteByUUID(uuidDonacionIndependiente)));

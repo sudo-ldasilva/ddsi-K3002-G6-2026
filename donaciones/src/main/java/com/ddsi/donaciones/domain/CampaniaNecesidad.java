@@ -1,9 +1,7 @@
 package com.ddsi.donaciones.domain;
 
-import java.util.stream.Collectors;
 import com.ddsi.donaciones.domain.dto.CampaniaNecesidadDTO;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public abstract class CampaniaNecesidad {

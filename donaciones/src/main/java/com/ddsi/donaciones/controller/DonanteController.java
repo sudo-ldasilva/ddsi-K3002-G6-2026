@@ -45,8 +45,17 @@ public class DonanteController {
 
     @GetMapping("/{mail}/contactos")
     public ResponseEntity<ArrayList<Contacto>> getContactos(@PathVariable String mail) {
-        ArrayList<Contacto> medios = GestorDonantes.getInstance().getDonante(new Contacto(mail, "mail")).getMediosDeContacto();
-        return ResponseEntity.status(200).body(medios);
+        Donante donante = GestorDonantes.getInstance().getDonante(new Contacto(mail, "mail"));
+        if (donante == null) return ResponseEntity.status(404).body(null);
+        return ResponseEntity.status(200).body(donante.getMediosDeContacto());
+    }
+
+    @PostMapping("/{mail}/contactos")
+    public ResponseEntity<ArrayList<Contacto>> postContactos(@PathVariable String mail, @RequestBody Contacto contacto) {
+        Donante donante = GestorDonantes.getInstance().getDonante(new Contacto(mail, "mail"));
+        if (donante == null) return ResponseEntity.status(404).body(null);
+        donante.agregarContacto(contacto);
+        return ResponseEntity.status(200).body(donante.getMediosDeContacto());
     }
 
     @PostMapping("/humanos")

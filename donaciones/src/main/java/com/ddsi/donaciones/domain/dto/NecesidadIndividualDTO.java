@@ -3,7 +3,6 @@ package com.ddsi.donaciones.domain.dto;
 import com.ddsi.donaciones.domain.*;
 import java.util.ArrayList;
 import java.util.UUID;
-import java.util.function.ToIntFunction;
 
 public class NecesidadIndividualDTO {
     private UUID uuid;

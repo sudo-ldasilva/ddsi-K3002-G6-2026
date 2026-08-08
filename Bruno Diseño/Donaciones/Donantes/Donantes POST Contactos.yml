@@ -1,0 +1,22 @@
+info:
+  name: Donantes POST Contactos
+  type: http
+  seq: 7
+
+http:
+  method: POST
+  url: http://localhost:8080/donantes/mail@empresa.com/contactos
+  body:
+    type: json
+    data: |-
+      {
+        "direccion": "asuntoLicitos@empresa.com",
+        "tipoContacto": "mail"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

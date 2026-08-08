@@ -1,10 +1,10 @@
 package com.ddsi.donaciones.domain;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface CargaDeDatos {
 
-    List<Donante> cargarDonantes(List<Donante> donantesActuales, String origen) throws Exception;
+    ArrayList<Donante> cargarDonantes(ArrayList<Donante> donantesActuales, String origen) throws Exception;
 
-    List<Donante> validarDatos(List<Donante> donantesActuales, String origen) throws Exception;
+    ArrayList<Donante> validarDatos(ArrayList<Donante> donantesActuales, String origen) throws Exception;
 }

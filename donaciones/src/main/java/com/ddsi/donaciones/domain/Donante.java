@@ -9,8 +9,10 @@ public abstract class Donante {
 
     public Donante(Contacto mail, Documento documento) {
         this.mail = mail;
-        this.mediosDeContacto = new ArrayList<>();
         this.documento = documento;
+
+        this.mediosDeContacto = new ArrayList<>();
+        mediosDeContacto.add(mail);
     }
 
     public Contacto getMail() {
@@ -22,7 +24,9 @@ public abstract class Donante {
     }
 
     public void agregarContacto(Contacto contacto) {
-        this.mediosDeContacto.add(contacto);
+        if (!this.mediosDeContacto.contains(contacto)) {
+            this.mediosDeContacto.add(contacto);
+        }
     }
 
     public void eliminarContacto(Contacto contacto) {
@@ -31,6 +35,10 @@ public abstract class Donante {
 
     public void setMediosDeContacto(ArrayList<Contacto> mediosDeContacto) {
         this.mediosDeContacto = mediosDeContacto;
+
+        if (!this.mediosDeContacto.contains(mail)) {
+            mediosDeContacto.add(mail);
+        }
     }
 
     public void setDocumento(Documento documento) {

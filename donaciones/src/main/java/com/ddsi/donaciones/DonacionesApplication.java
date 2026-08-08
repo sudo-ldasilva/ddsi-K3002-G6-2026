@@ -18,7 +18,7 @@ public class DonacionesApplication {
         cs.add(new Contacto("+5491168603322", "SMS"));
         notif.notificar(
             cs,
-            "Hola"
+            "Hola Anto, estamos ejecutando el servicio de Notificaciones!"
         );
     }
 

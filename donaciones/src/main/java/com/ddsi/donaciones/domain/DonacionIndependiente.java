@@ -3,8 +3,9 @@ package com.ddsi.donaciones.domain;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
 import java.util.UUID;
+
+import com.ddsi.donaciones.domain.dto.DonacionIndependienteDTO;
 
 public class DonacionIndependiente {
     private UUID uuid;
@@ -73,6 +74,10 @@ public class DonacionIndependiente {
 
     public void agregarFotoRecepcion(Image foto) {
         comprobante.cargarFoto(foto);
+    }
+
+    public DonacionIndependienteDTO toDto() {
+        return new DonacionIndependienteDTO(uuid, subcategoria.getNombre(), donacion.getDonante().getMail().getDireccion(), bienes.size(), estadoActual, fechaCreacion);
     }
 
 }

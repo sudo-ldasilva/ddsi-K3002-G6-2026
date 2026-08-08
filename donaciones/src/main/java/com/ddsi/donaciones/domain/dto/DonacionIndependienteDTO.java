@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class DonacionIndependienteDTO {
     private UUID uuid;
-    private String categoriaBien;
+    private String subcategoria;
     private String mailDonante;
     private int cantidadBienes;
     private EstadoDonacion estadoActual;
@@ -15,7 +15,7 @@ public class DonacionIndependienteDTO {
 
     public DonacionIndependienteDTO(UUID uuid, String categoriaBien, String mailDonante, int cantidadBienes, EstadoDonacion estadoActual, Date fecha) {
         this.uuid = uuid;
-        this.categoriaBien = categoriaBien;
+        this.subcategoria = categoriaBien;
         this.mailDonante = mailDonante;
         this.cantidadBienes = cantidadBienes;
         this.estadoActual = estadoActual;
@@ -26,12 +26,12 @@ public class DonacionIndependienteDTO {
         return uuid;
     }
 
-    public String getCategoriaBien() {
-        return categoriaBien;
+    public String getSubcategoria() {
+        return subcategoria;
     }
 
-    public void setCategoriaBien(String categoriaBien) {
-        this.categoriaBien = categoriaBien;
+    public void setSubcategoria(String categoriaBien) {
+        this.subcategoria = categoriaBien;
     }
 
     public String getMailDonante() {

@@ -1,17 +1,17 @@
 package com.ddsi.donaciones.domain;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Ranking {
 
     private String algoritmo;
-    private List<CampaniaNecesidad> necesidades;
+    private ArrayList<CampaniaNecesidad> necesidades;
 
-    public Ranking(String algoritmo, List<CampaniaNecesidad> necesidades) {
+    public Ranking(String algoritmo, ArrayList<CampaniaNecesidad> necesidades) {
         this.algoritmo = algoritmo;
         this.necesidades = necesidades;
     }
 
     public String getAlgoritmo() {return algoritmo;}
-    public List<CampaniaNecesidad> getNecesidades() {return necesidades;}
+    public ArrayList<CampaniaNecesidad> getNecesidades() {return necesidades;}
 }

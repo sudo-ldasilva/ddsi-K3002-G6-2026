@@ -18,6 +18,10 @@ http:
           {
             "direccion": "mail@empresa.com",
             "tipoContacto": "mail"
+          },
+          {
+            "direccion": "sobornos@empresa.com",
+            "tipoContacto": "mail"
           }
         ],
         "documento": {

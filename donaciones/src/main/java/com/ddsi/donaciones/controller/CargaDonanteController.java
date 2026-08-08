@@ -13,15 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/donantes")
 public class CargaDonanteController {
 
-    @PostMapping("/carga-csv")
-    public ResponseEntity<String> cargarDesdeCSV(@RequestParam("archivo") MultipartFile archivo)
-            throws IOException {
+    @PostMapping("/cargaCsv")
+    public ResponseEntity<String> cargarDesdeCSV(@RequestParam("archivo") MultipartFile archivo) throws IOException {
 
         if (archivo.isEmpty()) {
             return ResponseEntity.badRequest().body("El archivo está vacío.");
@@ -33,11 +32,11 @@ public class CargaDonanteController {
             archivo.transferTo(temporal);
 
             GestorDonantes gestor = GestorDonantes.getInstance();
-            List<Donante> donantesActuales = gestor.getDonantes();
+            ArrayList<Donante> donantesActuales = gestor.getDonantes();
 
             CargaDeDatosDesdeCSV carga = new CargaDeDatosDesdeCSV();
 
-            List<Donante> validados = carga.validarDatos(donantesActuales, temporal.getAbsolutePath());
+            ArrayList<Donante> validados = carga.validarDatos(donantesActuales, temporal.getAbsolutePath());
 
             int nuevos = 0;
             for (Donante d : validados) {

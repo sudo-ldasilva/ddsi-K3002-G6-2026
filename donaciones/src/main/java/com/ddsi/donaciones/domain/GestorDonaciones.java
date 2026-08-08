@@ -70,11 +70,17 @@ public class GestorDonaciones {
         return null;
     }
 
-    public void segmentarDonaciones() {
-        donaciones.stream().filter(d->!d.yaFueSegmentada()).forEach(d->{this.generarDonacionesIndependientes(d);});
+    public ArrayList<DonacionIndependiente> segmentarDonaciones() {
+        ArrayList<DonacionIndependiente> donacionesCreadas = new ArrayList<>();
+        donaciones.stream().filter(d->!d.yaFueSegmentada()).forEach(d -> {
+            ArrayList<DonacionIndependiente> dis = this.generarDonacionesIndependientes(d);
+            donacionesCreadas.addAll(dis);
+        });
+        posiblesDonaciones.addAll(donacionesCreadas);
+        return donacionesCreadas;
     }
 
-    public void generarDonacionesIndependientes(Donacion donacion){
+    public ArrayList<DonacionIndependiente> generarDonacionesIndependientes(Donacion donacion){
         ArrayList<DonacionIndependiente> donacionesInd = new ArrayList<>();
 
         for (BienDonado bien : donacion.getBienes()) {//para vencidos
@@ -109,12 +115,12 @@ public class GestorDonaciones {
 
         donacion.marcarSegmentada();
 
-        posiblesDonaciones.addAll(donacionesInd);
+        return donacionesInd;
     }
 
     public void asignarDonacionIndependiente(UUID donacionUUID, UUID campaniaUUID) throws Exception {
         DonacionIndependiente donacionIndependiente = this.getDonacionIndependienteByUUID(donacionUUID);
-        if (donacionIndependiente != null) {
+        if (donacionIndependiente == null) {
             throw new Exception();
         }
 
@@ -135,7 +141,6 @@ public class GestorDonaciones {
         //Envio de notificaciones
         NotificacionDispatcherService notificacionDispatcherService = new NotificacionDispatcherService();
         ArrayList<Contacto> contactosDonante = new ArrayList<>(donacionIndependiente.getDonacion().getDonante().getMediosDeContacto());
-        contactosDonante.add(0, donacionIndependiente.getDonacion().getDonante().getMail());
         notificacionDispatcherService.notificar(contactosDonante,
                 String.format("Asignacion de Donacion: Se asigno el bien %s a la entidad %s", donacionIndependiente.getSubcategoria(), campania.getEntidadBeneficiaria().getRazonSocial()));
         ArrayList<Contacto> contactoEntidad = new ArrayList<>();

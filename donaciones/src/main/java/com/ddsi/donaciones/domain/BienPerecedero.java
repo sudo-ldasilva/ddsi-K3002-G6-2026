@@ -1,6 +1,5 @@
 package com.ddsi.donaciones.domain;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 public class BienPerecedero extends Bien {

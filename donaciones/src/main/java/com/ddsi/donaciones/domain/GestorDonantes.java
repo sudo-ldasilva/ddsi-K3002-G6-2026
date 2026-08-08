@@ -5,7 +5,6 @@ import com.ddsi.donaciones.service.NotificacionDispatcherService;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public class GestorDonantes {
@@ -21,15 +20,8 @@ public class GestorDonantes {
     }
 
     public Donante getDonante(Contacto mail) {
-        System.out.println("Donantes: " + donantesRegistrados.size());
         for (int i = 0; i < donantesRegistrados.size(); i++) {
-            System.out.println(donantesRegistrados.get(i).getMail().getDireccion());
-            System.out.println(donantesRegistrados.get(i).getMail().getTipoContacto());
-            System.out.println(mail.getDireccion());
-            System.out.println(mail.getTipoContacto());
-            System.out.println("-------------------------------------");
             if (donantesRegistrados.get(i).getMail().equals(mail)) {
-                System.out.println("Resultado: true");
                 return donantesRegistrados.get(i);
             }
         }

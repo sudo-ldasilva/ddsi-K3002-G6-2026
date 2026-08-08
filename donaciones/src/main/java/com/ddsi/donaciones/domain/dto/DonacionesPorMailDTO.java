@@ -1,6 +1,5 @@
 package com.ddsi.donaciones.domain.dto;
 
-import com.ddsi.donaciones.domain.*;
 import java.util.ArrayList;
 
 public class DonacionesPorMailDTO {

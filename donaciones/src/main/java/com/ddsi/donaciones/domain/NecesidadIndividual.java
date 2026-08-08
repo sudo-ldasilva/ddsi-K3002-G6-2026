@@ -5,8 +5,6 @@ import java.util.UUID;
 import java.util.function.ToIntFunction;
 import com.ddsi.donaciones.domain.dto.*;
 
-import com.ddsi.donaciones.domain.dto.CampaniaNecesidadDTO;
-
 public class NecesidadIndividual {
     private UUID uuid;
     private Bien bien;//que se necesita,ej)sillas,ropa,comida

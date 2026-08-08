@@ -1,0 +1,22 @@
+info:
+  name: Donantes DELETE
+  type: http
+  seq: 8
+
+http:
+  method: DELETE
+  url: http://localhost:8080/donantes/mail@empresa.com
+  body:
+    type: json
+    data: |-
+      {
+        "direccion": "asuntoLicitos@empresa.com",
+        "tipoContacto": "mail"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

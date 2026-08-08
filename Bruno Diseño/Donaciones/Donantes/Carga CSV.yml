@@ -1,0 +1,22 @@
+info:
+  name: Carga CSV
+  type: http
+  seq: 9
+
+http:
+  method: POST
+  url: http://localhost:8080/donantes/cargaCsv
+  body:
+    type: multipart-form
+    data:
+      - name: archivo
+        type: file
+        value:
+          - /home/leonardo/test.csv
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

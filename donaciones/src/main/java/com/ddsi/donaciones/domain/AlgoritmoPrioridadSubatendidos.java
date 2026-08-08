@@ -1,7 +1,5 @@
 package com.ddsi.donaciones.domain;
 
-import com.ddsi.donaciones.domain.GestorEntidadesBeneficiarias;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 
