@@ -1,7 +1,6 @@
 package com.ddsi.donaciones.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -37,11 +36,11 @@ public class DonacionController {
     }
 
     @PostMapping
-    public ResponseEntity<Donacion> donar(@RequestBody DonacionDTO dto) {
+    public ResponseEntity<DonacionDTO> donar(@RequestBody DonacionDTO dto) {
         try {
             Donacion donacion = new Donacion(dto);
             GestorDonaciones.getInstance().donar(donacion);
-            return ResponseEntity.status(201).body(donacion);
+            return ResponseEntity.status(201).body(donacion.toDto());
         } catch (Exception e) {
             return ResponseEntity.status(404).body(null);
         }

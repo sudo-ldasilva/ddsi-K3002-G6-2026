@@ -12,12 +12,12 @@ public class NecesidadIndividualDTO {
 
     public NecesidadIndividualDTO() {}
 
-    public NecesidadIndividualDTO(UUID uuid, BienDTO bien, int cantidadNecesaria, UUID campaniaUUID) {
+    public NecesidadIndividualDTO(UUID uuid, BienDTO bien, int cantidadNecesaria, UUID campaniaUUID, ArrayList<DonacionIndependienteDTO> donaciones) {
         this.uuid = uuid;
         this.bien = bien;
         this.cantidadNecesaria = cantidadNecesaria;
         this.campaniaUUID = campaniaUUID;
-        this.donaciones = new ArrayList<>();
+        this.donaciones = donaciones;
     }
 
     public UUID getUuid() {

@@ -1,0 +1,30 @@
+info:
+  name: Categorias POST
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: http://localhost:8080/categorias
+  body:
+    type: json
+    data: |-
+      {
+        "nombre": "cat1",
+        "subcategorias": [
+          {
+            "nombre": "subcat1",
+            "unidadDeConteo": "string3",
+            "categoria": "string4"
+          }
+        ],
+        "esPerecedero": true,
+        "esUsable": true
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

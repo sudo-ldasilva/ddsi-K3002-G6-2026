@@ -8,7 +8,17 @@ public class Bien {
     private Subcategoria subcategoria;
 
     public Bien(BienDTO dto) {
-        this(dto.getDescripcion(), dto.getFoto(), new Subcategoria(dto.getSubcategoria()));
+        this(
+            dto.getDescripcion(),
+            dto.getFoto(),
+            GestorCategorias.getInstance()
+                            .getCategorias()
+                            .stream()
+                            .flatMap(c -> c.getSubcategorias().stream())
+                            .filter(s -> s.getNombre().equals(dto.getSubcategoria().getNombre()))
+                            .findFirst()
+                            .orElse(null)
+        );
     }
 
     public Bien(String descripcion, String foto, Subcategoria subcategoria) {

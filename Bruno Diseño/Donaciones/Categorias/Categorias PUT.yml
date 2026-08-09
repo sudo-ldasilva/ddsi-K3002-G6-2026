@@ -1,0 +1,30 @@
+info:
+  name: Categorias PUT
+  type: http
+  seq: 3
+
+http:
+  method: PUT
+  url: http://localhost:8080/categorias/cat1
+  body:
+    type: json
+    data: |-
+      {
+        "nombre": "cat1",
+        "subcategorias": [
+          {
+            "nombre": "subcat1",
+            "unidadDeConteo": "string3",
+            "categoria": "string4"
+          }
+        ],
+        "esPerecedero": false,
+        "esUsable": true
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

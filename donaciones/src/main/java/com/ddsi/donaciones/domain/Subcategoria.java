@@ -7,8 +7,8 @@ public class Subcategoria {
     public String unidadDeConteo;
     public Categoria categoria;
 
-    public Subcategoria(SubcategoriaDTO dto) {
-        this(dto.getNombre(), dto.getUnidadDeConteo(), GestorCategorias.getInstance().buscarCategoria(dto.getCategoria()));
+    public Subcategoria(SubcategoriaDTO dto, Categoria c) {
+        this(dto.getNombre(), dto.getUnidadDeConteo(), c);
     }
 
     public Subcategoria(String nombre, String unidadDeConteo, Categoria categoria) {

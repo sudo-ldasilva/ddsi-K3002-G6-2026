@@ -17,15 +17,15 @@ http:
               "descripcion": "string1",
               "foto": "string2",
               "subcategoria": {
-                "nombre": "string3",
+                "nombre": "subcat1",
                 "unidadDeConteo": "string5",
-                "categoria": "string4"
+                "categoria": "cat1"
               }
             },
-            "cantidadNecesaria": 0,
+            "cantidadNecesaria": 10,
             "donaciones": [
               {
-                "subcategoria": "string6",
+                "subcategoria": "subcat1",
                 "mailDonante": "string7",
                 "cantidadBienes": 0,
                 "estadoActual": {

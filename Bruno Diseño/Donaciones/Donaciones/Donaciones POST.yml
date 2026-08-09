@@ -37,9 +37,9 @@ http:
               "descripcion": "string",
               "foto": "string",
               "subcategoria": {
-                "nombre": "string",
+                "nombre": "subcat1",
                 "unidadDeConteo": "string",
-                "categoria": "string"
+                "categoria": "cat1"
               }
             }
           }

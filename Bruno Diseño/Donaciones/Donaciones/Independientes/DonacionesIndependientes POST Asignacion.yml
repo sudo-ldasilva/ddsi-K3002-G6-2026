@@ -5,17 +5,7 @@ info:
 
 http:
   method: POST
-  url: http://localhost:8080/donaciones/independientes/0babea87-c1a8-4a4f-8de3-f5e54a516de3/asignaciones/34a61e93-702c-4508-acaa-72624bcde03e
-  body:
-    type: json
-    data: |-
-      {
-        "fechaHora": "2026-08-08T21:44:42.487Z",
-        "camion": "string",
-        "fotos": [
-          "string"
-        ]
-      }
+  url: http://localhost:8080/donaciones/independientes/4b0b3641-1e47-49d1-b750-89828ca5e297/asignaciones/0329eb2f-eadb-4126-9978-e9f1a32646b3
   auth: inherit
 
 settings:

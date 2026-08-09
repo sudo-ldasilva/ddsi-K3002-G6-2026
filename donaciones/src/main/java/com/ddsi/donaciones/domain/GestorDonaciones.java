@@ -125,7 +125,7 @@ public class GestorDonaciones {
         }
 
         CampaniaNecesidad campania = GestorEntidadesBeneficiarias.getInstance().obtenerCampaniaDeNecesidad(campaniaUUID);
-        NecesidadIndividual necesidadAsignada = campania.necesidades.stream().filter(n->n.getSubcategoria().equals(donacionIndependiente.getSubcategoria())).findFirst().orElse(null);
+        NecesidadIndividual necesidadAsignada = campania.necesidades.stream().filter(n -> n.getSubcategoria().equals(donacionIndependiente.getSubcategoria())).findFirst().orElse(null);
         if (necesidadAsignada == null || necesidadAsignada.estaCubierta()) {
             throw new Exception();
         }

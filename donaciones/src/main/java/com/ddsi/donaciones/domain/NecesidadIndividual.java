@@ -3,6 +3,8 @@ package com.ddsi.donaciones.domain;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.function.ToIntFunction;
+import java.util.stream.Collectors;
+
 import com.ddsi.donaciones.domain.dto.*;
 
 public class NecesidadIndividual {
@@ -69,6 +71,7 @@ public class NecesidadIndividual {
     public void reiniciar(){this.donaciones.clear();}
 
     public NecesidadIndividualDTO toDTO() {
-        return new NecesidadIndividualDTO(uuid, bien.toDto(), cantidadNecesaria, campania.getUuid());
+        return new NecesidadIndividualDTO(uuid, bien.toDto(), cantidadNecesaria, campania.getUuid(), donaciones.stream().map(d -> d.toDto()).collect(Collectors.toCollection(ArrayList::new)));
+
     }
 }
