@@ -16,7 +16,7 @@ public class NotificacionController {
         this.notificacionService = notificacionService;
     }
 
-    @PostMapping("/enviar")
+    @PostMapping
     public ResponseEntity<Integer> enviar(@RequestBody NotificacionRequestDTO request) {
         boolean resultado = notificacionService.enviar(request);
         if (resultado) {

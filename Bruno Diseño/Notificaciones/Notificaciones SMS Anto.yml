@@ -1,0 +1,27 @@
+info:
+  name: Notificaciones SMS Anto
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:8081/notificaciones
+  body:
+    type: json
+    data: |-
+      {
+        "contactos": [
+          {
+            "tipoContacto": "SMS",
+            "direccion": "+5491168603322"
+          }
+        ],
+        "mensaje": "Buenaaaaaas :)\n Este es un mensaje de Bruno"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
