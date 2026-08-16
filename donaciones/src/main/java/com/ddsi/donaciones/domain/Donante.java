@@ -3,19 +3,19 @@ package com.ddsi.donaciones.domain;
 import java.util.ArrayList;
 
 public abstract class Donante {
-    protected Contacto mail;
+    protected String mail;
     protected ArrayList<Contacto> mediosDeContacto;
     protected Documento documento;
 
-    public Donante(Contacto mail, Documento documento) {
+    public Donante(String mail, Documento documento) {
         this.mail = mail;
         this.documento = documento;
 
         this.mediosDeContacto = new ArrayList<>();
-        mediosDeContacto.add(mail);
+        mediosDeContacto.add(new Contacto(mail, "mail"));
     }
 
-    public Contacto getMail() {
+    public String getMail() {
         return this.mail;
     }
 
@@ -36,8 +36,9 @@ public abstract class Donante {
     public void setMediosDeContacto(ArrayList<Contacto> mediosDeContacto) {
         this.mediosDeContacto = mediosDeContacto;
 
-        if (!this.mediosDeContacto.contains(mail)) {
-            mediosDeContacto.add(mail);
+        Contacto mailContacto = new Contacto(mail, "mail");
+        if (!this.mediosDeContacto.contains(mailContacto)) {
+            mediosDeContacto.add(mailContacto);
         }
     }
 
@@ -50,11 +51,6 @@ public abstract class Donante {
     }
 
     public boolean tienEsteMail(Contacto contacto) {
-        if (this.mail != null &&
-                "mail".equalsIgnoreCase(this.mail.getTipoContacto()) &&
-                this.mail.getDireccion().equalsIgnoreCase(contacto.getDireccion())) {
-            return true;
-        }
         return mediosDeContacto.stream()
                 .filter(c -> "mail".equalsIgnoreCase(c.getTipoContacto()))
                 .anyMatch(c -> c.getDireccion().equalsIgnoreCase(contacto.getDireccion()));

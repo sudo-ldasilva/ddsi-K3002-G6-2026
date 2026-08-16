@@ -19,7 +19,7 @@ public class GestorDonantes {
         return this.donantesRegistrados;
     }
 
-    public Donante getDonante(Contacto mail) {
+    public Donante getDonante(String mail) {
         for (int i = 0; i < donantesRegistrados.size(); i++) {
             if (donantesRegistrados.get(i).getMail().equals(mail)) {
                 return donantesRegistrados.get(i);
@@ -28,7 +28,7 @@ public class GestorDonantes {
         return null;
     }
 
-    public Donante eliminarDonante(Contacto mail) {
+    public Donante eliminarDonante(String mail) {
         for (int i = 0; i < donantesRegistrados.size(); i++) {
             if (donantesRegistrados.get(i).getMail().equals(mail)) {
                 return donantesRegistrados.remove(i);

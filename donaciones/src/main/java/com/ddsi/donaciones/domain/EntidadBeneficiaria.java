@@ -9,7 +9,7 @@ public class EntidadBeneficiaria {
 
     private String razonSocial;
     private String tipo;
-    private Contacto contactoTelefono;
+    private String contactoTelefono;
     private Direccion direccion;
     private ArrayList<RepresentanteEntidadBeneficiaria> representantes;
     private ArrayList<CampaniaNecesidad> necesidades;
@@ -17,11 +17,11 @@ public class EntidadBeneficiaria {
     private ArrayList<CampaniaNecesidadRecurrente> campañasRecurrentes;
 
     //Constructor
-    public EntidadBeneficiaria(String razonSocial, String tipo, Contacto contacto, Direccion direccion)
+    public EntidadBeneficiaria(String razonSocial, String tipo, String telefono, Direccion direccion)
     {
         this.razonSocial = razonSocial;
         this.tipo = tipo;
-        this.contactoTelefono = contacto;
+        this.contactoTelefono = telefono;
         this.direccion = direccion;
         this.representantes = new ArrayList<>();
         this.necesidades = new ArrayList<>();
@@ -31,7 +31,7 @@ public class EntidadBeneficiaria {
 
     //Constructor
     public EntidadBeneficiaria(EntidadBeneficiariaDTO dto) {
-        this(dto.getRazonSocial(), dto.getTipo(), dto.getContacto(), dto.getDireccion());
+        this(dto.getRazonSocial(), dto.getTipo(), dto.getTelefono(), dto.getDireccion());
     }
 
     //Getters
@@ -47,7 +47,7 @@ public class EntidadBeneficiaria {
         return direccion;
     }
 
-    public Contacto getContacto() {
+    public String getContacto() {
         return contactoTelefono;
     }
 
@@ -137,6 +137,10 @@ public class EntidadBeneficiaria {
 
     public CampaniaNecesidadRecurrente getCampañaRecurrente(UUID uuid) {
         return campañasRecurrentes.stream().filter(c -> c.getUUID().equals(uuid)).findFirst().orElse(null);
+    }
+
+    public EntidadBeneficiariaDTO toDto() {
+        return new EntidadBeneficiariaDTO(razonSocial, tipo, contactoTelefono, direccion);
     }
 
 }

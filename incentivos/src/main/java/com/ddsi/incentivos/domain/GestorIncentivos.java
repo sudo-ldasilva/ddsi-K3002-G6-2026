@@ -2,7 +2,6 @@ package com.ddsi.incentivos.domain;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import com.ddsi.incentivos.domain.dto.DonacionIndependienteDTO;
 import com.ddsi.incentivos.domain.dto.DonacionesPorMailDTO;
@@ -39,7 +38,7 @@ public class GestorIncentivos {
             Iterator<Donante> it = donantes.iterator();
             while (it.hasNext()) {
                 Donante actual = it.next();
-                if (actual.getMail().getDireccion().equalsIgnoreCase(mailDonante)) {
+                if (actual.getMail().equalsIgnoreCase(mailDonante)) {
                     donante = actual;
                     it.remove();
                     break;
@@ -47,12 +46,16 @@ public class GestorIncentivos {
             }
 
             if (donante == null) {
-                donante = new Donante(new Contacto(mailDonante,"mail"), null, 0, new ArrayList<Insignia>(), false);
+                donante = new Donante(mailDonante, null, 0, new ArrayList<Insignia>(), false);
             }
 
             progresarEnCategoria(donante, donacionPorMail.getDonaciones());
             donantes.add(donante);
         }
+    }
+
+    public ArrayList<Categoria> getCategorias() {
+        return categorias;
     }
 
     private void progresarEnCategoria(Donante donante, ArrayList<DonacionIndependienteDTO> donaciones) {
@@ -63,7 +66,7 @@ public class GestorIncentivos {
             progresarEnCategoria(donante, donaciones);
 
             NotificacionDispatcherService notif = new NotificacionDispatcherService();
-            notif.notificar(new ArrayList<Contacto>(List.of(donante.getMail())), "Has sido promovido a la categoría " + donante.getCategoriaActual().getNombre());
+            notif.notificar(new ArrayList<Contacto>(List.of(new Contacto(donante.getMail(), "mail"))), "Has sido promovido a la categoría " + donante.getCategoriaActual().getNombre());
         } catch (Exception error) {
         }
     }
@@ -75,10 +78,10 @@ public class GestorIncentivos {
         donante.agregarInsignia(insignia);
         donante.siguienteMision();
         NotificacionDispatcherService notif = new NotificacionDispatcherService();
-        notif.notificar(new ArrayList<Contacto>(List.of(donante.getMail())), "Has conseguido la insignia " + insignia.getMision().getNombre());
+        notif.notificar(new ArrayList<Contacto>(List.of(new Contacto(donante.getMail(), "mail"))), "Has conseguido la insignia " + insignia.getMision().getNombre());
         N8nService n8n = new N8nService();
         n8n.notificar(
-            donante.getMail().getDireccion(),
+            donante.getMail(),
             donante.getCategoriaActual().getNombre(),
             "Ha conseguido la insignia " + insignia.getMision().getNombre()
         );
@@ -100,7 +103,7 @@ public class GestorIncentivos {
 
     public long contarInsigniasDelMes(Donante donante, int mes, int anio) {
         return donante.getInsignias().stream()
-                .filter(i -> i.getFechaCompletada().getMonth() == mes
+                .filter(i -> i.getFechaCompletada().getMonthValue() == mes
                         && i.getFechaCompletada().getYear() == anio)
                 .count();
     }
@@ -110,6 +113,6 @@ public class GestorIncentivos {
     }
 
     public Optional<Donante> getDonante(Contacto mail) {
-        return donantes.stream().filter(d -> d.getMail().equals(mail)).findFirst();
+        return donantes.stream().filter(d -> d.getMail().equals(mail.getDireccion())).findFirst();
     }
 }

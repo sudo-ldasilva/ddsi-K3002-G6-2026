@@ -17,7 +17,7 @@ public class Donacion {
     private Date fecha;
 
     public Donacion(DonacionDTO dto) throws Exception{
-        Donante donante = GestorDonantes.getInstance().getDonante(new Contacto(dto.getDonante(), "mail"));
+        Donante donante = GestorDonantes.getInstance().getDonante(dto.getDonante());
         if (donante == null) throw new Exception("Donante no encontrado");
 
         this(
@@ -95,7 +95,7 @@ public class Donacion {
     // public DonacionDTO(Direccion direccionDeposito, String donante, String descripcion, ArrayList<BienDonadoDTO> bienesDonados, Date fecha){
         return new DonacionDTO(
             direccionDeposito,
-            donante.getMail().getDireccion(),
+            donante.getMail(),
             descripcion,
             bienes.stream().map( b -> b.toDto() ).collect(Collectors.toCollection(ArrayList::new)),
             fecha

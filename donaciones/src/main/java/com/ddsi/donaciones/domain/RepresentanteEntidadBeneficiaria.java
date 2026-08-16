@@ -3,8 +3,8 @@ package com.ddsi.donaciones.domain;
 public class RepresentanteEntidadBeneficiaria extends Representante{
     private EntidadBeneficiaria entidadBeneficiaria;
 
-    public RepresentanteEntidadBeneficiaria(Contacto email, EntidadBeneficiaria entidadBeneficiaria) {
-        super(email);
+    public RepresentanteEntidadBeneficiaria(Contacto mail, EntidadBeneficiaria entidadBeneficiaria) {
+        super(mail);
         this.entidadBeneficiaria = entidadBeneficiaria;
     }
 

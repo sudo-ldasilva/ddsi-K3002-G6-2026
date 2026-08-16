@@ -29,7 +29,7 @@ public class GestorEntidadesBeneficiarias {
 
     public EntidadBeneficiaria getEntidad(String telefono){
         for (int i = 0; i < entidadesBeneficiarias.size(); i++) {
-            if (entidadesBeneficiarias.get(i).getContacto().getDireccion().equals(telefono)){
+            if (entidadesBeneficiarias.get(i).getContacto().equals(telefono)){
                 return entidadesBeneficiarias.get(i);
             }
         }
@@ -38,7 +38,7 @@ public class GestorEntidadesBeneficiarias {
 
     public EntidadBeneficiaria eliminarEntidad(String telefono){
         for (int i = 0; i < entidadesBeneficiarias.size(); i++) {
-            if (entidadesBeneficiarias.get(i).getContacto().getDireccion().equals(telefono)) {
+            if (entidadesBeneficiarias.get(i).getContacto().equals(telefono)) {
                 return entidadesBeneficiarias.remove(i);
             }
         }

@@ -1,18 +1,17 @@
 package com.ddsi.incentivos.domain.dto;
 
 import com.ddsi.incentivos.domain.*;
-import com.ddsi.incentivos.services.DonacionesService;
 
 import java.util.ArrayList;
 
 public class DonanteDTO {
-    private Contacto mail;
+    private String mail;
     private Categoria categoriaActual;
     private int indiceMisionActual;
     private ArrayList<Insignia> insignias;
     private boolean mostrarInsignias;
 
-    public DonanteDTO(Contacto mail, Categoria categoriaActual, int indiceMisionActual, ArrayList<Insignia> insignias, boolean mostrarInsignias) {
+    public DonanteDTO(String mail, Categoria categoriaActual, int indiceMisionActual, ArrayList<Insignia> insignias, boolean mostrarInsignias) {
         this.mail = mail;
         this.categoriaActual = categoriaActual;
         this.indiceMisionActual = indiceMisionActual;
@@ -28,7 +27,7 @@ public class DonanteDTO {
         this.mostrarInsignias = donante.mostrarInsignias();
     }
 
-    public Contacto getMail() {
+    public String getMail() {
         return this.mail;
     }
 

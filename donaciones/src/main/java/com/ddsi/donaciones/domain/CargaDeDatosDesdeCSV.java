@@ -84,19 +84,18 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
         String tipoDocStr  = fila.getOrDefault("TipoDoc", "").trim().toUpperCase();
         String nroDoc      = fila.getOrDefault("Documento", "").trim();
         String nombre      = fila.getOrDefault("Nombre/Razón Social", "").trim();
-        String email       = fila.getOrDefault("Email", "").trim();
+        String mail       = fila.getOrDefault("Email", "").trim();
         String telefono    = fila.getOrDefault("Teléfono", "").trim();
 
         TipoDocumento tipoDoc = parsearTipoDocumento(tipoDocStr);
         Documento documento   = new Documento(tipoDoc, nroDoc);
-        Contacto contactoMail = new Contacto(email, "mail");
 
         Donante donante;
 
         switch (tipoPersona) {
             case "HUMANA" -> {
                 donante = new PersonaHumana(
-                        contactoMail,
+                        mail,
                         documento,
                         nombre,
                         18,
@@ -107,7 +106,7 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
             }
             case "JURIDICA" -> {
                 donante = new PersonaJuridica(
-                        contactoMail,
+                        mail,
                         documento,
                         nombre,
                         null,

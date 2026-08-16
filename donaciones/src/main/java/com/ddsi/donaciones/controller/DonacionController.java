@@ -52,7 +52,7 @@ public class DonacionController {
         if (donacion == null) return ResponseEntity.status(404).body(null);
 
         donacion.setDeposito(dto.getDireccionDeposito());
-        donacion.setDonante(GestorDonantes.getInstance().getDonante(new Contacto(dto.getDonante(), "mail")));
+        donacion.setDonante(GestorDonantes.getInstance().getDonante(dto.getDonante()));
         donacion.setDescripcion(dto.getDescripcion());
         donacion.setBienes(dto.getBienes().stream().map(b -> new BienDonado(b)).collect(Collectors.toCollection(ArrayList::new)));
         donacion.setFueSegmentada(dto.yaFueSegmentada());

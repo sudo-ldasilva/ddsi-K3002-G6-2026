@@ -14,7 +14,7 @@ public class PersonaJuridica extends Donante {
         this.mediosDeContacto = persona.getMediosDeContacto();
     }
 
-    public PersonaJuridica(Contacto mail, Documento documento, String razonSocial, TipoPersonaJuridica tipo, String rubro) {
+    public PersonaJuridica(String mail, Documento documento, String razonSocial, TipoPersonaJuridica tipo, String rubro) {
         super(mail, documento);
         this.razonSocial = razonSocial;
         this.tipo = tipo;

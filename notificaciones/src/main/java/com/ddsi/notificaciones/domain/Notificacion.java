@@ -22,7 +22,10 @@ public class Notificacion {
     public TipoContacto getTipoContacto() {
         return tipoContacto;
     }
-    public boolean setEstaCompletada(boolean valor) {
-        return estaCompletada = valor;
+    public boolean getEstaCompletada() {
+        return estaCompletada;
+    }
+    public void setEstaCompletada(boolean valor) {
+        estaCompletada = valor;
     }
 }

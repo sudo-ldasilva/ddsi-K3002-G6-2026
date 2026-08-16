@@ -4,16 +4,15 @@ import com.ddsi.incentivos.domain.dto.DonacionIndependienteDTO;
 import com.ddsi.incentivos.services.DonacionesService;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Donante {
-    private Contacto mail;
+    private String mail;
     private Categoria categoriaActual;
     private int indiceMisionActual;
     private ArrayList<Insignia> insignias;
     private boolean mostrarInsignias;
 
-    public Donante(Contacto mail, Categoria categoriaActual, int indiceMisionActual, ArrayList<Insignia> insignias, boolean mostrarInsignias) {
+    public Donante(String mail, Categoria categoriaActual, int indiceMisionActual, ArrayList<Insignia> insignias, boolean mostrarInsignias) {
         this.mail = mail;
         this.categoriaActual = categoriaActual;
         this.indiceMisionActual = indiceMisionActual;
@@ -21,7 +20,7 @@ public class Donante {
         this.mostrarInsignias = mostrarInsignias;
     }
 
-    public Contacto getMail() {
+    public String getMail() {
         return this.mail;
     }
 
@@ -35,7 +34,7 @@ public class Donante {
 
     public ArrayList<DonacionIndependienteDTO> getDonaciones() {
         DonacionesService donacionesService = new DonacionesService();
-        return donacionesService.getDonaciones(mail.getDireccion());
+        return donacionesService.getDonaciones(mail);
     }
 
     public void siguienteMision() { this.indiceMisionActual = this.indiceMisionActual + 1; }
@@ -63,7 +62,7 @@ public class Donante {
 
     public ArrayList<Contacto> getMedioDeContacto() {
         DonacionesService donacionesService = new DonacionesService();
-        return donacionesService.getMediosDeContacto(mail.getDireccion());
+        return donacionesService.getMediosDeContacto(mail);
     }
 
     public boolean mostrarInsignias() {

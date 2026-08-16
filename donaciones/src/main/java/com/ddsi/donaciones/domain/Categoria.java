@@ -27,7 +27,6 @@ public class Categoria {
     }
 
     public void setNombre(String nombre) {
-        // TODO Checkear colisiones
         this.nombre = nombre;
     }
 

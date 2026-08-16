@@ -51,7 +51,7 @@ public class EntidadBeneficiariaController{
         entidadRegistrada.setTipo(entidadCambiada.getTipo());
         entidadRegistrada.setDireccion(entidadCambiada.getDireccion());
 
-        return ResponseEntity.status(201).body(new EntidadBeneficiariaDTO(entidadRegistrada));
+        return ResponseEntity.status(201).body(entidadRegistrada.toDto());
     }
 
     @DeleteMapping("/{telefono}")

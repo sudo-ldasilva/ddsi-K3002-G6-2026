@@ -144,7 +144,8 @@ public class GestorDonaciones {
         notificacionDispatcherService.notificar(contactosDonante,
                 String.format("Asignacion de Donacion: Se asigno el bien %s a la entidad %s", donacionIndependiente.getSubcategoria(), campania.getEntidadBeneficiaria().getRazonSocial()));
         ArrayList<Contacto> contactoEntidad = new ArrayList<>();
-        contactoEntidad.add(campania.getEntidadBeneficiaria().getContacto());
+        contactoEntidad.add(new Contacto(campania.getEntidadBeneficiaria().getContacto(), "whatsapp"));
+        contactoEntidad.add(new Contacto(campania.getEntidadBeneficiaria().getContacto(), "sms"));
         notificacionDispatcherService.notificar(contactoEntidad, String.format("Asignacion de Donacion: Se te asigno el bien %s", donacionIndependiente.getSubcategoria()));
     }
 
@@ -166,7 +167,9 @@ public class GestorDonaciones {
             donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ASIGNACION_REALIZADA, new Date()));
             NotificacionDispatcherService notif = new NotificacionDispatcherService();
             notif.notificar(donacionInd.getDonacion().getDonante().getMediosDeContacto(), "Su donación fue asignada!");
-            ArrayList<Contacto> contactosEntidad = new ArrayList<>(); contactosEntidad.add(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto());
+            ArrayList<Contacto> contactosEntidad = new ArrayList<>();
+            contactosEntidad.add(new Contacto(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto(), "whatsapp"));
+            contactosEntidad.add(new Contacto(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto(), "sms"));
             notif.notificar(contactosEntidad, "Su donación fue asignada!");
         });
     }
@@ -178,7 +181,9 @@ public class GestorDonaciones {
             donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.EN_TRASLADO, new Date()));
             NotificacionDispatcherService notif = new NotificacionDispatcherService();
             notif.notificar(donacionInd.getDonacion().getDonante().getMediosDeContacto(), "Su donación está en camino! Mapa: " + enlaceMapa);
-            ArrayList<Contacto> contactosEntidad = new ArrayList<>(); contactosEntidad.add(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto());
+            ArrayList<Contacto> contactosEntidad = new ArrayList<>();
+            contactosEntidad.add(new Contacto(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto(), "whatsapp"));
+            contactosEntidad.add(new Contacto(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto(), "sms"));
             notif.notificar(contactosEntidad, "Su donación está en camino! Mapa: " + enlaceMapa);
         });
     }
@@ -189,7 +194,9 @@ public class GestorDonaciones {
         donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ENTREGADA, new Date()));
         NotificacionDispatcherService notif = new NotificacionDispatcherService();
         notif.notificar(donacionInd.getDonacion().getDonante().getMediosDeContacto(), "Su donación fue entregada! Comprobante: " + comprobante.toString());
-        ArrayList<Contacto> contactosEntidad = new ArrayList<>(); contactosEntidad.add(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto());
+        ArrayList<Contacto> contactosEntidad = new ArrayList<>();
+        contactosEntidad.add(new Contacto(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto(), "whatsapp"));
+        contactosEntidad.add(new Contacto(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto(), "sms"));
         notif.notificar(contactosEntidad, "Su donación fue entregada! Comprobante: " + comprobante.toString());
     }
 
@@ -199,7 +206,9 @@ public class GestorDonaciones {
         donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ENTREGA_FALLIDA, new Date()));
         NotificacionDispatcherService notif = new NotificacionDispatcherService();
         notif.notificar(donacionInd.getDonacion().getDonante().getMediosDeContacto(), "Su donación no se pudo entregar :( Justificación: " + justificacion);
-        ArrayList<Contacto> contactosEntidad = new ArrayList<>(); contactosEntidad.add(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto());
+        ArrayList<Contacto> contactosEntidad = new ArrayList<>();
+        contactosEntidad.add(new Contacto(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto(), "whatsapp"));
+        contactosEntidad.add(new Contacto(donacionInd.getNecesidad().getCampania().getEntidadBeneficiaria().getContacto(), "sms"));
         notif.notificar(contactosEntidad, "Su donación no se pudo entregar :( Justificación: " + justificacion);
         // TODO Notificar al usuario Administrador también
 

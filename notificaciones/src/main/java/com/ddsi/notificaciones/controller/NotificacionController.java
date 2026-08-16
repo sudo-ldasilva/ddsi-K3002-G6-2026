@@ -1,8 +1,6 @@
 package com.ddsi.notificaciones.controller;
 
-import com.ddsi.notificaciones.domain.GestorNotificaciones;
 import com.ddsi.notificaciones.dto.NotificacionRequestDTO;
-import com.ddsi.notificaciones.dto.ContactoDTO;
 import com.ddsi.notificaciones.service.NotificacionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

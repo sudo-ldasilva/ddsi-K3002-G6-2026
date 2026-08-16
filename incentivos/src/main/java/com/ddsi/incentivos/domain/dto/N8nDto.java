@@ -12,4 +12,8 @@ public class N8nDto {
         this.badge = badge;
         this.description = description;
     }
+
+    public String getUser() { return user; }
+    public String getBadge() { return badge; }
+    public String getDescription() { return description; }
 }

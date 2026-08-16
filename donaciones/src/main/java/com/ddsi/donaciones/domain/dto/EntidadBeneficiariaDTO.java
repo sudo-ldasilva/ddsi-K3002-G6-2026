@@ -1,29 +1,20 @@
 package com.ddsi.donaciones.domain.dto;
 
-import com.ddsi.donaciones.domain.Contacto;
 import com.ddsi.donaciones.domain.Direccion;
-import com.ddsi.donaciones.domain.EntidadBeneficiaria;
 
 public class EntidadBeneficiariaDTO {
     private String razonSocial;
     private String tipo;
-    private Contacto contacto;
+    private String telefono;
     private Direccion direccion;
 
     public EntidadBeneficiariaDTO() {}
 
-    public EntidadBeneficiariaDTO(String razonSocial, String tipo, Contacto contacto, Direccion direccion) {
+    public EntidadBeneficiariaDTO(String razonSocial, String tipo, String telefono, Direccion direccion) {
         this.razonSocial = razonSocial;
         this.tipo = tipo;
-        this.contacto = contacto;
+        this.telefono = telefono;
         this.direccion = direccion;
-    }
-
-    public EntidadBeneficiariaDTO(EntidadBeneficiaria eb) {
-        this.razonSocial = eb.getRazonSocial();
-        this.tipo = eb.getTipo();
-        this.contacto = eb.getContacto();
-        this.direccion = eb.getDireccion();
     }
 
     public String getRazonSocial() {
@@ -34,8 +25,8 @@ public class EntidadBeneficiariaDTO {
         return tipo;
     }
 
-    public Contacto getContacto() {
-        return contacto;
+    public String getTelefono() {
+        return telefono;
     }
 
     public Direccion getDireccion() {

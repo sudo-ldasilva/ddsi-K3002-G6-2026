@@ -27,7 +27,7 @@ public class GestorNotificaciones {
         return new Notificacion(
                 contacto.getDireccion(),
                 mensaje,
-                TipoContacto.valueOf(contacto.getTipoContacto()),
+                TipoContacto.valueOf(contacto.getTipoContacto().toUpperCase()),
                 false
         );
     }

@@ -13,7 +13,6 @@ public class DonacionIndependiente {
     private Donacion donacion;
     private ArrayList<BienDonado> bienes;
     private ArrayList<EstadoDonacion> historialEstados;
-    private EstadoDonacion estadoActual;
     private Date fechaCreacion;
     private ComprobanteRecepcion comprobante;
 
@@ -23,9 +22,10 @@ public class DonacionIndependiente {
         this.necesidad = necesidad;
         this.donacion = donacion;
         this.bienes = new ArrayList<>();
-        this.historialEstados = new ArrayList<>();
-        this.estadoActual = new EstadoDonacion(EstadoDeDonacion.EN_DEPOSITO, new Date());
         this.fechaCreacion = new Date();
+
+        this.historialEstados = new ArrayList<>();
+        this.historialEstados.add(new EstadoDonacion(EstadoDeDonacion.EN_DEPOSITO, new Date()));
     }
 
     public UUID getUUID() {
@@ -33,7 +33,7 @@ public class DonacionIndependiente {
     }
 
     public EstadoDonacion getEstadoActual() {
-        return this.estadoActual;
+        return this.historialEstados.getLast();
     }
 
     public Subcategoria getSubcategoria() {
@@ -63,7 +63,6 @@ public class DonacionIndependiente {
     }
 
     public void cambiarEstado(EstadoDonacion estado) {
-        this.estadoActual = estado;
         historialEstados.add(estado);
     }
 
@@ -80,7 +79,7 @@ public class DonacionIndependiente {
     }
 
     public DonacionIndependienteDTO toDto() {
-        return new DonacionIndependienteDTO(uuid, subcategoria.getNombre(), donacion.getDonante().getMail().getDireccion(), bienes.size(), estadoActual, fechaCreacion, comprobante);
+        return new DonacionIndependienteDTO(uuid, subcategoria.getNombre(), donacion.getDonante().getMail(), bienes.size(), historialEstados.getLast(), fechaCreacion, comprobante);
     }
 
 }

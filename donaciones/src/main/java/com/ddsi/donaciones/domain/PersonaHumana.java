@@ -7,7 +7,7 @@ public class PersonaHumana extends Donante{
     private Direccion direccion;
     private Contacto medioPredeterminado;
 
-    public PersonaHumana(Contacto mail, Documento documento, String nombreYApellido, int edad, Genero genero, Direccion direccion, Contacto medioPredeterminado) {
+    public PersonaHumana(String mail, Documento documento, String nombreYApellido, int edad, Genero genero, Direccion direccion, Contacto medioPredeterminado) {
         super(mail, documento);
         this.nombreYApellido = nombreYApellido;
         this.edad = edad;

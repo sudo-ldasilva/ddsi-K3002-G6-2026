@@ -1,0 +1,27 @@
+info:
+  name: Notificaciones Mail Leo
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: http://localhost:8081/notificaciones
+  body:
+    type: json
+    data: |-
+      {
+        "contactos": [
+          {
+            "tipoContacto": "mail",
+            "direccion": "ldasilva@frba.utn.edu.ar"
+          }
+        ],
+        "mensaje": "Buenaaaaaas :)\n Este es un mensaje de Bruno"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

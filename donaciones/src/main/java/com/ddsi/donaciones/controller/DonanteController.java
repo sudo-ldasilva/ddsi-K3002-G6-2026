@@ -30,7 +30,7 @@ public class DonanteController {
         ArrayList<DonacionIndependienteDTO> donaciones = GestorDonaciones.getInstance()
                 .getDonacionesIndependientes()
                 .stream()
-                .filter(d -> d.getDonacion().getDonante().getMail().getDireccion().equalsIgnoreCase(mail))
+                .filter(d -> d.getDonacion().getDonante().getMail().equalsIgnoreCase(mail))
                 .map(d -> d.toDto())
                 .collect(Collectors.toCollection(ArrayList::new));
         return ResponseEntity.status(200).body(donaciones);
@@ -38,14 +38,14 @@ public class DonanteController {
 
     @GetMapping("/{mail}/contactos")
     public ResponseEntity<ArrayList<Contacto>> getContactos(@PathVariable String mail) {
-        Donante donante = GestorDonantes.getInstance().getDonante(new Contacto(mail, "mail"));
+        Donante donante = GestorDonantes.getInstance().getDonante(mail);
         if (donante == null) return ResponseEntity.status(404).body(null);
         return ResponseEntity.status(200).body(donante.getMediosDeContacto());
     }
 
     @PostMapping("/{mail}/contactos")
     public ResponseEntity<ArrayList<Contacto>> postContactos(@PathVariable String mail, @RequestBody Contacto contacto) {
-        Donante donante = GestorDonantes.getInstance().getDonante(new Contacto(mail, "mail"));
+        Donante donante = GestorDonantes.getInstance().getDonante(mail);
         if (donante == null) return ResponseEntity.status(404).body(null);
         donante.agregarContacto(contacto);
         return ResponseEntity.status(200).body(donante.getMediosDeContacto());
@@ -66,7 +66,7 @@ public class DonanteController {
 
     @PutMapping("/humanos/{mail}")
     public ResponseEntity<PersonaHumana> modificarHumano(@PathVariable String mail, @RequestBody PersonaHumana cambios) {
-        Donante donante = GestorDonantes.getInstance().getDonante(new Contacto(mail, "mail"));
+        Donante donante = GestorDonantes.getInstance().getDonante(mail);
 
         if ( !(donante instanceof PersonaHumana) ) {
             return ResponseEntity.status(404).body(null);
@@ -88,7 +88,7 @@ public class DonanteController {
 
     @PutMapping("/juridicos/{mail}")
     public ResponseEntity<PersonaJuridicaDTO> modificarJuridico(@PathVariable String mail, @RequestBody PersonaJuridicaDTO cambios) {
-        Donante donante = GestorDonantes.getInstance().getDonante(new Contacto(mail, "mail"));
+        Donante donante = GestorDonantes.getInstance().getDonante(mail);
 
         if ( donante == null ) return ResponseEntity.status(404).body(null);
         if ( !(donante instanceof PersonaJuridica) ) return ResponseEntity.status(400).body(null);
@@ -107,7 +107,7 @@ public class DonanteController {
 
     @DeleteMapping("/{mail}")
     public ResponseEntity<Donante> deleteDonante(@PathVariable String mail) {
-        Donante eliminado = GestorDonantes.getInstance().eliminarDonante(new Contacto(mail, "mail"));
+        Donante eliminado = GestorDonantes.getInstance().eliminarDonante(mail);
         return ResponseEntity.status((eliminado != null) ? 200 : 404).body(eliminado);
     }
 }

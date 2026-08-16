@@ -17,5 +17,5 @@ public class NotificadorEmail implements NotificadorStrategy{
     }
 
     @Override
-    public TipoContacto getTipo(){return TipoContacto.EMAIL;}
+    public TipoContacto getTipo(){return TipoContacto.MAIL;}
 }

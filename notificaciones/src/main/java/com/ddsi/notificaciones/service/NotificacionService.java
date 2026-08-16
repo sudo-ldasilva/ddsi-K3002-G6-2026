@@ -4,7 +4,6 @@ import com.ddsi.notificaciones.domain.GestorNotificaciones;
 import com.ddsi.notificaciones.dto.ContactoDTO;
 import com.ddsi.notificaciones.dto.NotificacionRequestDTO;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 
 @Service
 public class NotificacionService {
@@ -23,7 +22,7 @@ public class NotificacionService {
         return todoOk;
     }
 
-    private boolean validar(NotificacionRequestDTO request) {
+    public boolean validar(NotificacionRequestDTO request) {
         if (request.getContactos() == null) {
             return false;
         }

@@ -7,7 +7,6 @@ import com.ddsi.incentivos.domain.dto.DonacionesPorMailDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.MediaType;
 
 import java.util.ArrayList;
 

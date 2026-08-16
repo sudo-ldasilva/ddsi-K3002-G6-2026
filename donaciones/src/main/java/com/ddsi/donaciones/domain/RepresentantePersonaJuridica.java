@@ -3,8 +3,8 @@ package com.ddsi.donaciones.domain;
 public class RepresentantePersonaJuridica extends Representante {
     private PersonaJuridica personaJuridica;
 
-    public RepresentantePersonaJuridica(Contacto email, PersonaJuridica personaJuridica) {
-        super(email);
+    public RepresentantePersonaJuridica(Contacto mail, PersonaJuridica personaJuridica) {
+        super(mail);
         this.personaJuridica = personaJuridica;
     }
 
