@@ -18,7 +18,7 @@ public class ValidadorDeDatos {
 
     public boolean existeElDonante(ArrayList<Donante> donantesActuales, Donante candidato) {
         return donantesActuales.stream()
-                .anyMatch(existente -> criterios.stream()
-                        .anyMatch(criterio -> criterio.sonPosibleDuplicado(existente, candidato)));
+                               .anyMatch(existente -> criterios.stream()
+                                                                .anyMatch(criterio -> criterio.sonPosibleDuplicado(existente, candidato)));
     }
 }

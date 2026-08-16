@@ -50,9 +50,9 @@ public abstract class Donante {
         return this.documento;
     }
 
-    public boolean tienEsteMail(Contacto contacto) {
+    public boolean tieneContacto(Contacto contacto) {
         return mediosDeContacto.stream()
-                .filter(c -> "mail".equalsIgnoreCase(c.getTipoContacto()))
+                .filter(c -> contacto.getTipoContacto().equalsIgnoreCase(c.getTipoContacto()))
                 .anyMatch(c -> c.getDireccion().equalsIgnoreCase(contacto.getDireccion()));
     }
 }

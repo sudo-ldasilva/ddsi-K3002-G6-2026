@@ -53,11 +53,12 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
         Contacto contactoMail = new Contacto(email, "mail");
 
         Donante existente = donantesActuales.stream()
-                .filter(d -> d.tienEsteMail(contactoMail))
+                .filter(d -> d.tieneContacto(contactoMail))
                 .findFirst()
                 .orElse(null);
 
         if (existente != null) {
+            System.out.println("[CSV] Actualiza: " + existente.getMail());
             actualizarDonante(existente, fila);
         } else {
             Donante nuevo = construirDonante(fila);
@@ -68,6 +69,19 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
     }
 
     private void actualizarDonante(Donante donante, Map<String, String> fila) {
+        // No contemplamos que pueda cambiar de Tipo de donante (humano - juridico)
+
+        String tipoDoc = fila.getOrDefault("TipoDoc", "").trim();
+        String doc = fila.getOrDefault("Documento", "").trim();
+        donante.setDocumento(new Documento(TipoDocumento.valueOf(tipoDoc), doc));
+
+        String nombre = fila.getOrDefault("Nombre/Razón Social", "").trim();
+        if (donante instanceof PersonaHumana) {
+            ( (PersonaHumana) donante).setNombreYApellido(nombre);
+        } else if (donante instanceof PersonaHumana) {
+            ( (PersonaJuridica) donante).setRazonSocial(nombre);
+        }
+
         String telefono = fila.getOrDefault("Teléfono", "").trim();
         if (!telefono.isEmpty()) {
             boolean yaEsta = donante.getMediosDeContacto().stream()
@@ -84,7 +98,7 @@ public class CargaDeDatosDesdeCSV implements CargaDeDatos {
         String tipoDocStr  = fila.getOrDefault("TipoDoc", "").trim().toUpperCase();
         String nroDoc      = fila.getOrDefault("Documento", "").trim();
         String nombre      = fila.getOrDefault("Nombre/Razón Social", "").trim();
-        String mail       = fila.getOrDefault("Email", "").trim();
+        String mail        = fila.getOrDefault("Email", "").trim();
         String telefono    = fila.getOrDefault("Teléfono", "").trim();
 
         TipoDocumento tipoDoc = parsearTipoDocumento(tipoDocStr);

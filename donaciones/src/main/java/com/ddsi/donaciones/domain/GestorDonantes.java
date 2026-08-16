@@ -19,6 +19,12 @@ public class GestorDonantes {
         return this.donantesRegistrados;
     }
 
+    public void agregarDonante(Donante d) {
+        donantesRegistrados.add(d);
+    }
+
+    public void dropDonantes() { donantesRegistrados = new ArrayList<>(); }
+
     public Donante getDonante(String mail) {
         for (int i = 0; i < donantesRegistrados.size(); i++) {
             if (donantesRegistrados.get(i).getMail().equals(mail)) {
@@ -26,6 +32,10 @@ public class GestorDonantes {
             }
         }
         return null;
+    }
+
+    public void setDonantes(ArrayList<Donante> ds) {
+        donantesRegistrados = ds;
     }
 
     public Donante eliminarDonante(String mail) {

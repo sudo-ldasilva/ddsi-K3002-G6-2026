@@ -36,18 +36,11 @@ public class CargaDonanteController {
 
             CargaDeDatosDesdeCSV carga = new CargaDeDatosDesdeCSV();
 
-            ArrayList<Donante> validados = carga.validarDatos(donantesActuales, temporal.getAbsolutePath());
-
-            int nuevos = 0;
-            for (Donante d : validados) {
-                gestor.registrarDonanteSinNotificar(d);
-                nuevos++;
-            }
-
+            ArrayList<Donante> ds = carga.cargarDonantes(donantesActuales, temporal.getAbsolutePath());
+            gestor.setDonantes(ds);
 
             return ResponseEntity.ok(
-                    String.format("Carga completada. Donantes nuevos registrados: %d.", nuevos));
-
+                    String.format("Carga completada. Donantes totales: %d.", ds.size()));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.internalServerError()
