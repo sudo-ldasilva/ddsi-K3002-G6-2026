@@ -9,7 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.stream.Collectors;
 
 import com.ddsi.donaciones.domain.*;
 
@@ -102,5 +106,24 @@ class DonacionesApplicationTests {
 
         assertEquals(19986, GestorDonantes.getInstance().getDonantes().size(), "No se cargaron la cantidad correcta de donantes");
         compararDonantePostCarga(GestorDonantes.getInstance().getDonantes().get(0));
+    }
+
+    @Test
+    void segmentacionDonaciones(){
+        GestorDonantes.getInstance().agregarDonante(donantePrevioACarga);
+        Direccion direccionDeposito = new Direccion("Saraza", "Vegetta", "Willyrex", "777", "S06",
+                new Ciudad("CABA", new Provincia("CABA", new Pais("Argentina"))));
+        ArrayList<BienDonado> bienesDonados = new ArrayList<>();
+        Subcategoria mesa = new Subcategoria("Mesa", "unidad", new Categoria("Mueble", new ArrayList<>(), false, false));
+        bienesDonados.add(new BienDonado(2, new Bien("Mesa xd", "", mesa)));
+        bienesDonados.add(new BienDonado(2, new Bien("Mesa xD", "", mesa)));
+        bienesDonados.add(new BienDonado(1, new BienPerecedero("Leche", "", new Subcategoria("Leche", "Litro", new Categoria("Comida", new ArrayList<>(), true, false)), LocalDate.of(2026, 8, 22))));
+        bienesDonados.add(new BienDonado(1, new BienPerecedero("Tomate", "", new Subcategoria("Tomate", "Kilogramo", new Categoria("Comida", new ArrayList<>(), true, false)), LocalDate.of(2026, 8, 21))));
+        GestorDonaciones.getInstance().donar(new Donacion(direccionDeposito, GestorDonantes.getInstance().getDonantes().getFirst(), "Hola :)", bienesDonados, LocalDate.now()));
+        GestorDonaciones.getInstance().segmentarDonaciones();
+        ArrayList<DonacionIndependiente> donacionIndependientes = GestorDonaciones.getInstance().getDonacionesIndependientes();
+        ArrayList<Integer> cantidadDeBienes = donacionIndependientes.stream().map(d -> d.getBienes().size()).collect(Collectors.toCollection(ArrayList::new));
+        assertEquals(3, donacionIndependientes.size());
+        assertTrue(cantidadDeBienes.contains(2));
     }
 }

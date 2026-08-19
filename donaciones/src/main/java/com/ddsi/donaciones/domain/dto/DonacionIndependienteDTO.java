@@ -3,8 +3,8 @@ package com.ddsi.donaciones.domain.dto;
 import com.ddsi.donaciones.domain.EstadoDonacion;
 import com.ddsi.donaciones.domain.ComprobanteRecepcion;
 
+import java.time.LocalDate;
 import java.util.UUID;
-import java.util.Date;
 
 public class DonacionIndependienteDTO {
     private UUID uuid;
@@ -12,10 +12,10 @@ public class DonacionIndependienteDTO {
     private String mailDonante;
     private int cantidadBienes;
     private EstadoDonacion estadoActual;
-    private Date fecha;
+    private LocalDate fecha;
     private ComprobanteRecepcion comprobante;
 
-    public DonacionIndependienteDTO(UUID uuid, String categoriaBien, String mailDonante, int cantidadBienes, EstadoDonacion estadoActual, Date fecha, ComprobanteRecepcion comprobante) {
+    public DonacionIndependienteDTO(UUID uuid, String categoriaBien, String mailDonante, int cantidadBienes, EstadoDonacion estadoActual, LocalDate fecha, ComprobanteRecepcion comprobante) {
         this.uuid = uuid;
         this.subcategoria = categoriaBien;
         this.mailDonante = mailDonante;
@@ -45,7 +45,7 @@ public class DonacionIndependienteDTO {
         return estadoActual;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 

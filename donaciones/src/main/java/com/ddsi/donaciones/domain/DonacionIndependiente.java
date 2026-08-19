@@ -1,5 +1,6 @@
 package com.ddsi.donaciones.domain;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
@@ -13,7 +14,7 @@ public class DonacionIndependiente {
     private Donacion donacion;
     private ArrayList<BienDonado> bienes;
     private ArrayList<EstadoDonacion> historialEstados;
-    private Date fechaCreacion;
+    private LocalDate fechaCreacion;
     private ComprobanteRecepcion comprobante;
 
     public DonacionIndependiente(Subcategoria subcategoria, NecesidadIndividual necesidad, Donacion donacion) {
@@ -22,10 +23,10 @@ public class DonacionIndependiente {
         this.necesidad = necesidad;
         this.donacion = donacion;
         this.bienes = new ArrayList<>();
-        this.fechaCreacion = new Date();
+        this.fechaCreacion = LocalDate.now();
 
         this.historialEstados = new ArrayList<>();
-        this.historialEstados.add(new EstadoDonacion(EstadoDeDonacion.EN_DEPOSITO, new Date()));
+        this.historialEstados.add(new EstadoDonacion(EstadoDeDonacion.EN_DEPOSITO, LocalDate.now()));
     }
 
     public UUID getUUID() {
@@ -52,7 +53,7 @@ public class DonacionIndependiente {
         return bienes;
     }
 
-    public java.util.Date getFecha() {return fechaCreacion;}
+    public LocalDate getFecha() {return fechaCreacion;}
 
     public void agregarBien(BienDonado bien){
         bienes.add(bien);

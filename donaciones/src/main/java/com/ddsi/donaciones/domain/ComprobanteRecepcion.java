@@ -1,19 +1,19 @@
 package com.ddsi.donaciones.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ComprobanteRecepcion {
-    private Date fechaHora;
+    private LocalDate fechaHora;
     private String camion;
     private ArrayList<String> fotos;
 
-    public ComprobanteRecepcion(Date fechaHora, String camion) {
+    public ComprobanteRecepcion(LocalDate fechaHora, String camion) {
         this.fechaHora = fechaHora;
         this.camion = camion;
     }
 
-    public Date getFechaHora() {
+    public LocalDate getFechaHora() {
         return fechaHora;
     }
 

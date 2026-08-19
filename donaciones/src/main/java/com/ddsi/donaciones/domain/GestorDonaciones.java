@@ -1,7 +1,7 @@
 package com.ddsi.donaciones.domain;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -136,7 +136,7 @@ public class GestorDonaciones {
         campania.getEntidadBeneficiaria().sumarDonacionCuatrimestral();
 
         //Cambio de Estado
-        donacionIndependiente.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ASIGNACION_REALIZADA, new Date()));
+        donacionIndependiente.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ASIGNACION_REALIZADA, LocalDate.now()));
 
         //Envio de notificaciones
         NotificacionDispatcherService notificacionDispatcherService = new NotificacionDispatcherService();
@@ -157,14 +157,14 @@ public class GestorDonaciones {
                 && d.getSubcategoria().getCategoria().esPerecedero()
                 && ((BienPerecedero) d.getBienes().get(0).getBien()).estaVencido()
             )
-            .forEach(d -> d.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.VENCIDA, new Date())));
+            .forEach(d -> d.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.VENCIDA, LocalDate.now())));
     }
 
     public void recibirAsignacionDeRuta(ArrayList<UUID> donacionesIndependienteUUID) {
         donacionesIndependienteUUID.stream().forEach(donacionIndependienteUUID -> {
             DonacionIndependiente donacionInd = getDonacionIndependienteByUUID(donacionIndependienteUUID);
 
-            donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ASIGNACION_REALIZADA, new Date()));
+            donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ASIGNACION_REALIZADA, LocalDate.now()));
             NotificacionDispatcherService notif = new NotificacionDispatcherService();
             notif.notificar(donacionInd.getDonacion().getDonante().getMediosDeContacto(), "Su donación fue asignada!");
             ArrayList<Contacto> contactosEntidad = new ArrayList<>();
@@ -178,7 +178,7 @@ public class GestorDonaciones {
         donacionesIndependienteUUID.stream().forEach(donacionIndependienteUUID -> {
             DonacionIndependiente donacionInd = getDonacionIndependienteByUUID(donacionIndependienteUUID);
 
-            donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.EN_TRASLADO, new Date()));
+            donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.EN_TRASLADO, LocalDate.now()));
             NotificacionDispatcherService notif = new NotificacionDispatcherService();
             notif.notificar(donacionInd.getDonacion().getDonante().getMediosDeContacto(), "Su donación está en camino! Mapa: " + enlaceMapa);
             ArrayList<Contacto> contactosEntidad = new ArrayList<>();
@@ -191,7 +191,7 @@ public class GestorDonaciones {
     public void recibirEntregaExitosa(UUID donacionIndependiente, ComprobanteRecepcion comprobante) {
         DonacionIndependiente donacionInd = getDonacionIndependienteByUUID(donacionIndependiente);
 
-        donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ENTREGADA, new Date()));
+        donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ENTREGADA, LocalDate.now()));
         NotificacionDispatcherService notif = new NotificacionDispatcherService();
         notif.notificar(donacionInd.getDonacion().getDonante().getMediosDeContacto(), "Su donación fue entregada! Comprobante: " + comprobante.toString());
         ArrayList<Contacto> contactosEntidad = new ArrayList<>();
@@ -203,7 +203,7 @@ public class GestorDonaciones {
     public void recibirEntregaFallida(UUID donacionIndependiente, String justificacion, boolean puedeReasignarse) {
         DonacionIndependiente donacionInd = getDonacionIndependienteByUUID(donacionIndependiente);
 
-        donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ENTREGA_FALLIDA, new Date()));
+        donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.ENTREGA_FALLIDA, LocalDate.now()));
         NotificacionDispatcherService notif = new NotificacionDispatcherService();
         notif.notificar(donacionInd.getDonacion().getDonante().getMediosDeContacto(), "Su donación no se pudo entregar :( Justificación: " + justificacion);
         ArrayList<Contacto> contactosEntidad = new ArrayList<>();
@@ -213,7 +213,7 @@ public class GestorDonaciones {
         // TODO Notificar al usuario Administrador también
 
         if (puedeReasignarse) {
-            donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.EN_DEPOSITO, new Date()));
+            donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.EN_DEPOSITO, LocalDate.now()));
         }
     }
 }

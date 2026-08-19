@@ -2,7 +2,8 @@ package com.ddsi.donaciones.domain;
 
 import com.ddsi.donaciones.service.NotificacionDispatcherService;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.concurrent.TimeUnit;
@@ -78,8 +79,7 @@ public class GestorDonantes {
                 .stream()
                 .max(Comparator.comparing(Donacion::getFecha))
                 .map(donacion -> {
-                    return TimeUnit.DAYS.convert(new Date().getTime() - donacion.getFecha().getTime(),TimeUnit.MILLISECONDS) == 20;
-                })
+                    return ChronoUnit.DAYS.between(donacion.getFecha(), LocalDate.now()) >= 20;                })
                 .orElse(false); // si no tiene donaciones
         })
         .forEach( d -> {

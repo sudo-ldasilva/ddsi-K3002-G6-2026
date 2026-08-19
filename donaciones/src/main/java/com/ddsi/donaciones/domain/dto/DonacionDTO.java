@@ -1,5 +1,6 @@
 package com.ddsi.donaciones.domain.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -13,11 +14,11 @@ public class DonacionDTO {
     private String descripcion;
     private ArrayList<BienDonadoDTO> bienes;
     private boolean fueSegmentada;
-    private Date fecha;
+    private LocalDate fecha;
 
     public DonacionDTO() { }
 
-    public DonacionDTO(Direccion direccionDeposito, String donante, String descripcion, ArrayList<BienDonadoDTO> bienesDonados, Date fecha){
+    public DonacionDTO(Direccion direccionDeposito, String donante, String descripcion, ArrayList<BienDonadoDTO> bienesDonados, LocalDate fecha){
         this.uuid = UUID.randomUUID();
         this.direccionDeposito = direccionDeposito;
         this.donante = donante;
@@ -27,7 +28,7 @@ public class DonacionDTO {
         this.fecha = fecha;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return this.fecha;
     }
 

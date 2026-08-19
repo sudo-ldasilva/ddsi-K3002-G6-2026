@@ -1,12 +1,12 @@
 package com.ddsi.donaciones.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class EstadoDonacion {
     protected EstadoDeDonacion estado;
-    protected Date fechaInicio ;
+    protected LocalDate fechaInicio ;
 
-    public EstadoDonacion(EstadoDeDonacion estado, Date fechaInicio) {
+    public EstadoDonacion(EstadoDeDonacion estado, LocalDate fechaInicio) {
         this.estado = estado;
         this.fechaInicio = fechaInicio;
     }
@@ -15,7 +15,7 @@ public class EstadoDonacion {
         return estado;
     }
 
-    public Date getFechaInicio() {
+    public LocalDate getFechaInicio() {
         return fechaInicio;
     }
 }
