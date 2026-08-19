@@ -115,4 +115,8 @@ public class GestorIncentivos {
     public Optional<Donante> getDonante(Contacto mail) {
         return donantes.stream().filter(d -> d.getMail().equals(mail.getDireccion())).findFirst();
     }
+
+    public void agregarDonante(Donante donante) {
+        donantes.add(donante);
+    }
 }

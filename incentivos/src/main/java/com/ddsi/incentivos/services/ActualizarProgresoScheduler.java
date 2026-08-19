@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActualizarProgresoScheduler {
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 0 30 * * *")
     public void actualizarProgreso(){
         GestorIncentivos.getInstance().actualizarProgreso();
     }
