@@ -65,7 +65,6 @@ public class GestorIncentivos {
         try {
             donante.cambiarCategoria(donaciones);
             progresarEnCategoria(donante, donaciones);
-
             NotificacionDispatcherService notif = new NotificacionDispatcherService();
             notif.notificar(new ArrayList<Contacto>(List.of(new Contacto(donante.getMail(), "mail"))), "Has sido promovido a la categoría " + donante.getCategoriaActual().getNombre());
         } catch (Exception error) {
@@ -86,7 +85,6 @@ public class GestorIncentivos {
             donante.getCategoriaActual().getNombre(),
             "Ha conseguido la insignia " + insignia.getMision().getNombre()
         );
-
         progresarEnMision(donante, donaciones);
     }
 
@@ -95,7 +93,7 @@ public class GestorIncentivos {
         int mesActual = hoy.getMonthValue();
         int añoActual = hoy.getYear();
 
-        if (mesActual != ranking.getMes() && añoActual != ranking.getAño()) {
+        if (ranking == null || (mesActual != ranking.getMes() && añoActual != ranking.getAño())) {
             ranking = new Ranking(añoActual, mesActual);
         }
 
