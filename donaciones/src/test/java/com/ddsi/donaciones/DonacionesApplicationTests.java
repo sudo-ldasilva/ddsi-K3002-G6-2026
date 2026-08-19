@@ -115,10 +115,11 @@ class DonacionesApplicationTests {
                 new Ciudad("CABA", new Provincia("CABA", new Pais("Argentina"))));
         ArrayList<BienDonado> bienesDonados = new ArrayList<>();
         Subcategoria mesa = new Subcategoria("Mesa", "unidad", new Categoria("Mueble", new ArrayList<>(), false, false));
+        Subcategoria tomate = new Subcategoria("Tomate", "Kilogramo", new Categoria("Comida", new ArrayList<>(), true, false));
         bienesDonados.add(new BienDonado(2, new Bien("Mesa xd", "", mesa)));
         bienesDonados.add(new BienDonado(2, new Bien("Mesa xD", "", mesa)));
-        bienesDonados.add(new BienDonado(1, new BienPerecedero("Leche", "", new Subcategoria("Leche", "Litro", new Categoria("Comida", new ArrayList<>(), true, false)), LocalDate.of(2026, 8, 22))));
-        bienesDonados.add(new BienDonado(1, new BienPerecedero("Tomate", "", new Subcategoria("Tomate", "Kilogramo", new Categoria("Comida", new ArrayList<>(), true, false)), LocalDate.of(2026, 8, 21))));
+        bienesDonados.add(new BienDonado(1, new BienPerecedero("Tomate", "", tomate, LocalDate.of(2026, 8, 22))));
+        bienesDonados.add(new BienDonado(1, new BienPerecedero("Tomate", "", tomate, LocalDate.of(2026, 8, 21))));
         GestorDonaciones.getInstance().donar(new Donacion(direccionDeposito, GestorDonantes.getInstance().getDonantes().getFirst(), "Hola :)", bienesDonados, LocalDate.now()));
         GestorDonaciones.getInstance().segmentarDonaciones();
         ArrayList<DonacionIndependiente> donacionIndependientes = GestorDonaciones.getInstance().getDonacionesIndependientes();
