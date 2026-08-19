@@ -15,7 +15,7 @@ public class Categoria {
     }
 
     public boolean puedePasarASiguienteCategoria(Donante donante, ArrayList<DonacionIndependienteDTO> donaciones) {
-        return misionesACompletar.stream().allMatch( m -> m.misionCumplida(donante, donaciones) != null);
+        return misionesACompletar.stream().allMatch( m -> m.misionCumplida(donante, donaciones) != null) && categoriaSiguiente != null;
     }
 
     public Mision getMision(int indice) {

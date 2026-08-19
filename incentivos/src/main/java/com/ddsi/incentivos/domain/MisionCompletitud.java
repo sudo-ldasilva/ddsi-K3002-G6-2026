@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import com.ddsi.incentivos.domain.dto.DonacionIndependienteDTO;
 
 public class MisionCompletitud extends Mision {
+
+    public MisionCompletitud(String nombre, int cantidadNecesaria, String unidadDeMedida) {
+        super(nombre, cantidadNecesaria, unidadDeMedida);
+    }
+
     @Override
     public int getProgresoActual(Donante donante, ArrayList<DonacionIndependienteDTO> donaciones) {
         ArrayList<String> categorias = new ArrayList<>();

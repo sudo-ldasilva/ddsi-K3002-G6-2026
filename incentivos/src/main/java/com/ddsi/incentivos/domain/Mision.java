@@ -10,6 +10,12 @@ public abstract class Mision {
     private int cantidadNecesaria;
     private String unidadDeMedida;
 
+    protected Mision(String nombre, int cantidadNecesaria, String unidadDeMedida) {
+        this.nombre = nombre;
+        this.cantidadNecesaria = cantidadNecesaria;
+        this.unidadDeMedida = unidadDeMedida;
+    }
+
     public Insignia misionCumplida(Donante donante, ArrayList<DonacionIndependienteDTO> donaciones) {
         if (getProgresoActual(donante, donaciones) == cantidadNecesaria){
             return new Insignia(LocalDate.now(), this);

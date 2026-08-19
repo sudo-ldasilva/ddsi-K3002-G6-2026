@@ -48,8 +48,10 @@ public class Donante {
             throw new Exception(); //No se puede pasar a la siguiente categoria (usar codificacion o booleano, no un string)
         }
 
-        categoriaActual = categoriaActual.getSiguiente();
-        indiceMisionActual = 0;
+        if(categoriaActual.getSiguiente() != null) {
+            categoriaActual = categoriaActual.getSiguiente();
+            indiceMisionActual = 0;
+        }
     }
 
     public ArrayList<Insignia> getInsignias() {

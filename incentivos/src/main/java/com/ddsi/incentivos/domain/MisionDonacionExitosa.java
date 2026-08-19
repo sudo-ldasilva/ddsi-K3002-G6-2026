@@ -4,6 +4,11 @@ import com.ddsi.incentivos.domain.dto.DonacionIndependienteDTO;
 import java.util.ArrayList;
 
 public class MisionDonacionExitosa extends Mision {
+
+    public MisionDonacionExitosa(String nombre, int cantidadNecesaria, String unidadDeMedida) {
+        super(nombre, cantidadNecesaria, unidadDeMedida);
+    }
+
     @Override
     public int getProgresoActual(Donante donante, ArrayList<DonacionIndependienteDTO> donaciones) {
         int recibidas = 0;

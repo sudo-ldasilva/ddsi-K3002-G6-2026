@@ -14,6 +14,7 @@ public class GestorIncentivos {
     private ArrayList<Donante> donantes;
     private ArrayList<Categoria> categorias;
     private Ranking ranking;
+    private ArrayList<Mision> misiones;
 
     private GestorIncentivos() {
         this.donantes = new ArrayList<>();

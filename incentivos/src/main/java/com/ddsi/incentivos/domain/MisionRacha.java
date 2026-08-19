@@ -5,6 +5,11 @@ import java.time.LocalDate;
 import com.ddsi.incentivos.domain.dto.DonacionIndependienteDTO;
 
 public class MisionRacha extends Mision {
+
+    public MisionRacha(String nombre, int cantidadNecesaria, String unidadDeMedida) {
+        super(nombre, cantidadNecesaria, unidadDeMedida);
+    }
+
     @Override
     public int getProgresoActual(Donante donante, ArrayList<DonacionIndependienteDTO> donaciones) {
         int progreso = 0;
