@@ -1,6 +1,8 @@
 package com.ddsi.donaciones.domain;
 
 import com.ddsi.donaciones.domain.dto.CampaniaNecesidadDTO;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -8,13 +10,15 @@ public abstract class CampaniaNecesidad {
     private UUID uuid;
     ArrayList<NecesidadIndividual> necesidades;
     EntidadBeneficiaria entidadBeneficiaria;
+    LocalDate fechaInicio;
     String descripcion;
 
-    protected CampaniaNecesidad(EntidadBeneficiaria entidadBeneficiaria, String descripcion, ArrayList<NecesidadIndividual> necesidades) {
+    protected CampaniaNecesidad(EntidadBeneficiaria entidadBeneficiaria, String descripcion, ArrayList<NecesidadIndividual> necesidades, LocalDate fechaInicio) {
         this.uuid = UUID.randomUUID();
         this.necesidades = necesidades;
         this.entidadBeneficiaria = entidadBeneficiaria;
         this.descripcion = descripcion;
+        this.fechaInicio = fechaInicio;
     }
 
     //Getters
@@ -71,4 +75,12 @@ public abstract class CampaniaNecesidad {
     }
 
     public CampaniaNecesidadDTO toDTO() { throw new Error("Not implemented"); }
+
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
 }

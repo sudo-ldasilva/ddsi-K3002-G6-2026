@@ -216,4 +216,9 @@ public class GestorDonaciones {
             donacionInd.cambiarEstado(new EstadoDonacion(EstadoDeDonacion.EN_DEPOSITO, LocalDate.now()));
         }
     }
+
+    public void dropDonaciones() {
+        donaciones = new ArrayList<Donacion>();
+        posiblesDonaciones = new ArrayList<DonacionIndependiente>();
+    }
 }

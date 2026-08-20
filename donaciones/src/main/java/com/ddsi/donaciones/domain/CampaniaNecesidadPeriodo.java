@@ -10,21 +10,12 @@ public class CampaniaNecesidadPeriodo extends  CampaniaNecesidad {
     private CampaniaNecesidadRecurrente campaniaRecurrente;
 
     public CampaniaNecesidadPeriodo(EntidadBeneficiaria entidadBeneficiaria, String descripcion, LocalDate fechaInicio, CampaniaNecesidadRecurrente campaniaRecurrente, ArrayList<NecesidadIndividual> necesidades) {
-        super(entidadBeneficiaria, descripcion,  necesidades);
-        this.fechaInicio = fechaInicio;
+        super(entidadBeneficiaria, descripcion, necesidades, fechaInicio);
         this.campaniaRecurrente = campaniaRecurrente;
-    }
-
-    public LocalDate getFechaInicio() {
-        return fechaInicio;
     }
 
     public CampaniaNecesidadRecurrente getCampaniaRecurrente() {
         return campaniaRecurrente;
-    }
-
-    public void setFechaInicio(LocalDate fechaInicio) {
-        this.fechaInicio = fechaInicio;
     }
 
     @Override

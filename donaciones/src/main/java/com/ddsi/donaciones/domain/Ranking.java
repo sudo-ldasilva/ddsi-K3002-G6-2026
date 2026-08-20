@@ -8,17 +8,17 @@ import com.ddsi.donaciones.domain.dto.RankingDTO;
 public class Ranking {
 
     private String algoritmo;
-    private ArrayList<CampaniaNecesidad> necesidades;
+    private ArrayList<CampaniaNecesidad> campañas;
 
-    public Ranking(String algoritmo, ArrayList<CampaniaNecesidad> necesidades) {
+    public Ranking(String algoritmo, ArrayList<CampaniaNecesidad> campañas) {
         this.algoritmo = algoritmo;
-        this.necesidades = necesidades;
+        this.campañas = campañas;
     }
 
     public String getAlgoritmo() {return algoritmo;}
-    public ArrayList<CampaniaNecesidad> getNecesidades() {return necesidades;}
+    public ArrayList<CampaniaNecesidad> getCampañas() {return campañas;}
 
     public RankingDTO toDto() {
-        return new RankingDTO(algoritmo, necesidades.stream().map(n -> n.toDTO()).collect(Collectors.toCollection(ArrayList::new)));
+        return new RankingDTO(algoritmo, campañas.stream().map(n -> n.toDTO()).collect(Collectors.toCollection(ArrayList::new)));
     }
 }

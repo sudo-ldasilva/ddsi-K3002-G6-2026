@@ -16,20 +16,20 @@ public class Rankeador {
                                                 .map(a -> a.generarRanking(donacionIndependiente))
                                                 .collect(Collectors.toCollection(ArrayList::new));
 
-        System.out.println("algoritmos: " + algoritmos);
-        System.out.println("algoritmo aplicado: " + algoritmos.getFirst().generarRanking(donacionIndependiente));
-
         ArrayList<CampaniaNecesidad> campaniasCompartidas = new ArrayList<CampaniaNecesidad>(
             rankings.stream()
-                    .map(r -> r.getNecesidades())
+                    .map(r -> r.getCampañas())
                     .reduce(
-                        rankings.getFirst().getNecesidades(),
+                        rankings.getFirst().getCampañas(),
                         (x, y ) -> x.stream()
                                     .filter(y::contains)
                                     .collect(Collectors.toCollection(ArrayList::new))
                     )
         );
 
+        for (CampaniaNecesidad campaña : campaniasCompartidas) {
+            System.out.println("camp: " + campaña.getEntidadBeneficiaria().getRazonSocial());
+        }
         if(!campaniasCompartidas.isEmpty()) {
             String algoritmo = "final";
             Ranking ranking = new Ranking(algoritmo, campaniasCompartidas);

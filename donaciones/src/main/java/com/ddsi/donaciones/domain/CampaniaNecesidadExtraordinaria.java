@@ -1,6 +1,8 @@
 package com.ddsi.donaciones.domain;
 
 import com.ddsi.donaciones.domain.dto.CampaniaNecesidadDTO;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -12,13 +14,14 @@ public class CampaniaNecesidadExtraordinaria extends CampaniaNecesidad {
             eb,
             campaniaDto.getDescripcion(),
             null,
-            campaniaDto.getSituacionExcepcional()
+            campaniaDto.getSituacionExcepcional(),
+            campaniaDto.getFechaInicio()
         );
         this.necesidades = campaniaDto.getNecesidades().stream().map(n -> new NecesidadIndividual(n, this)).collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public CampaniaNecesidadExtraordinaria(EntidadBeneficiaria entidadBeneficiaria, String descripcion, ArrayList<NecesidadIndividual> necesidades, String situacionExcepcional) {
-        super(entidadBeneficiaria, descripcion, necesidades);
+    public CampaniaNecesidadExtraordinaria(EntidadBeneficiaria entidadBeneficiaria, String descripcion, ArrayList<NecesidadIndividual> necesidades, String situacionExcepcional, LocalDate fechaInicio) {
+        super(entidadBeneficiaria, descripcion, necesidades, fechaInicio);
         this.situacionExcepcional = situacionExcepcional;
     }
 
