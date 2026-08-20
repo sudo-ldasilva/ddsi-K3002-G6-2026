@@ -2,6 +2,7 @@ package com.ddsi.donaciones.domain;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.stream.Collectors;
 
 public class AlgoritmoPrioridadSubatendidos implements AlgoritmoSeleccion {
     @Override
@@ -14,6 +15,11 @@ public class AlgoritmoPrioridadSubatendidos implements AlgoritmoSeleccion {
         for (int i =0; campaniasElegidas.size() < 10 && i < entidades.size();i++) {
             campaniasElegidas.addAll(entidades.get(i).getNecesidadesPorSubcategoria(donacion.getSubcategoria()));
         }
+
+        campaniasElegidas = campaniasElegidas.stream()
+                                             .limit(10)
+                                             .collect(Collectors.toCollection(ArrayList::new));
+
         return new Ranking("Prioridad Subatendidos", campaniasElegidas);
     }
 }

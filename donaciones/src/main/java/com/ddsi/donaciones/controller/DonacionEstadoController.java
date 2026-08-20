@@ -1,7 +1,6 @@
 package com.ddsi.donaciones.controller;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 
 import com.ddsi.donaciones.domain.*;

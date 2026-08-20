@@ -69,4 +69,7 @@ public class GestorEntidadesBeneficiarias {
         entidadesBeneficiarias.forEach(e->e.setCantidadDeDonacionesDelCuatrimestre(0));
     }
 
+    public void dropEntidadesBeneficiarias() {
+        entidadesBeneficiarias = new ArrayList<>();
+    }
 }

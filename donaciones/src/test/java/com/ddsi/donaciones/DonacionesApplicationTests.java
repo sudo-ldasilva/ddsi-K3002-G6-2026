@@ -12,11 +12,10 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.stream.Collectors;
 
 import com.ddsi.donaciones.domain.*;
+import com.ddsi.donaciones.service.GeneracionDeCampañasDelPeriodoScheduler;
 
 @SpringBootTest
 class DonacionesApplicationTests {
@@ -176,6 +175,7 @@ class DonacionesApplicationTests {
     public void limpiarDonantes() {
         GestorDonantes.getInstance().dropDonantes();
         GestorDonaciones.getInstance().dropDonaciones();
+        GestorEntidadesBeneficiarias.getInstance().dropEntidadesBeneficiarias();
     }
 
     @Test
@@ -195,20 +195,20 @@ class DonacionesApplicationTests {
         assertEquals(donantePostCarga.getMail(), d.getMail());
         assertTrue(d.tieneContacto(donantePostCarga.getMediosDeContacto().get(0)));
     }
-    //
-    // @Test
-    // void cargaCSV() throws Exception {
-    //     cargarDonanteTemplate();
-    //
-    //     File path = new File("../donantes_import_20000_UTF8_BOM.csv");
-    //     CargaDeDatosDesdeCSV carga = new CargaDeDatosDesdeCSV();
-    //
-    //     ArrayList<Donante> donantes = carga.cargarDonantes(GestorDonantes.getInstance().getDonantes(), path.getAbsolutePath());
-    //     GestorDonantes.getInstance().setDonantes(donantes);
-    //
-    //     assertEquals(19986, GestorDonantes.getInstance().getDonantes().size(), "No se cargaron la cantidad correcta de donantes");
-    //     compararDonantePostCarga(GestorDonantes.getInstance().getDonantes().get(0));
-    // }
+
+    @Test
+    void cargaCSV() throws Exception {
+        cargarDonanteTemplate();
+
+        File path = new File("../donantes_import_20000_UTF8_BOM.csv");
+        CargaDeDatosDesdeCSV carga = new CargaDeDatosDesdeCSV();
+
+        ArrayList<Donante> donantes = carga.cargarDonantes(GestorDonantes.getInstance().getDonantes(), path.getAbsolutePath());
+        GestorDonantes.getInstance().setDonantes(donantes);
+
+        assertEquals(19986, GestorDonantes.getInstance().getDonantes().size(), "No se cargaron la cantidad correcta de donantes");
+        compararDonantePostCarga(GestorDonantes.getInstance().getDonantes().get(0));
+    }
 
     @Test
     void segmentacionDonaciones(){
@@ -283,7 +283,7 @@ class DonacionesApplicationTests {
 
         // Setea que pepito tiene ya una donacion
         GestorEntidadesBeneficiarias.getInstance()
-                                    .getEntidad(pepito.getContacto())
+                                    .getEntidad(pepita.getContacto())
                                     .setCantidadDeDonacionesDelCuatrimestre(1);
         DonacionIndependiente donacionIndependiente = new DonacionIndependiente(mesa, null, donacion);
         GestorDonaciones.getInstance()
@@ -299,11 +299,78 @@ class DonacionesApplicationTests {
         assertEquals(2, rankings.size());
         assertEquals(10, rankings.get(0).getCampañas().size());
         assertEquals(10, rankings.get(1).getCampañas().size());
-        for (CampaniaNecesidad campaña : rankings.get(0).getCampañas()) {
-            assertEquals(pepito.getRazonSocial(), campaña.getEntidadBeneficiaria().getRazonSocial());
+        for (Ranking r : rankings) {
+            if (r.getAlgoritmo() == "Prioridad Subatendidos") {
+                for (CampaniaNecesidad campaña : r.getCampañas()) {
+                    assertEquals(pepito.getRazonSocial(), campaña.getEntidadBeneficiaria().getRazonSocial());
+                }
+            } else if (r.getAlgoritmo() == "Compatibilidad Semántica") {
+                for (CampaniaNecesidad campaña : r.getCampañas()) {
+                    assertEquals(pepita.getRazonSocial(), campaña.getEntidadBeneficiaria().getRazonSocial());
+                }
+            }
         }
-        for (CampaniaNecesidad campaña : rankings.get(0).getCampañas()) {
-            assertEquals(pepita.getRazonSocial(), campaña.getEntidadBeneficiaria().getRazonSocial());
+    }
+
+    @Test
+    void ejecucionAlgoritmoInterseccion(){
+        GestorEntidadesBeneficiarias.getInstance().agregarEntidadBeneficiaria(pepito);
+        GestorEntidadesBeneficiarias.getInstance().agregarEntidadBeneficiaria(pepita);
+
+        // Camapaña 0-9
+        for (int i=0; i < 10; i++) {
+            CampaniaNecesidadExtraordinaria campaña = new CampaniaNecesidadExtraordinaria(pepita, "ayuda" + i, new ArrayList<>(Arrays.asList(necesidadPepita)), "Tengo hambre", LocalDate.of(2026, 8, 20));
+            GestorEntidadesBeneficiarias.getInstance()
+                                        .getEntidad(pepita.getContacto())
+                                        .crearCampaniaNecesidad(campaña);
         }
+        // Camapaña 10-18 (crea solo 9 así los algoritmos toman una campaña de pepita)
+        for (int i=0; i < 9; i++) {
+            CampaniaNecesidadExtraordinaria campaña = new CampaniaNecesidadExtraordinaria(pepito, "ayuda" + i, new ArrayList<>(Arrays.asList(necesidadPepito)), "Tengo sueño", LocalDate.of(2026, 8, 10));
+            GestorEntidadesBeneficiarias.getInstance()
+                                        .getEntidad(pepito.getContacto())
+                                        .crearCampaniaNecesidad(campaña);
+        }
+
+        // Setea que pepito tiene ya una donacion
+        GestorEntidadesBeneficiarias.getInstance()
+                                    .getEntidad(pepita.getContacto())
+                                    .setCantidadDeDonacionesDelCuatrimestre(1);
+        DonacionIndependiente donacionIndependiente = new DonacionIndependiente(mesa, null, donacion);
+        GestorDonaciones.getInstance()
+                        .getDonacionesIndependientes()
+                        .add(donacionIndependiente);
+
+        ArrayList<AlgoritmoSeleccion> algoritmos = new ArrayList<>();
+        algoritmos.add(new AlgoritmoPrioridadSubatendidos());
+        algoritmos.add(new AlgoritmoCompatibilidadSemantica());
+        Rankeador rankeador = new Rankeador(algoritmos);
+        ArrayList<Ranking> rankings = rankeador.generarRankings(GestorDonaciones.getInstance().getDonacionesIndependientes().getFirst());
+
+        assertEquals(1, rankings.size());
+        assertEquals(1, rankings.get(0).getCampañas().size());
+        assertEquals(pepita, rankings.get(0).getCampañas().getFirst().getEntidadBeneficiaria());
+    }
+
+    @Test
+    void campañasRecurrentesSuscripcion() {
+        GestorEntidadesBeneficiarias.getInstance().agregarEntidadBeneficiaria(pepita);
+
+        CampaniaNecesidadRecurrente campaña = new CampaniaNecesidadRecurrente(
+            Periodo.ANUAL,
+            "Ropa nueva para papa noel",
+            true,
+            new ArrayList<NecesidadBase>(Arrays.asList(new NecesidadBase(necesidadPepita.getBien(), necesidadPepita.getCantidadNecesaria()))),
+            pepita
+        );
+        pepita.agregarCampañaRecurrente(campaña);
+
+        // Simulamos que invocamos al cron (aunque no debería generar nada, debido a que checkea que ya existe una del periodo vigente)
+        GeneracionDeCampañasDelPeriodoScheduler g = new GeneracionDeCampañasDelPeriodoScheduler();
+        g.crearTodasLasCampañasDelPeriodo();
+
+        assertEquals(1, pepita.getCampañasRecurrentes().size());
+        assertEquals(1, pepita.getNecesidades().size());
+        assertInstanceOf(CampaniaNecesidadPeriodo.class, pepita.getNecesidades().getFirst());
     }
 }

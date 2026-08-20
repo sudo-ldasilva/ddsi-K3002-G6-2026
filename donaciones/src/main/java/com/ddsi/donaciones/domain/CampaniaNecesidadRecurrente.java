@@ -22,6 +22,8 @@ public class CampaniaNecesidadRecurrente {
         this.activo = activo;
         this.necesidadesBase = necesidadesBase;
         this.entidadBeneficiaria = entidadBeneficiaria;
+
+        crearSiguientePeriodoSiEsNecesario();
     }
 
     public UUID getUUID() {
@@ -51,20 +53,22 @@ public class CampaniaNecesidadRecurrente {
         this.activo = activo;
     }
 
-    public void crearSiguientePeriodo(){
-        if(!activo && this.seCumplioUltimoPeriodo()) return;
+    public void crearSiguientePeriodoSiEsNecesario(){
+        if (!activo || !this.seCumplioUltimoPeriodo()) return;
 
         ArrayList<NecesidadIndividual> necesidadesEfectivas = necesidadesBase.stream().map(nec -> new NecesidadIndividual(nec.getBien(), nec.getCantidadNecesaria(), null)).collect(Collectors.toCollection(ArrayList::new));
         CampaniaNecesidadPeriodo nuevaCampania = new CampaniaNecesidadPeriodo(entidadBeneficiaria, descripcion, this.siguienteFechaInicio(), this, necesidadesEfectivas);
         nuevaCampania.getNecesidades().forEach(nec -> nec.setCampania(nuevaCampania));
         this.agregarCampania(nuevaCampania);
+        entidadBeneficiaria.crearCampaniaNecesidad(nuevaCampania);
     }
 
     private LocalDate siguienteFechaInicio(){
+        if (campanias.size() == 0) return LocalDate.now();
+
         CampaniaNecesidadPeriodo ultimaCampania = campanias.get(campanias.size()-1);
 
         LocalDate fechaNueva;
-
         switch(periodo){
             case ANUAL ->  fechaNueva = ultimaCampania.getFechaInicio().plusYears(1);
             case CUATRIMESTRAL -> fechaNueva = ultimaCampania.getFechaInicio().plusMonths(4);
@@ -77,9 +81,10 @@ public class CampaniaNecesidadRecurrente {
     }
 
     private boolean seCumplioUltimoPeriodo(){
-        return this.siguienteFechaInicio().isBefore(LocalDate.now());
+        LocalDate siguienteFecha = this.siguienteFechaInicio();
+        LocalDate now = LocalDate.now();
+        return siguienteFecha.isBefore(now) || siguienteFecha.isEqual(now);
     }
-
 
     /*
     private void asignarFinal(Periodo periodo){

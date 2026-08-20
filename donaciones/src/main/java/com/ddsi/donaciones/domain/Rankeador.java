@@ -15,6 +15,14 @@ public class Rankeador {
         ArrayList<Ranking> rankings = algoritmos.stream()
                                                 .map(a -> a.generarRanking(donacionIndependiente))
                                                 .collect(Collectors.toCollection(ArrayList::new));
+        // System.out.println("----");
+        // for (Ranking r : rankings) {
+        //     System.out.println("Ranking method: " + r.getAlgoritmo());
+        //     for (CampaniaNecesidad campaña : r.getCampañas()) {
+        //         System.out.println("camp: " + campaña.getEntidadBeneficiaria().getRazonSocial());
+        //     }
+        //     System.out.println("----");
+        // }
 
         ArrayList<CampaniaNecesidad> campaniasCompartidas = new ArrayList<CampaniaNecesidad>(
             rankings.stream()
@@ -27,9 +35,10 @@ public class Rankeador {
                     )
         );
 
-        for (CampaniaNecesidad campaña : campaniasCompartidas) {
-            System.out.println("camp: " + campaña.getEntidadBeneficiaria().getRazonSocial());
-        }
+        // for (CampaniaNecesidad campaña : campaniasCompartidas) {
+        //     System.out.println("camp: " + campaña.getEntidadBeneficiaria().getRazonSocial());
+        // }
+        // System.out.println("Entra al if: " + !campaniasCompartidas.isEmpty());
         if(!campaniasCompartidas.isEmpty()) {
             String algoritmo = "final";
             Ranking ranking = new Ranking(algoritmo, campaniasCompartidas);

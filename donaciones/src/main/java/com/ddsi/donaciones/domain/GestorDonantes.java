@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.concurrent.TimeUnit;
 
 public class GestorDonantes {
     private static GestorDonantes gestorDonantes = null;

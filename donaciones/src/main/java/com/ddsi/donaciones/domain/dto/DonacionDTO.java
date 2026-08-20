@@ -1,7 +1,6 @@
 package com.ddsi.donaciones.domain.dto;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.UUID;
 
