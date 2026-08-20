@@ -19,6 +19,16 @@ public class GestorIncentivos {
     private GestorIncentivos() {
         this.donantes = new ArrayList<>();
         this.categorias = new ArrayList<>();
+
+        // PARA TESTS
+        // donantes.add(new Donante(
+        //     "email@email.com",
+        //     new Categoria("pepe", new ArrayList<Mision>(Arrays.asList(new MisionCompletitud("Excelente, pero las sillas no se comen... Doná alimentos", 1000, "sillas"))), null),
+        //     0,
+        //     new ArrayList<Insignia>(Arrays.asList(new Insignia(LocalDate.now(), null))),
+        //     true
+        // ));
+        // donantes.add(new Donante("email2@email.com", new Categoria("pepe", new ArrayList<Mision>(), null), 5, new ArrayList<Insignia>(), true));
     }
 
     public static GestorIncentivos getInstance() {
@@ -28,10 +38,21 @@ public class GestorIncentivos {
         return gestorIncentivos;
     }
 
+    public void agregarMision(Mision mision) {
+        misiones.add(mision);
+    }
+
+    public ArrayList<Mision> getMisiones() {
+        return this.misiones;
+    }
+
     public void actualizarProgreso() {
         DonacionesService donacionesService = new DonacionesService();
         ArrayList<DonacionesPorMailDTO> donacionesActuales = donacionesService.getDonacionesPorMail();
+        this.actualizarProgreso(donacionesActuales);
+    }
 
+    public void actualizarProgreso(ArrayList<DonacionesPorMailDTO> donacionesActuales) {
         for (DonacionesPorMailDTO donacionPorMail : donacionesActuales) {
             String mailDonante = donacionPorMail.getMailDonante();
 
@@ -111,8 +132,8 @@ public class GestorIncentivos {
         return donantes;
     }
 
-    public Optional<Donante> getDonante(Contacto mail) {
-        return donantes.stream().filter(d -> d.getMail().equals(mail.getDireccion())).findFirst();
+    public Optional<Donante> getDonante(String mail) {
+        return donantes.stream().filter(d -> d.getMail().equals(mail)).findFirst();
     }
 
     public void agregarDonante(Donante donante) {
