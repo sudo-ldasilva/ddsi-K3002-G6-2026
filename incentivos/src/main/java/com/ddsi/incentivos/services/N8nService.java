@@ -9,7 +9,7 @@ import org.springframework.http.MediaType;
 public class N8nService {
 
     private final RestClient restClient;
-    private static final String URL_N8N = "http://localhost:5678/webhook-test/10973e82-bed5-4563-9f2f-b2b37f836b00";
+    private static final String URL_N8N = "http://localhost:5678/webhook/10973e82-bed5-4563-9f2f-b2b37f836b00";
 
     public N8nService() {
         this.restClient = RestClient.builder().build();

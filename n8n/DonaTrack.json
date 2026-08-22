@@ -240,13 +240,13 @@
       ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "ef7b53c3-cf32-4231-ae71-d7851c26c579",
+  "versionId": "4a9b5d59-31e5-446f-90fa-2c6ba5b382e5",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "45d3fe1300633f68f726d0817c055db4096d5f85a16cae803cb69190bd92377b"
