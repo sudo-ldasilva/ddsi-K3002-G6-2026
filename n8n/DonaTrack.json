@@ -36,7 +36,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const items = $input.all();\n\nfor (const [index, item] of items.entries()) {\n  item.json.ranking = [{ posicion: index+1, identificador: item.json.mail.direccion }]\n}\n\nreturn items;"
+        "jsCode": "const items = $input.all();\n\nfor (const [index, item] of items.entries()) {\n  item.json.ranking = [{ posicion: index+1, identificador: item.json.mail }]\n}\n\nreturn items;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -246,7 +246,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "4a9b5d59-31e5-446f-90fa-2c6ba5b382e5",
+  "versionId": "50abd86a-46f8-40f5-ab46-39a3c4cf9294",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "45d3fe1300633f68f726d0817c055db4096d5f85a16cae803cb69190bd92377b"
